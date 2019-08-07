@@ -47,9 +47,9 @@ app.use(express.static(__dirname + '/src'));
 
 // include routes
 var routes = require('./server/routes/router');
-var usersRouter = require('./server/routes/users');
+//var usersRouter = require('./server/routes/users');
 app.use('/', routes);
-app.use('/users', usersRouter);
+//app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

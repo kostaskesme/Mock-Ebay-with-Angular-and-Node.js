@@ -1,29 +1,31 @@
-var express = require('express');
 var User = require('../models/users');
-var router = express.Router();
 
 //get all users
-router.get('/', (req, res) => {
+exports.getAllUsers = function (req, res) {
   User.find((err, user) => {
-    if (err)
+    if (err){
+      res.send({ error: 'Could not get users'});
       console.log(err);
+    }
     else
       res.json(user);
   });
-});
+}
 
 //get user by id
-router.get('/:id', (req, res) => {
+exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
-    if (err)
+    if (err){
+      res.send({ error: `User with id:${req.params.id} not found!`});
       console.log(err);
+    }
     else
       res.json(user);
   });
-});
+}
 
 //add new user
-router.post('/add', (req, res) => {
+exports.addUser = function (req, res) {
   var user = new User(req.body);
   user.save()
       .then(user => {
@@ -32,10 +34,10 @@ router.post('/add', (req, res) => {
       .catch(err => {
         res.status(400).send('Failed to create new record');
       });
-});
+}
 
 //update user info by id
-router.post('/update/:id', (req, res) => {
+exports.updateUserById = function (req, res, next) {
   User.findById(req.params.id, (err, user) => {
     if (!user)
       return next(new Error('Could not load Document'));
@@ -57,16 +59,16 @@ router.post('/update/:id', (req, res) => {
       });
     }
   });
-});
+}
 
 //delete user by id
-router.get('/delete/:id', (req, res) => {
+exports.deleteUserById = function (req, res) {
   User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
-    if (err)
-      res.json(err);
+    if (err){
+      res.send({ error: `User with id:${req.params.id} not found!`});
+      console.log(err);
+    }
     else
       res.json('Removed successfully');
   });
-});
-
-module.exports = router;
+}
