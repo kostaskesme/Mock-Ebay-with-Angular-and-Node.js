@@ -16,7 +16,7 @@ exports.getAllUsers = function (req, res) {
 exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
     if (err){
-      res.send({ error: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
       console.log(err);
     }
     else
@@ -39,8 +39,10 @@ exports.addUser = function (req, res) {
 //update user info by id
 exports.updateUserById = function (req, res, next) {
   User.findById(req.params.id, (err, user) => {
-    if (!user)
-      return next(new Error('Could not load Document'));
+    if (!user){
+      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+      console.log(err);
+    }
     else {
       user.userName = req.body.userName;
       user.password = req.body.password;
@@ -65,7 +67,7 @@ exports.updateUserById = function (req, res, next) {
 exports.deleteUserById = function (req, res) {
   User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
     if (err){
-      res.send({ error: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
       console.log(err);
     }
     else
