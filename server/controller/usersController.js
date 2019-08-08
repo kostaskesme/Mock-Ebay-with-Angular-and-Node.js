@@ -37,7 +37,7 @@ exports.addUser = function (req, res) {
 }
 
 //update user info by id
-exports.updateUserById = function (req, res, next) {
+exports.updateUserById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
     if (!user){
       res.status(400).send({ error: `User with id:${req.params.id} not found!`});

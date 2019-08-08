@@ -7,7 +7,7 @@ var MongoStore = require('connect-mongo')(session);
 const port = 3000
 
 //connect to MongoDB
-mongoose.connect('mongodb://localhost/tedMaster');
+mongoose.connect('mongodb://localhost/tedMaster', { useNewUrlParser: true, useFindAndModify: false });
 var db = mongoose.connection;
 
 

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var authController = require('../controller/authenticationController')
+var usersController = require('../controller/usersController')
 var auctionController = require('../controller/auctionController')
 
 
@@ -33,6 +34,30 @@ router.get('/logout', function (req, res, next) {
 router.get('/getByName/:name', function (req, res, next) {
   authController.getByName(req, res, next);
 });
+
+//Users routers
+
+router.get('/users', function (req, res) {
+  usersController.getAllUsers(req, res);
+});
+
+router.get('/users/:id', function (req, res) {
+  usersController.getUsersById(req, res);
+});
+
+router.post('/users/add', function (req, res) {
+  usersController.addUser(req, res);
+});
+
+router.post('/users/update/:id', function (req, res) {
+  usersController.updateUserById(req, res);
+});
+
+router.get('/users/delete/:id', function (req, res) {
+  usersController.deleteUserById(req, res);
+});
+
+//Auction routers
 
 router.post('/newAuction', function (req, res, next) {
   auctionController.createAuction(req, res, next);
