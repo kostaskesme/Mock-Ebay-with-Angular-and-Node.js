@@ -1,0 +1,11 @@
+<p>Sumbit Auction data below</p>
+<form (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="First bid" [formControl]="firstBid">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Buy price" [formControl]="buyPrice">
+  </mat-form-field>
+  <button mat-button>Create Auction!</button>
+</form>

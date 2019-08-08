@@ -34,6 +34,7 @@ exports.registerLogin = function (req, res, next) {
             email: req.body.email,
             username: req.body.username,
             password: req.body.password,
+            
         }
 
         User.create(userData, function (error, user) {
@@ -93,7 +94,7 @@ exports.logout = function (req, res, next) {
     }
 }
 
-exports.findByName = function (req, res, next) {
+exports.getByName = function (req, res, next) {
     User.findOne({ username: req.params.name })
         .exec(function (error, user) {
             if (error) {

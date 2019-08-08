@@ -1,34 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/users');
-//var authController = require('../controller/authenticationController');
-var usersController = require('../controller/usersController');
+var authController = require('../controller/authenticationController')
+var auctionController = require('../controller/auctionController')
 
-//get all users
-router.get('/users', (req, res) => {
-  usersController.getAllUsers(req, res);
-});
 
-//get user by id
-router.get('/users/:id', (req, res) => {
-  usersController.getUsersById(req, res);
-});
-
-//add new user
-router.post('/users/add', (req, res) => {
-  usersController.addUser(req, res);
-});
-
-//update user info by id
-router.post('/users/update/:id', (req, res) => {
-  usersController.updateUserById(req, res);
-});
-
-//delete user by id
-router.get('/users/delete/:id', (req, res) => {
-  usersController.deleteUserById(req, res);
-});
-/*
 // GET route for reading data
 router.get('/login', function (req, res, next) {
   return authController.login(req, res, next);
@@ -54,10 +29,21 @@ router.get('/logout', function (req, res, next) {
   authController.logout(req, res, next);
 });
 
-// GET route findByName
-router.get('/findByName/:name', function (req, res, next) {
-  authController.findByName(req, res, next);
+// GET route getByName
+router.get('/getByName/:name', function (req, res, next) {
+  authController.getByName(req, res, next);
 });
-*/
+
+router.post('/newAuction', function (req, res, next) {
+  auctionController.createAuction(req, res, next);
+});
+
+router.get('/getAuction/:id', function (req, res, next) {
+  auctionController.getAuctionById(req, res, next);
+});
+
+router.post('/updateAuction/:id', function (req, res) {
+  auctionController.updateAuctionById(req, res);
+});
 
 module.exports = router;

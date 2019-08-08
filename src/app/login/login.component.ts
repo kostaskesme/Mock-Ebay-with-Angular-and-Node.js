@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/enviroment.local';
 import { Router } from '@angular/router';
 import { HttpClient } from 'selenium-webdriver/http';
-import { AuthenticationService } from 'src/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-login',

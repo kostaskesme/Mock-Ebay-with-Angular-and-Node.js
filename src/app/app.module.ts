@@ -5,17 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { FormsModule } from '@angular/forms';
+import {MatCardModule, MatButtonModule} from '@angular/material'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from './core/material.module';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthenticationService } from 'src/services/authentication.service';
+import { AuthenticationService } from './services/authentication.service';
+import { AuctionComponent } from './auction/auction.component';
+import { AuctionService } from './services/auction.service';
+import { ViewAuctionComponent } from './view-auction/view-auction.component'
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    AuctionComponent,
+    ViewAuctionComponent
   ],
   imports: [
     BrowserModule,
@@ -24,9 +31,11 @@ import { AuthenticationService } from 'src/services/authentication.service';
     HttpModule,
     AppRoutingModule,
     CustomMaterialModule,
-    FormsModule
+    MatCardModule, MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [AuthenticationService],
+  providers: [AuthenticationService, AuctionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
