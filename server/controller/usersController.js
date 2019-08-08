@@ -44,15 +44,16 @@ exports.updateUserById = function (req, res, next) {
       console.log(err);
     }
     else {
-      user.userName = req.body.userName;
+      user.email = req.body.email;
+      user.username = req.body.username;
       user.password = req.body.password;
       user.firstName = req.body.firstName;
       user.lastName = req.body.lastName;
-      user.email = req.body.email;
       user.phoneNumber = req.body.phoneNumber;
       user.address = req.body.address;
       user.location = req.body.location;
       user.afm = req.body.afm;
+      user.rating = req.body.rating;
 
       user.save().then(user => {
         res.json('Update done');
