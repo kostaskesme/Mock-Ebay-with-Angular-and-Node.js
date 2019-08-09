@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
-// var users = require('./users.js');
 
 var AuctionSchema = new mongoose.Schema({
-  //items: { type: , unique: true, required: true, trim: true},
-  // seller: [{ type: Schema.users.UsersSchema.ObjectId, ref: 'User', required: true }], // [] ??
+  //item: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', unique: true, required: true, trim: true},
+  seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   firstBid: { type: Number, required: true },
   noOfBids: { type: Number, required: true },
   startTime: { type: String, required: true },
