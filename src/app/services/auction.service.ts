@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Auction } from '../models/auction.type';
+
 @Injectable()
 export class AuctionService {
 
@@ -27,6 +27,13 @@ export class AuctionService {
     public viewAuction(id: string) {
         const url = `${environment.appUrl}/getAuction/${id}`;
         return this.httpClient.get<any>(url).toPromise().then(response => {
+            return Promise.resolve(response);
+        })
+    }
+
+    public viewAllAuctions(){
+        const url = `${environment.appUrl}/getAuction`;
+        return this.httpClient.get<any>(url).toPromise().then(response =>{
             return Promise.resolve(response);
         })
     }

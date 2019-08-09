@@ -42,6 +42,10 @@ router.get('/getAuction/:id', function (req, res, next) {
   auctionController.getAuctionById(req, res, next);
 });
 
+router.get('/getAuction', function (req, res, next) {
+  auctionController.getAllAuctions(req, res, next);
+});
+
 router.post('/updateAuction/:id', function (req, res) {
   auctionController.updateAuctionById(req, res);
 });

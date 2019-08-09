@@ -13,7 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
 import { AuctionComponent } from './auction/auction.component';
 import { AuctionService } from './services/auction.service';
-import { ViewAuctionComponent } from './view-auction/view-auction.component'
+import { ViewAuctionComponent } from './view-auction/view-auction.component';
+import { BrowseAuctionComponent } from './browse-auction/browse-auction.component'
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ViewAuctionComponent } from './view-auction/view-auction.component'
     LoginComponent,
     RegisterComponent,
     AuctionComponent,
-    ViewAuctionComponent
+    ViewAuctionComponent,
+    BrowseAuctionComponent
   ],
   imports: [
     BrowserModule,
