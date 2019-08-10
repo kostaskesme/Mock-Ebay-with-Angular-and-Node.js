@@ -59,16 +59,20 @@ router.get('/users/delete/:id', function (req, res) {
 
 //Auction routers
 
-router.post('/newAuction', function (req, res, next) {
-  auctionController.createAuction(req, res, next);
+router.post('/newAuction', function (req, res) {
+  auctionController.createAuction(req, res);
 });
 
-router.get('/getAuction/:id', function (req, res, next) {
-  auctionController.getAuctionById(req, res, next);
+router.get('/getAuction/:id', function (req, res) {
+  auctionController.getAuctionById(req, res);
 });
 
 router.post('/updateAuction/:id', function (req, res) {
   auctionController.updateAuctionById(req, res);
+});
+
+router.get('/deleteAuction/:id', function (req, res) {
+  auctionController.deleteAuctionById(req, res);
 });
 
 module.exports = router;

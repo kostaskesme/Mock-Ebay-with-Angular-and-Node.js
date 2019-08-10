@@ -1,14 +1,34 @@
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var AuctionSchema = new mongoose.Schema({
-  //item: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', unique: true, required: true, trim: true},
-  seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  firstBid: { type: Number, required: true },
-  noOfBids: { type: Number, required: true },
-  startTime: { type: String, required: true },
-  endTime: { type: String, trim: true },
-  currentBid: { type: Number, required: true },
-  buyPrice: { type: Number, trim: true }
+  ItemID: { type: String, unique: true, required: true },
+  Name: { type: String, required: true, trim: true },
+  Category: [{ type: String, trim: true }],
+  Currently: { type: Number },
+  First_Bid: { type: Number },
+  Number_of_Bids: { type: Number },
+  Bids: [
+    {
+      Bidder: {
+        Rating: { type: Number, required: true },
+        UserID: { type: ObjectId, ref: 'User', required: true },
+        Location: { type: String, required: true, trim: true },
+        Country: { type: String, required: true, trim: true }
+      },
+      Time: { type: Date, required: true },
+      Amount: { type: Number, required: true }
+    }
+  ],
+  Location: { type: String, required: true, trim: true },
+  Country: { type: String, required: true, trim: true },
+  Started: { type: Date, required: true },
+  Ends: { type: Date, required: true },
+  Seller: {
+    Rating: { type: Number, required: true },
+    UserID: { type: ObjectId, ref: 'User', required: true }
+  },
+  Description: { type: String, trim: true }
 });
 
 var Auction = mongoose.model('Auction', AuctionSchema);

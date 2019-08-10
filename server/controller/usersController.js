@@ -3,7 +3,7 @@ var User = require('../models/users');
 //get all users
 exports.getAllUsers = function (req, res) {
   User.find((err, user) => {
-    if (err){
+    if (err) {
       res.send({ error: 'Could not get users'});
       console.log(err);
     }
@@ -15,7 +15,7 @@ exports.getAllUsers = function (req, res) {
 //get user by id
 exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
-    if (err){
+    if (err) {
       res.status(400).send({ error: `User with id:${req.params.id} not found!`});
       console.log(err);
     }
@@ -27,19 +27,18 @@ exports.getUsersById = function (req, res) {
 //add new user
 exports.addUser = function (req, res) {
   var user = new User(req.body);
-  user.save()
-      .then(user => {
-        res.status(200).json({'user': 'Added successfully'});
-      })
-      .catch(err => {
-        res.status(400).send('Failed to create new record');
-      });
+  user.save().then(user => {
+    res.status(200).json({'user': 'Added successfully'});
+  })
+  .catch(err => {
+    res.status(400).send('Failed to create new record');
+  });
 }
 
 //update user info by id
 exports.updateUserById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
-    if (!user){
+    if (!user) {
       res.status(400).send({ error: `User with id:${req.params.id} not found!`});
       console.log(err);
     }
@@ -67,7 +66,7 @@ exports.updateUserById = function (req, res) {
 //delete user by id
 exports.deleteUserById = function (req, res) {
   User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
-    if (err){
+    if (err) {
       res.status(400).send({ error: `User with id:${req.params.id} not found!`});
       console.log(err);
     }
