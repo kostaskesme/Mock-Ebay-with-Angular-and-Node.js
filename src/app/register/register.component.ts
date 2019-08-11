@@ -1,6 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Injectable } from '@angular/core';
+import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
+
+
+const passwordConfirmation: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+  const password = control.get('password');
+  const passwordConfirm = control.get('passwordConfirm');
+  if (password.value === passwordConfirm.value)
+    return null;
+  else
+    return { 'passwordsMatch': false };
+};
 
 
 @Component({
@@ -10,53 +21,68 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 export class RegisterComponent implements OnInit {
   regData = new FormGroup({
-    email: new FormControl([
+    email: new FormControl('', [
       Validators.email,
       Validators.required
     ]),
-    username: new FormControl([
+    username: new FormControl('', [
       Validators.required
       //checkUnique()
     ]),
-    password: new FormControl([
+    password: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
       Validators.maxLength(16)
     ]),
-    passwordConfirm: new FormControl([
+    passwordConfirm: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
       Validators.maxLength(16)
-      //checkpassword()
     ]),
-    firstName: new FormControl([
+    firstName: new FormControl('', [
       Validators.required,
       Validators.maxLength(25)
     ]),
-    lastName: new FormControl([
+    lastName: new FormControl('', [
       Validators.required,
       Validators.maxLength(25)
     ]),
-    phoneNumber: new FormControl([
+    phoneNumber: new FormControl('', [
       Validators.required,
       Validators.minLength(10),
       Validators.maxLength(10)
     ]),
-    address: new FormControl([
-      Validators.required 
+    address: new FormControl('', [
+      Validators.required
     ])
-  });
+  }, { validators: passwordConfirmation });
 
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router, ) { }
 
   ngOnInit() {
   }
 
   onSumbit() {
-    console.log('clicked');
-    console.log(this.regData.value);
-    //this.authenticationService.
+
+    var registerData = this.regData.value;
+    registerData.rating = "0";
+    registerData.type = "1";
+    registerData.approved = "false";
+    delete registerData.passwordConfirm;
+
+
+    //console.log(registerData);
+    this.authenticationService.register(registerData).then(response => {
+      if (response.registered) {
+        console.log(response.registered);
+        this.router.navigate(['pendingApproval']);
+      }
+      else{
+        console.log(response.message)
+      }
+    })
 
   }
+
 }

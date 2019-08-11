@@ -18,8 +18,6 @@ export class AuctionService {
                 currentBid: firstBid,
                 buyPrice: buyPrice,
             }).toPromise().then(response => {
-                console.log('AuctionService');
-                console.log(response);
                 return Promise.resolve(response);
             })
     }

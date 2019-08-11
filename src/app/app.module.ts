@@ -15,8 +15,8 @@ import { AuctionComponent } from './auction/auction.component';
 import { AuctionService } from './services/auction.service';
 import { ViewAuctionComponent } from './view-auction/view-auction.component';
 import { BrowseAuctionComponent } from './browse-auction/browse-auction.component';
-import { BrowseUsersComponent } from './browse-users/browse-users.component'
-
+import { BrowseUsersComponent } from './browse-users/browse-users.component';
+import { PendingApprovalComponent } from './pending-approval/pending-approval.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { BrowseUsersComponent } from './browse-users/browse-users.component'
     AuctionComponent,
     ViewAuctionComponent,
     BrowseAuctionComponent,
-    BrowseUsersComponent
+    BrowseUsersComponent,
+    PendingApprovalComponent,
   ],
   imports: [
     BrowserModule,

@@ -17,7 +17,6 @@ exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
     if (err) {
       res.status(400).send({ error: `User with id:${req.params.id} not found!` });
-      console.log(err);
     }
     else
       res.json(user);
@@ -26,13 +25,14 @@ exports.getUsersById = function (req, res) {
 
 //add new user
 exports.addUser = function (req, res) {
-  var user = new User(req.body);
-  user.save()
-    .then(user => {
-      res.status(200).json({ 'user': 'Added successfully' });
+  var userFromRequest = new User(req.body);
+  userFromRequest.save()
+    .then(userFromdb => {
+      res.status(200).json({ registered: true, userId: userFromdb._id });
     })
     .catch(err => {
-      res.status(400).send('Failed to create new record');
+      console.log(err);
+      res.status(400).send({ register: false, message:'Error registering user' });
     });
 }
 

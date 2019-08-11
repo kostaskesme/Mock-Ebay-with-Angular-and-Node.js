@@ -12,15 +12,19 @@ export class AuthenticationService {
     public authenticate(email: string, password: string): Promise<boolean> {
         const url = `${environment.appUrl}/login`;
         return this.httpClient.post<{ isLoggedIn: boolean }>(url, {
-            logemail : email,
+            logemail: email,
             logpassword: password
-         }).toPromise().then(response => {
+        }).toPromise().then(response => {
             return Promise.resolve(response.isLoggedIn);
         });
     }
-    public register(){
-        
+    public register(registerData: any) {
+        const url = `${environment.appUrl}/users/register`;
+        return this.httpClient.post<any>(url, registerData).toPromise().then(response => {
+            return Promise.resolve(response);
+        })
     }
 
-    //public register()
 }
+
+

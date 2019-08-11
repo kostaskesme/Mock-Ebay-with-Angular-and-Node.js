@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var authController = require('../controller/authenticationController')
 var auctionController = require('../controller/auctionController')
+var usersController = require('../controller/usersController')
 
 
 // GET route for reading data
@@ -43,7 +44,7 @@ router.get('/users/:id', function (req, res) {
   usersController.getUsersById(req, res);
 });
 
-router.post('/users/add', function (req, res) {
+router.post('/users/register', function (req, res) {
   usersController.addUser(req, res);
 });
 

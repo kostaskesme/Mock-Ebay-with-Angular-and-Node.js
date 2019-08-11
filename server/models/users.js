@@ -9,8 +9,8 @@ var UserSchema = new mongoose.Schema({
   lastName: { type: String, trim: true, required: true },
   phoneNumber: { type: String, trim: true, required: true },
   address: { type: String, trim: true, required: true },
-  location: { type: String, trim: true, required: true },
-  afm: { type: String, trim: true, required: true },
+  //location: { type: String, trim: true, required: true },
+  //afm: { type: String, trim: true, required: true },
   rating: { type: Number, required: true },
   type: { type: Number, required: true },
   approved: {type : Boolean, required: true}
