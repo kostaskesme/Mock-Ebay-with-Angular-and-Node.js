@@ -7,6 +7,7 @@ exports.createAuction = function (req, res) {
   })
   .catch(err => {
     res.status(400).send({ created: false, message: 'Error' });
+    console.log(err);
   });
 }
 
@@ -49,6 +50,28 @@ exports.updateAuctionById = function (req, res) {
       auction.Seller.Rating = req.body.Seller.Rating;
       auction.Seller.UserID = req.body.Seller.UserID;
       auction.Description = req.body.Description;
+
+      auction.save().then(auction => {
+        res.json('Update done');
+      }).catch(err => {
+        res.status(400).send('Update failed');
+      });
+    }
+  });
+}
+
+exports.bidAuctionById = function (req, res) {
+  Auction.findById(req.params.id, (err, auction) => {
+    if (!auction) {
+      res.status(400).send({ error: `Auction with id:${req.params.id} not found!`});
+      console.log(err);
+    }
+    else {
+      auction.Bids.push(req.body);
+      auction.Number_of_Bids++;
+      if (req.body.Amount > auction.Currently) {
+        auction.Currently = req.body.Amount;
+      }
 
       auction.save().then(auction => {
         res.json('Update done');

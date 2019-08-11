@@ -71,6 +71,10 @@ router.post('/updateAuction/:id', function (req, res) {
   auctionController.updateAuctionById(req, res);
 });
 
+router.post('/bidAuction/:id', function (req, res) {
+  auctionController.bidAuctionById(req, res);
+});
+
 router.get('/deleteAuction/:id', function (req, res) {
   auctionController.deleteAuctionById(req, res);
 });

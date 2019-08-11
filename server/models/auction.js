@@ -5,9 +5,10 @@ var AuctionSchema = new mongoose.Schema({
   ItemID: { type: String, unique: true, required: true },
   Name: { type: String, required: true, trim: true },
   Category: [{ type: String, trim: true }],
-  Currently: { type: Number },
-  First_Bid: { type: Number },
-  Number_of_Bids: { type: Number },
+  Currently: { type: Number, required: true },
+  Buy_Price: { type: Number, default: null },
+  First_Bid: { type: Number, required: true },
+  Number_of_Bids: { type: Number, default: 0 },
   Bids: [
     {
       Bidder: {
@@ -16,13 +17,13 @@ var AuctionSchema = new mongoose.Schema({
         Location: { type: String, required: true, trim: true },
         Country: { type: String, required: true, trim: true }
       },
-      Time: { type: Date, required: true },
+      Time: { type: Date, default: Date.now },
       Amount: { type: Number, required: true }
     }
   ],
   Location: { type: String, required: true, trim: true },
   Country: { type: String, required: true, trim: true },
-  Started: { type: Date, required: true },
+  Started: { type: Date, default: Date.now },
   Ends: { type: Date, required: true },
   Seller: {
     Rating: { type: Number, required: true },
