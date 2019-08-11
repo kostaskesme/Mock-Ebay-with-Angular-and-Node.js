@@ -67,6 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "sslKey": "./server/cert/server.key",
+            "sslCert": "./server/cert/server.cert",
             "browserTarget": "TedMaster:build"
           },
           "configurations": {
@@ -124,6 +126,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "TedMaster"
 }

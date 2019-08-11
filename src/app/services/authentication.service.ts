@@ -9,14 +9,18 @@ export class AuthenticationService {
         private httpClient: HttpClient) {
     }
 
-    public authenticate(logemail: string, logpassword: string): Promise<boolean> {
+    public authenticate(email: string, password: string): Promise<boolean> {
         const url = `${environment.appUrl}/login`;
-        return this.httpClient.get<{ isLoggedIn: boolean }>(url, {
-            params: new HttpParams()
-                .append('logemail', logemail)
-                .append('logpassword', logpassword)
-        }).toPromise().then(response => {
+        return this.httpClient.post<{ isLoggedIn: boolean }>(url, {
+            logemail : email,
+            logpassword: password
+         }).toPromise().then(response => {
             return Promise.resolve(response.isLoggedIn);
         });
-    } 
+    }
+    public register(){
+        
+    }
+
+    //public register()
 }

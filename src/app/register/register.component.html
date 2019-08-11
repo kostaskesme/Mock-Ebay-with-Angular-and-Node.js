@@ -1,1 +1,50 @@
-<p>register works!</p>
+Enter your data to register
+
+<form [formGroup]="regData" (ngSubmit)="onSubmit()">
+
+    <div class="data1">
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Email" formControl="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Username" formControl="username">
+        </mat-form-field>
+    </div>
+
+
+    <div class="data2">
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Password" formControl="password">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Password confirm" formControl="passwordConfirm">
+        </mat-form-field>
+    </div>
+
+
+    <div class="data3">
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="First name" formControlName="firstName">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Last name" formControl="lastName">
+        </mat-form-field>
+    </div>
+
+
+    <div class="data4">
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Phone Number" formControl="phoneNumber">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Address" formControl="address">
+        </mat-form-field>
+    </div>
+
+    <button type="submit" [disabled]="!regData.valid">Submit</button>
+
+</form>

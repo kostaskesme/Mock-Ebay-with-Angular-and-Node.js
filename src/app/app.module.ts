@@ -14,7 +14,8 @@ import { AuthenticationService } from './services/authentication.service';
 import { AuctionComponent } from './auction/auction.component';
 import { AuctionService } from './services/auction.service';
 import { ViewAuctionComponent } from './view-auction/view-auction.component';
-import { BrowseAuctionComponent } from './browse-auction/browse-auction.component'
+import { BrowseAuctionComponent } from './browse-auction/browse-auction.component';
+import { BrowseUsersComponent } from './browse-users/browse-users.component'
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { BrowseAuctionComponent } from './browse-auction/browse-auction.componen
     RegisterComponent,
     AuctionComponent,
     ViewAuctionComponent,
-    BrowseAuctionComponent
+    BrowseAuctionComponent,
+    BrowseUsersComponent
   ],
   imports: [
     BrowserModule,

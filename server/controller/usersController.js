@@ -3,20 +3,20 @@ var User = require('../models/users');
 //get all users
 exports.getAllUsers = function (req, res) {
   User.find((err, user) => {
-    if (err){
-      res.send({ error: 'Could not get users'});
+    if (err) {
+      res.status(400).send({ found: false, message: 'Could not get users' });
       console.log(err);
     }
     else
-      res.json(user);
+      res.status(200).json({ found: true, result: user });
   });
 }
 
 //get user by id
 exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
-    if (err){
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+    if (err) {
+      res.status(400).send({ error: `User with id:${req.params.id} not found!` });
       console.log(err);
     }
     else
@@ -28,19 +28,19 @@ exports.getUsersById = function (req, res) {
 exports.addUser = function (req, res) {
   var user = new User(req.body);
   user.save()
-      .then(user => {
-        res.status(200).json({'user': 'Added successfully'});
-      })
-      .catch(err => {
-        res.status(400).send('Failed to create new record');
-      });
+    .then(user => {
+      res.status(200).json({ 'user': 'Added successfully' });
+    })
+    .catch(err => {
+      res.status(400).send('Failed to create new record');
+    });
 }
 
 //update user info by id
 exports.updateUserById = function (req, res, next) {
   User.findById(req.params.id, (err, user) => {
-    if (!user){
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+    if (!user) {
+      res.status(400).send({ error: `User with id:${req.params.id} not found!` });
       console.log(err);
     }
     else {
@@ -65,9 +65,9 @@ exports.updateUserById = function (req, res, next) {
 
 //delete user by id
 exports.deleteUserById = function (req, res) {
-  User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
-    if (err){
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+  User.findByIdAndRemove({ _id: req.params.id }, (err, user) => {
+    if (err) {
+      res.status(400).send({ error: `User with id:${req.params.id} not found!` });
       console.log(err);
     }
     else

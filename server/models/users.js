@@ -12,7 +12,8 @@ var UserSchema = new mongoose.Schema({
   location: { type: String, trim: true, required: true },
   afm: { type: String, trim: true, required: true },
   rating: { type: Number, required: true },
-  type: { type: Number, required: true }
+  type: { type: Number, required: true },
+  approved: {type : Boolean, required: true}
 });
 
 //authenticate input against database

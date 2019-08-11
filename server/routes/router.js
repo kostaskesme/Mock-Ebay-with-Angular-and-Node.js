@@ -5,7 +5,7 @@ var auctionController = require('../controller/auctionController')
 
 
 // GET route for reading data
-router.get('/login', function (req, res, next) {
+router.post('/login', function (req, res, next) {
   return authController.login(req, res, next);
 });
 
@@ -33,6 +33,30 @@ router.get('/logout', function (req, res, next) {
 router.get('/getByName/:name', function (req, res, next) {
   authController.getByName(req, res, next);
 });
+
+//Users Controllers
+router.get('/users', function (req, res) {
+  usersController.getAllUsers(req, res);
+});
+
+router.get('/users/:id', function (req, res) {
+  usersController.getUsersById(req, res);
+});
+
+router.post('/users/add', function (req, res) {
+  usersController.addUser(req, res);
+});
+
+router.post('/users/update/:id', function (req, res) {
+  usersController.updateUserById(req, res);
+});
+
+router.get('/users/delete/:id', function (req, res) {
+  usersController.deleteUserById(req, res);
+});
+
+//Auction Controllers
+
 
 router.post('/newAuction', function (req, res, next) {
   auctionController.createAuction(req, res, next);

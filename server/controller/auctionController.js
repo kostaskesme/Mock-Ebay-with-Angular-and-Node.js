@@ -32,21 +32,6 @@ exports.getAllAuctions = function (req, res) {
     });
 }
 
-// exports.getAllAuctions = function (req, res){
-//     console.log('controller');
-//     Auction.find().toArray()(function(err, result){
-//         console.log(err);
-//         console.log(result);
-//         if(err){
-//             res.status(400).send({ found: false, message: 'Auction not found' });
-//         }
-//         else{
-//             console.log(result);
-//             res.status(200).json({found: true, result})
-//         }
-//     })
-// }
-
 exports.updateAuctionById = function (req, res) {
     Auction.findById(req.params.id, (err, auction) => {
         if (!auction)
@@ -65,6 +50,13 @@ exports.updateAuctionById = function (req, res) {
     });
 }
 
-exports.deleteAction = function () {
-    Auction.findByIdAndDelete(req._id)
-}
+exports.deleteAuctionById = function () {
+    Auction.findByIdAndRemove({_id: req.params.id}, (err, auction) => {
+      if (err) {
+        res.status(400).send({ error: `Auction with id:${req.params.id} not found!`});
+        console.log(err);
+      }
+      else
+        res.json('Removed successfully');
+    });
+  }

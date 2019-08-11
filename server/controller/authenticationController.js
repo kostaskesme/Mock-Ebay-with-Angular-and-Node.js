@@ -1,7 +1,7 @@
 var User = require('../models/users');
 
 exports.login = function (req, res, next) {
-    User.authenticate(req.query.logemail, req.query.logpassword, function (error, user) {
+    User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
         if (error || !user) {
             // var err = new Error('Wrong email or password.');
             res.status(401).jsonp({ error: 'Wrong email or password.' });
