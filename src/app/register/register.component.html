@@ -15,7 +15,7 @@ Enter your data to register
 
     <div class="data2">
         <mat-form-field appearance="outline">
-            <input matInput placeholder="Password"  type="password" formControlName="password">
+            <input matInput placeholder="Password" type="password" formControlName="password">
             <mat-hint>6-16 characters</mat-hint>
         </mat-form-field>
 
@@ -49,6 +49,32 @@ Enter your data to register
             <input matInput placeholder="Address" formControlName="address">
         </mat-form-field>
     </div>
+
+    <div class=data5>
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Location" formControlName="location">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Country" formControlName="country">
+        </mat-form-field>
+
+        <!--<mat-form-field>
+            <mat-select formControlName="country" >
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let country of countreis" [value]="country">
+                {{country.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="animalControl.hasError('required')">Please choose a country</mat-error>
+          </mat-form-field>-->
+
+
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="afm" formControlName="afm">
+        </mat-form-field>
+    </div>
+
 
     <button type="submit" [disabled]="!regData.valid">Submit</button>
 

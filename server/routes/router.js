@@ -51,6 +51,10 @@ router.post('/users/register', function (req, res) {
   usersController.addUser(req, res);
 });
 
+router.put('/users/approve', function (req, res) {
+  usersController.approveUserById(req, res);
+});
+
 router.post('/users/update/:id', function (req, res) {
   usersController.updateUserById(req, res);
 });

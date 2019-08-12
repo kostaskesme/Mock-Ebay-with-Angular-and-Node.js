@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
@@ -54,35 +54,47 @@ export class RegisterComponent implements OnInit {
     ]),
     address: new FormControl('', [
       Validators.required
+    ]),
+    location: new FormControl('', [
+      Validators.required
+    ]),
+    country: new FormControl('', [
+      Validators.required
+    ]),
+    afm: new FormControl('', [
+      Validators.required
     ])
   }, { validators: passwordConfirmation });
 
 
-  constructor(private authenticationService: AuthenticationService, private router: Router, ) { }
-
-  ngOnInit() {
-  }
-
-  onSumbit() {
-
-    var registerData = this.regData.value;
-    registerData.rating = "0";
-    registerData.type = "1";
-    registerData.approved = "false";
-    delete registerData.passwordConfirm;
+  
 
 
-    //console.log(registerData);
-    this.authenticationService.register(registerData).then(response => {
-      if (response.registered) {
-        console.log(response.registered);
-        this.router.navigate(['pendingApproval']);
-      }
-      else{
-        console.log(response.message)
-      }
-    })
+constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
-  }
+ngOnInit() {
+}
+
+onSumbit() {
+
+  var registerData = this.regData.value;
+  registerData.rating = "0";
+  registerData.type = "1";
+  registerData.approved = "false";
+  delete registerData.passwordConfirm;
+
+
+  //console.log(registerData);
+  this.authenticationService.register(registerData).then(response => {
+    if (response.registered) {
+      console.log(response.registered);
+      this.router.navigate(['pendingApproval']);
+    }
+    else {
+      console.log(response.message)
+    }
+  })
+
+}
 
 }

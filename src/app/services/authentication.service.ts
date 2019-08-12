@@ -24,7 +24,4 @@ export class AuthenticationService {
             return Promise.resolve(response);
         })
     }
-
 }
-
-

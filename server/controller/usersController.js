@@ -16,11 +16,11 @@ exports.getAllUsers = function (req, res) {
 exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
     if (err) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ found: false, message: `User with id:${req.params.id} not found!`});
       console.log(err);
     }
     else
-      res.json(user);
+      res.status(200).json({ found: true, User: user });
   });
 }
 
@@ -33,43 +33,63 @@ exports.addUser = function (req, res) {
     })
     .catch(err => {
       console.log(err);
-      res.status(400).send({ register: false, message:'Error registering user' });
+      res.status(400).send({ register: false, message: 'Error registering user' });
     });
 }
 
-//update user info by id
-exports.updateUserById = function (req, res) {
-  User.findById(req.params.id, (err, user) => {
+exports.approveUserById = function (req, res) {
+  console.log(req.body.id);
+  User.findById(req.body.id, (err, user) => {
     if (!user) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ found: false, message: `User with id:${req.params.id} not found!` });
       console.log(err);
     }
     else {
-      user.email = req.body.email;
-      user.username = req.body.username;
-      user.password = req.body.password;
-      user.firstName = req.body.firstName;
-      user.lastName = req.body.lastName;
-      user.phoneNumber = req.body.phoneNumber;
-      user.address = req.body.address;
-      user.location = req.body.location;
-      user.afm = req.body.afm;
-      user.rating = req.body.rating;
-
+      user.approve = true;
       user.save().then(user => {
-        res.json('Update done');
+        res.json({found: true, message: 'User approved!'});
       }).catch(err => {
         res.status(400).send('Update failed');
+        console.log(err);
       });
     }
   });
 }
 
+//update user info by id
+
+// exports.updateUserById = function (req, res) {
+//   User.findById(req.params.id, (err, user) => {
+//     if (!user) {
+//       res.status(400).send({ error: `User with id:${req.params.id} not found!` });
+//       console.log(err);
+//     }
+//     else {
+//       user.email = req.body.email;
+//       user.username = req.body.username;
+//       user.password = req.body.password;
+//       user.firstName = req.body.firstName;
+//       user.lastName = req.body.lastName;
+//       user.phoneNumber = req.body.phoneNumber;
+//       user.address = req.body.address;
+//       user.location = req.body.location;
+//       user.afm = req.body.afm;
+//       user.rating = req.body.rating;
+
+//       user.save().then(user => {
+//         res.json('Update done');
+//       }).catch(err => {
+//         res.status(400).send('Update failed');
+//       });
+//     }
+//   });
+// }
+
 //delete user by id
 exports.deleteUserById = function (req, res) {
-  User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
+  User.findByIdAndRemove({ _id: req.params.id }, (err, user) => {
     if (err) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ error: `User with id:${req.params.id} not found!` });
       console.log(err);
     }
     else

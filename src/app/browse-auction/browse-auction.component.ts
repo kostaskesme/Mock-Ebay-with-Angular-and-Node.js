@@ -27,7 +27,7 @@ export class BrowseAuctionComponent implements OnInit {
     })
   }
 
-  onClick(auction: any){
+  onClick(auction: any) {
     this.router.navigate([`viewAuction/${auction._id}`]);
   }
 }

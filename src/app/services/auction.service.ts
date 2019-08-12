@@ -8,7 +8,7 @@ export class AuctionService {
     constructor(private httpClient: HttpClient, ) {
     }
 
-    public createAuction(firstBid: any, buyPrice: any ) {
+    public createAuction(firstBid: any, buyPrice: any) {
         const url = `${environment.appUrl}/newAuction`;
         return this.httpClient.post<any>(url,
             {
@@ -29,9 +29,9 @@ export class AuctionService {
         })
     }
 
-    public viewAllAuctions(){
+    public viewAllAuctions() {
         const url = `${environment.appUrl}/getAuction`;
-        return this.httpClient.get<any>(url).toPromise().then(response =>{
+        return this.httpClient.get<any>(url).toPromise().then(response => {
             return Promise.resolve(response);
         })
     }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -13,6 +13,21 @@ export class UserService {
         })
     }
 
-    
+    public profile(id: string) {
+        const url = `${environment.appUrl}/users/${id}`;
+        return this.httpClient.get<any>(url).toPromise().then(response => {
+            return Promise.resolve(response);
+        })
+    }
+
+    public approve(id: string) {
+        const url = `${environment.appUrl}/users/approve`;
+        return this.httpClient.put<any>(url, id).toPromise().then(response => {
+            return Promise.resolve(response);
+        })
+
+    }
+
+
 }
 

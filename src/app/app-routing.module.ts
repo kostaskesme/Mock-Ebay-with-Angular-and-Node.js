@@ -6,6 +6,8 @@ import { AuctionComponent } from './auction/auction.component';
 import { ViewAuctionComponent } from '../app/view-auction/view-auction.component';
 import { BrowseAuctionComponent } from './browse-auction/browse-auction.component';
 import { PendingApprovalComponent } from './pending-approval/pending-approval.component';
+import { BrowseUsersComponent } from './browse-users/browse-users.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -28,6 +30,12 @@ const routes: Routes = [
   },
   {
     path : 'pendingApproval', component: PendingApprovalComponent
+  },
+  {
+    path : 'viewUser', component: BrowseUsersComponent
+  },
+  {
+    path : 'profile/:id', component: ProfileComponent
   },
   // {
   //   path: '**', component: LoginComponent
