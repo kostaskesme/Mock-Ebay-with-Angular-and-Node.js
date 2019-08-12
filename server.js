@@ -15,7 +15,7 @@ const cert = {
 }
 
 //connect to MongoDB
-mongoose.connect('mongodb://localhost/tedMaster');
+mongoose.connect('mongodb://localhost/tedMaster', { useNewUrlParser: true, useFindAndModify: false });
 var db = mongoose.connection;
 
 

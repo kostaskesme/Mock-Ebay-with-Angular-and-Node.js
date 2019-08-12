@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var authController = require('../controller/authenticationController')
+var usersController = require('../controller/usersController')
 var auctionController = require('../controller/auctionController')
 var usersController = require('../controller/usersController')
 
@@ -35,7 +36,8 @@ router.get('/getByName/:name', function (req, res, next) {
   authController.getByName(req, res, next);
 });
 
-//Users Controllers
+//Users routers
+
 router.get('/users', function (req, res) {
   usersController.getAllUsers(req, res);
 });
@@ -45,6 +47,7 @@ router.get('/users/:id', function (req, res) {
 });
 
 router.post('/users/register', function (req, res) {
+
   usersController.addUser(req, res);
 });
 
@@ -56,15 +59,15 @@ router.get('/users/delete/:id', function (req, res) {
   usersController.deleteUserById(req, res);
 });
 
-//Auction Controllers
 
+//Auction routers
 
-router.post('/newAuction', function (req, res, next) {
-  auctionController.createAuction(req, res, next);
+router.post('/newAuction', function (req, res) {
+  auctionController.createAuction(req, res);
 });
 
-router.get('/getAuction/:id', function (req, res, next) {
-  auctionController.getAuctionById(req, res, next);
+router.get('/getAuction/:id', function (req, res) {
+  auctionController.getAuctionById(req, res);
 });
 
 router.get('/getAuction', function (req, res, next) {
@@ -73,6 +76,14 @@ router.get('/getAuction', function (req, res, next) {
 
 router.post('/updateAuction/:id', function (req, res) {
   auctionController.updateAuctionById(req, res);
+});
+
+router.post('/bidAuction/:id', function (req, res) {
+  auctionController.bidAuctionById(req, res);
+});
+
+router.get('/deleteAuction/:id', function (req, res) {
+  auctionController.deleteAuctionById(req, res);
 });
 
 module.exports = router;

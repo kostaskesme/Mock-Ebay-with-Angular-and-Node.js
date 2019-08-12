@@ -16,7 +16,8 @@ exports.getAllUsers = function (req, res) {
 exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
     if (err) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!` });
+      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+      console.log(err);
     }
     else
       res.json(user);
@@ -37,22 +38,23 @@ exports.addUser = function (req, res) {
 }
 
 //update user info by id
-exports.updateUserById = function (req, res, next) {
+exports.updateUserById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
     if (!user) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!` });
+      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
       console.log(err);
     }
     else {
-      user.userName = req.body.userName;
+      user.email = req.body.email;
+      user.username = req.body.username;
       user.password = req.body.password;
       user.firstName = req.body.firstName;
       user.lastName = req.body.lastName;
-      user.email = req.body.email;
       user.phoneNumber = req.body.phoneNumber;
       user.address = req.body.address;
       user.location = req.body.location;
       user.afm = req.body.afm;
+      user.rating = req.body.rating;
 
       user.save().then(user => {
         res.json('Update done');
@@ -65,9 +67,9 @@ exports.updateUserById = function (req, res, next) {
 
 //delete user by id
 exports.deleteUserById = function (req, res) {
-  User.findByIdAndRemove({ _id: req.params.id }, (err, user) => {
+  User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
     if (err) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!` });
+      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
       console.log(err);
     }
     else
