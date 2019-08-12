@@ -3,10 +3,11 @@ var router = express.Router();
 var authController = require('../controller/authenticationController')
 var usersController = require('../controller/usersController')
 var auctionController = require('../controller/auctionController')
+var usersController = require('../controller/usersController')
 
 
 // GET route for reading data
-router.get('/login', function (req, res, next) {
+router.post('/login', function (req, res, next) {
   return authController.login(req, res, next);
 });
 
@@ -45,7 +46,8 @@ router.get('/users/:id', function (req, res) {
   usersController.getUsersById(req, res);
 });
 
-router.post('/users/add', function (req, res) {
+router.post('/users/register', function (req, res) {
+
   usersController.addUser(req, res);
 });
 
@@ -57,6 +59,7 @@ router.get('/users/delete/:id', function (req, res) {
   usersController.deleteUserById(req, res);
 });
 
+
 //Auction routers
 
 router.post('/newAuction', function (req, res) {
@@ -65,6 +68,10 @@ router.post('/newAuction', function (req, res) {
 
 router.get('/getAuction/:id', function (req, res) {
   auctionController.getAuctionById(req, res);
+});
+
+router.get('/getAuction', function (req, res, next) {
+  auctionController.getAllAuctions(req, res, next);
 });
 
 router.post('/updateAuction/:id', function (req, res) {

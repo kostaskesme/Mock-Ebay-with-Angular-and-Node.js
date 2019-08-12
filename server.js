@@ -4,7 +4,15 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
-const port = 3000
+
+const fs = require('fs')
+const https = require('https');
+
+const port = 3000;
+const cert = {
+  key: fs.readFileSync('./server/cert/server.key'),
+  cert: fs.readFileSync('./server/cert/server.cert')
+}
 
 //connect to MongoDB
 mongoose.connect('mongodb://localhost/tedMaster', { useNewUrlParser: true, useFindAndModify: false });
@@ -14,7 +22,7 @@ var db = mongoose.connection;
 //CORS Middleware
 app.use(function (req, res, next) {
   //Enabling CORS
-  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Origin', 'https://localhost:4200');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization');
   next();
@@ -65,6 +73,6 @@ app.use(function (err, req, res, next) {
 
 
 // listen on port 3000
-app.listen(port, function () {
-  console.log(`Example app listening on port ${port}!`);
+https.createServer(cert, app).listen(port, () => {
+  console.log(`App listening on port ${port}!`);
 });

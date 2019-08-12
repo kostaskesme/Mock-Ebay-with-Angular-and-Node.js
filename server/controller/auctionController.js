@@ -12,14 +12,27 @@ exports.createAuction = function (req, res) {
 }
 
 exports.getAuctionById = function (req, res) {
-  Auction.findById(req.params.id, (err, auction) => {
-    if (err) {
-      res.status(400).send({ error: `Auction with id:${req.params.id} not found!`});
-      console.log(err);
-    }
-    else
-      res.json(auction);
-  });
+    Auction.findById(req.params.id, (err, auction) => {
+        if (err){
+            res.status(400).send({ found: false, message: 'Auction not found' });
+            console.log(err);
+        }
+        else {
+            res.status(200).json({ found: true, Auction: auction });
+        }
+    });
+
+}
+
+exports.getAllAuctions = function (req, res) {
+    Auction.find((err, auctionList) => {
+        if (err) {
+            res.status(400).send({ found: false, message: 'Auction not found' });
+            console.log(err);
+        }
+        else
+            res.status(200).json({ found: true, result: auctionList });
+    });
 }
 
 exports.updateAuctionById = function (req, res) {

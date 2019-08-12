@@ -4,11 +4,11 @@ var User = require('../models/users');
 exports.getAllUsers = function (req, res) {
   User.find((err, user) => {
     if (err) {
-      res.send({ error: 'Could not get users'});
+      res.status(400).send({ found: false, message: 'Could not get users' });
       console.log(err);
     }
     else
-      res.json(user);
+      res.status(200).json({ found: true, result: user });
   });
 }
 
@@ -26,13 +26,15 @@ exports.getUsersById = function (req, res) {
 
 //add new user
 exports.addUser = function (req, res) {
-  var user = new User(req.body);
-  user.save().then(user => {
-    res.status(200).json({'user': 'Added successfully'});
-  })
-  .catch(err => {
-    res.status(400).send('Failed to create new record');
-  });
+  var userFromRequest = new User(req.body);
+  userFromRequest.save()
+    .then(userFromdb => {
+      res.status(200).json({ registered: true, userId: userFromdb._id });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).send({ register: false, message:'Error registering user' });
+    });
 }
 
 //update user info by id

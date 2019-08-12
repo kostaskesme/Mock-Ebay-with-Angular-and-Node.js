@@ -4,6 +4,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuctionComponent } from './auction/auction.component';
 import { ViewAuctionComponent } from '../app/view-auction/view-auction.component';
+import { BrowseAuctionComponent } from './browse-auction/browse-auction.component';
+import { PendingApprovalComponent } from './pending-approval/pending-approval.component';
 
 const routes: Routes = [
   {
@@ -22,7 +24,10 @@ const routes: Routes = [
     path : 'viewAuction/:id', component: ViewAuctionComponent
   },
   {
-    path : 'viewAuction', component: ViewAuctionComponent
+    path : 'viewAuction', component: BrowseAuctionComponent
+  },
+  {
+    path : 'pendingApproval', component: PendingApprovalComponent
   },
   // {
   //   path: '**', component: LoginComponent

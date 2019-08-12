@@ -32,5 +32,6 @@ var AuctionSchema = new mongoose.Schema({
   Description: { type: String, trim: true }
 });
 
+
 var Auction = mongoose.model('Auction', AuctionSchema);
 module.exports = Auction;

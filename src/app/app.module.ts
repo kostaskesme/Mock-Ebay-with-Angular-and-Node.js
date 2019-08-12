@@ -13,8 +13,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
 import { AuctionComponent } from './auction/auction.component';
 import { AuctionService } from './services/auction.service';
-import { ViewAuctionComponent } from './view-auction/view-auction.component'
-
+import { ViewAuctionComponent } from './view-auction/view-auction.component';
+import { BrowseAuctionComponent } from './browse-auction/browse-auction.component';
+import { BrowseUsersComponent } from './browse-users/browse-users.component';
+import { PendingApprovalComponent } from './pending-approval/pending-approval.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,10 @@ import { ViewAuctionComponent } from './view-auction/view-auction.component'
     LoginComponent,
     RegisterComponent,
     AuctionComponent,
-    ViewAuctionComponent
+    ViewAuctionComponent,
+    BrowseAuctionComponent,
+    BrowseUsersComponent,
+    PendingApprovalComponent,
   ],
   imports: [
     BrowserModule,
