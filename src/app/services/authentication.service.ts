@@ -9,12 +9,9 @@ export class AuthenticationService {
         private httpClient: HttpClient) {
     }
 
-    public authenticate(email: string, password: string): Promise<boolean> {
+    public authenticate(logdata: any): Promise<boolean> {
         const url = `${environment.appUrl}/login`;
-        return this.httpClient.post<{ isLoggedIn: boolean }>(url, {
-            logemail: email,
-            logpassword: password
-        }).toPromise().then(response => {
+        return this.httpClient.post<any>(url, logdata).toPromise().then(response => {
             return Promise.resolve(response.isLoggedIn);
         });
     }

@@ -19,6 +19,7 @@ import { BrowseUsersComponent } from './browse-users/browse-users.component';
 import { PendingApprovalComponent } from './pending-approval/pending-approval.component';
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './profile/profile.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ProfileComponent } from './profile/profile.component';
     BrowseUsersComponent,
     PendingApprovalComponent,
     ProfileComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,

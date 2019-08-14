@@ -41,11 +41,11 @@ exports.approveUserById = function (req, res) {
   console.log(req.body.id);
   User.findById(req.body.id, (err, user) => {
     if (!user) {
-      res.status(400).send({ found: false, message: `User with id:${req.params.id} not found!` });
+      res.status(400).send({ found: false, message: `User with id:${req.body.id} not found!` });
       console.log(err);
     }
     else {
-      user.approve = true;
+      user.approved = true;
       user.save().then(user => {
         res.json({found: true, message: 'User approved!'});
       }).catch(err => {

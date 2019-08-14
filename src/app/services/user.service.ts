@@ -21,8 +21,9 @@ export class UserService {
     }
 
     public approve(id: string) {
+        console.log(id);
         const url = `${environment.appUrl}/users/approve`;
-        return this.httpClient.put<any>(url, id).toPromise().then(response => {
+        return this.httpClient.put<any>(url, {id:id}).toPromise().then(response => {
             return Promise.resolve(response);
         })
 

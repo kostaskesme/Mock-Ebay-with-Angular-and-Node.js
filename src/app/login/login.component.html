@@ -1,4 +1,21 @@
-<mat-card class="example-card">
+<form [formGroup]="logData">
+    <div class="data1">
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="email" formControlName="logemail">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <input matInput placeholder="Password" type = "password" formControlName="logpassword">
+        </mat-form-field>
+
+        <button mat-raised-button (click)="login()" color="primary">Login</button>
+    </div>
+    Don't have an account ? <a href="https://localhost:4200/register"> Click to register</a>
+
+</form>
+
+
+<!--<mat-card class="example-card">
     <mat-card-header>
         <mat-card-title>Login</mat-card-title>
     </mat-card-header>
@@ -27,4 +44,4 @@
     <mat-card-actions>
         <button mat-raised-button (click)="login()" color="primary">Login</button>
     </mat-card-actions>
-</mat-card>
+</mat-card>-->

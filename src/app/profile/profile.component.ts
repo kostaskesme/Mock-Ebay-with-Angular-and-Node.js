@@ -10,6 +10,8 @@ import { User } from '../models/user.type';
 })
 export class ProfileComponent implements OnInit {
 
+
+
   approved: boolean;
   userData: User[];
   id: string = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
@@ -21,7 +23,6 @@ export class ProfileComponent implements OnInit {
     'address', 'location', 'country', 'afm', 'rating', 'approved', ' '];
 
   ngOnInit() {
-    //this.id = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
     this.profileService.profile(this.id).then(response => {
       if (response.found) {
         this.userData = [response.User];
@@ -41,6 +42,7 @@ export class ProfileComponent implements OnInit {
       this.profileService.approve(this.id).then(response =>{
         if(response.found){
           alert('User approved!');
+          location.reload(); 
         }
         else{
           alert('error!');
