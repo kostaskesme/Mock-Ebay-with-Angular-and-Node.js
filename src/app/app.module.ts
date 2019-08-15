@@ -5,7 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import {MatCardModule, MatButtonModule} from '@angular/material'
+import {MatCardModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatInputModule} from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from './core/material.module';
 import { HttpModule } from '@angular/http';
@@ -36,7 +40,7 @@ import { PendingApprovalComponent } from './pending-approval/pending-approval.co
     HttpModule,
     AppRoutingModule,
     CustomMaterialModule,
-    MatCardModule, MatButtonModule,
+    MatCardModule, MatButtonModule, MatDividerModule, MatFormFieldModule, MatInputModule,
     FormsModule,
     ReactiveFormsModule
   ],
