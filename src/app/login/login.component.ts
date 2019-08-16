@@ -16,11 +16,10 @@ export class LoginComponent implements OnInit {
 
 
   logData = new FormGroup({
-    logemail: new FormControl('',[
+    username: new FormControl('', [
       Validators.required,
-      Validators.email
     ]),
-    logpassword: new FormControl('',[
+    password: new FormControl('', [
       Validators.required
     ])
   });
@@ -31,7 +30,6 @@ export class LoginComponent implements OnInit {
   login(): void {
 
     console.log(this.logData.value);
-    //{email: soto , password: soto}
     //this.authenticationService.authenticate(this.logData.value)
 
     //alert(`Thanks for submitting! Data: ${this.username} + ${this.password}`);

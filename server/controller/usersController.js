@@ -16,12 +16,38 @@ exports.getAllUsers = function (req, res) {
 exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
     if (err) {
-      res.status(400).send({ found: false, message: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ found: false, message: `User with id:${req.params.id} not found!` });
       console.log(err);
     }
     else
       res.status(200).json({ found: true, User: user });
   });
+}
+
+
+
+exports.findByUsername = function (username, cb) {
+  console.log('controller', username);
+  User.findOne({ username: username })
+    .exec(function (err, user) {
+      if (err) {
+        return cb(err, null);
+      } else if (!user) {
+        var err = new Error('User not found.');
+        err.status = 401;
+        return cb(err, null);
+      }
+      else {
+        return cb(null, user);
+      }
+      // bcrypt.compare(password, user.password, function (err, result) {
+      //   if (result === true) {
+      //     return callback(null, user);
+      //   } else {
+      //     return callback(err);
+      //   }
+      // })
+    });
 }
 
 //add new user
@@ -47,7 +73,7 @@ exports.approveUserById = function (req, res) {
     else {
       user.approved = true;
       user.save().then(user => {
-        res.json({found: true, message: 'User approved!'});
+        res.json({ found: true, message: 'User approved!' });
       }).catch(err => {
         res.status(400).send('Update failed');
         console.log(err);

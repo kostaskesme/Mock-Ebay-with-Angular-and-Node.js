@@ -4,6 +4,11 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+var usersController = require('./server/controller/usersController');
+
+
 
 const fs = require('fs')
 const https = require('https');
@@ -28,7 +33,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 //handle mongo error
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -45,10 +49,42 @@ app.use(session({
   })
 }));
 
+
+/*  PASSPORT SETUP  */
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/success', (req, res) => res.send("Welcome " + req.query.username + "!!"));
+app.get('/error', (req, res) => res.send("error logging in"));
+
+// passport.use(new LocalStrategy(authController.login));
+
+passport.use(new LocalStrategy(
+  function(username, password, cb) {
+    console.log('passport use' ,username, password);
+    usersController.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    });
+  }));
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function (id, cb) {
+  User.findById(id, function (err, user) {
+    cb(err, user);
+  });
+});
+
 // parse incoming requests
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 // serve static files from template
 app.use(express.static(__dirname + '/src'));
@@ -70,7 +106,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.send(err.message);
 });
-
 
 // listen on port 3000
 https.createServer(cert, app).listen(port, () => {

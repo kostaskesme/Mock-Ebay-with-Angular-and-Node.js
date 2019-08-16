@@ -1,11 +1,11 @@
 <form [formGroup]="logData">
     <div class="data1">
         <mat-form-field appearance="outline">
-            <input matInput placeholder="email" formControlName="logemail">
+            <input matInput placeholder="username" formControlName="username">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-            <input matInput placeholder="Password" type = "password" formControlName="logpassword">
+            <input matInput placeholder="Password" type = "password" formControlName="password">
         </mat-form-field>
 
         <button mat-raised-button (click)="login()" color="primary">Login</button>

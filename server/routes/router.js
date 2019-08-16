@@ -1,25 +1,38 @@
 var express = require('express');
 var router = express.Router();
 var authController = require('../controller/authenticationController')
-var usersController = require('../controller/usersController')
 var auctionController = require('../controller/auctionController')
 var usersController = require('../controller/usersController')
+var passport = require('passport');
 
 
-// GET route for reading data
-router.post('/login', function (req, res, next) {
-  return authController.login(req, res, next);
-});
+// // GET route for reading data
+// router.post('/login', function (req, res, next) {
+//   return authController.login(req, res, next);
+// });
+
+
+// router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     res.redirect('/');
+//   });
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
   return res.sendFile(path.join(__dirname + '/templateLogReg/index.html'));
 });
 
-//POST route for updating data
-router.post('/', function (req, res, next) {
-  authController.registerLogin(req, res, next);
-})
+router.post('/login',
+passport.authenticate('local', { failureRedirect: '/login' }),
+  function (req, res) {
+    console.log('royter')
+    res.redirect('/');
+  });
+
+// //POST route for updating data //USELESS???
+// router.post('/', function (req, res, next) {
+//   authController.registerLogin(req, res, next);
+// })
 
 // GET route after registering
 router.get('/profile', function (req, res, next) {
