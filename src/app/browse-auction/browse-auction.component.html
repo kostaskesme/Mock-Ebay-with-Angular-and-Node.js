@@ -1,39 +1,44 @@
-<table mat-table [dataSource]="auctionData" class="mat-elevation-z8">
-
+<div>
+  <br>
+  <button mat-raised-button color="primary" routerLink="/newAuction">Create New Auction</button>
+  <br><br>
+  <mat-divider></mat-divider>
+  <br>
+  <table mat-table [dataSource]="auctionData" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Item</th>
+      <td mat-cell *matCellDef="let auction"> {{auction.Name}} </td>
+    </ng-container>
     <ng-container matColumnDef="firstBid">
-        <th mat-header-cell *matHeaderCellDef>First Bid</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.firstBid}} </td>
+      <th mat-header-cell *matHeaderCellDef>First Bid</th>
+      <td mat-cell *matCellDef="let auction"> {{auction.First_Bid}} </td>
     </ng-container>
-
     <ng-container matColumnDef="noOfBids">
-        <th mat-header-cell *matHeaderCellDef># of bids</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.noOfBids}} </td>
+      <th mat-header-cell *matHeaderCellDef># of bids</th>
+      <td mat-cell *matCellDef="let auction"> {{auction.Number_of_Bids}} </td>
     </ng-container>
-
-    <ng-container matColumnDef="startTime">
-        <th mat-header-cell *matHeaderCellDef>Start time</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.startTime}} </td>
+    <ng-container matColumnDef="endTime">
+      <th mat-header-cell *matHeaderCellDef>End time</th>
+      <td mat-cell *matCellDef="let auction"> {{auction.Ends}} </td>
     </ng-container>
-
     <ng-container matColumnDef="currentBid">
-        <th mat-header-cell *matHeaderCellDef>Current bid</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.currentBid}} </td>
+      <th mat-header-cell *matHeaderCellDef>Current bid</th>
+      <td mat-cell *matCellDef="let auction"> {{auction.Currently}} </td>
     </ng-container>
-
     <ng-container matColumnDef="buyPrice">
-        <th mat-header-cell *matHeaderCellDef>Buy price</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.buyPrice}} </td>
+      <th mat-header-cell *matHeaderCellDef>Buy price</th>
+      <td mat-cell *matCellDef="let auction"> {{auction.Buy_Price}} </td>
     </ng-container>
-
     <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef = "let auction">
-            <button mat-raised-button (click)="onClick(auction)">Go to Auction!</button>
-        </td>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef = "let auction">
+        <button mat-raised-button color="primary" (click)="onClick(auction)">View</button>
+      </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-<a href="http://localhost:4200/newAuction">Create a new Auction</a>
+  </table>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 5, 25, 100]">
+  </mat-paginator>
+  <mat-divider></mat-divider>
+</div>

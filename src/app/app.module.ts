@@ -9,7 +9,9 @@ import {MatCardModule,
         MatButtonModule,
         MatDividerModule,
         MatFormFieldModule,
-        MatInputModule} from '@angular/material'
+        MatInputModule,
+        MatTableModule,
+        MatPaginatorModule} from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from './core/material.module';
 import { HttpModule } from '@angular/http';
@@ -40,7 +42,13 @@ import { PendingApprovalComponent } from './pending-approval/pending-approval.co
     HttpModule,
     AppRoutingModule,
     CustomMaterialModule,
-    MatCardModule, MatButtonModule, MatDividerModule, MatFormFieldModule, MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule
   ],
