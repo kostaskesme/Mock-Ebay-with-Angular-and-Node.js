@@ -36,8 +36,8 @@ export class AuctionService {
     }
 
     return this.httpClient.post<any>(url, auction, httpOptions).toPromise().then(response => {
-        return Promise.resolve(response);
-      })
+      return Promise.resolve(response);
+    })
   }
 
   public viewAuction(id: string) {
@@ -54,11 +54,20 @@ export class AuctionService {
     })
   }
 
-  /*getDateTime = function () {
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date + ' ' + time;
-    return dateTime;
-  }*/
+  public bidAuction(rat: number, id: string, loc: string, count: string, amount: number) {
+    const url = `${environment.appUrl}/bidAuction/${id}`;
+    const bid = {
+      "Bidder": {
+        "Rating": rat,
+        "UserID": id,
+        "Location": loc,
+        "Country": count
+      },
+      "Amount": amount
+    }
+
+    return this.httpClient.post<any>(url, bid, httpOptions).toPromise().then(response => {
+      return Promise.resolve(response);
+    })
+  }
 }
