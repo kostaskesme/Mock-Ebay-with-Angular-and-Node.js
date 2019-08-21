@@ -2,6 +2,7 @@ import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
+import {dropdownValues} from './countries';
 
 
 const passwordConfirmation: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
@@ -58,14 +59,15 @@ export class RegisterComponent implements OnInit {
     location: new FormControl('', [
       Validators.required
     ]),
-    country: new FormControl('', [
-      Validators.required
-    ]),
+    // country: new FormControl('', [
+    //   Validators.required
+    // ]),
     afm: new FormControl('', [
       Validators.required
     ])
   }, { validators: passwordConfirmation });
 
+  countries = dropdownValues;
 
   
 
@@ -84,10 +86,10 @@ onSumbit() {
   delete registerData.passwordConfirm;
 
 
-  //console.log(registerData);
+  console.log(registerData);
   this.authenticationService.register(registerData).then(response => {
-    if (response.registered) {
-      console.log(response.registered);
+    if (response) {
+      console.log(response);
       this.router.navigate(['pendingApproval']);
     }
     else {

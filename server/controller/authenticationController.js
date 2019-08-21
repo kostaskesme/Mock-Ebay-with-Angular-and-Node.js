@@ -1,30 +1,30 @@
 var User = require('../models/users');
 var usersController = require('../controller/usersController');
+var passport = require('passport');
+// exports.login2 = function (req, res, next) {
+//     User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
+//         if (error || !user) {
+//             // var err = new Error('Wrong email or password.');
+//             res.status(401).jsonp({ error: 'Wrong email or password.' });
+//             // return next(res);
+//             return res.send({ error: 'Wrong email or password.' });
+//         } else {
+//             req.session.userId = user._id;
+//             res.status = 200;
+//             return res.send({ isLoggedIn: true });
+//         }
+//     });
 
-exports.login2 = function (req, res, next) {
-    User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
-        if (error || !user) {
-            // var err = new Error('Wrong email or password.');
-            res.status(401).jsonp({ error: 'Wrong email or password.' });
-            // return next(res);
-            return res.send({ error: 'Wrong email or password.' });
-        } else {
-            req.session.userId = user._id;
-            res.status = 200;
-            return res.send({ isLoggedIn: true });
-        }
-    });
+// }
 
-}
-
-exports.login = function (username, password, done) {
-    usersController.findByUsername(username, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        if (user.password != password) { return cb(null, false); }
-        return done(null, user);
-    });
-}
+// exports.login = function (username, password, done) {
+//     usersController.findByUsername(username, function (err, user) {
+//         if (err) { return done(err); }
+//         if (!user) { return done(null, false); }
+//         if (user.password != password) { return cb(null, false); }
+//         return done(null, user);
+//     });
+// }
 
 // exports.registerLogin = function (req, res, next) {      USELESS?
 //     // confirm that user typed same password twice
@@ -75,11 +75,14 @@ exports.login = function (username, password, done) {
 // }
 
 exports.goToProfile = function (req, res, next) {
-    User.findById(req.session.userId)
+
+    User.findById(req.sessionID)
         .exec(function (error, user) {
+            console.log('find in profile');
             if (error) {
                 return next(error);
             } else {
+                console.log(user);
                 if (user === null) {
                     var err = new Error('Not authorized! Go back!');
                     err.status = 400;

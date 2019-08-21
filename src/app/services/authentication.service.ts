@@ -1,6 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { RequestOptions } from '@angular/http';
 
 @Injectable()
 export class AuthenticationService {
@@ -9,15 +10,26 @@ export class AuthenticationService {
         private httpClient: HttpClient) {
     }
 
-    public authenticate(logdata: any): Promise<boolean> {
+    public authenticate(logdata: any): Promise<any> {
         const url = `${environment.appUrl}/login`;
-        return this.httpClient.post<any>(url, logdata).toPromise().then(response => {
-            return Promise.resolve(response.isLoggedIn);
+        const httpPostOptions =
+        {
+            headers:
+                new HttpHeaders(),
+            withCredentials: true,
+        };
+        return this.httpClient.post<any>(url, logdata, httpPostOptions).toPromise().then(response => {
+            console.log('FE login');
+            console.log(response);
+            return Promise.resolve(response);
         });
     }
     public register(registerData: any) {
-        const url = `${environment.appUrl}/users/register`;
+        // const url = `${environment.appUrl}/users/register`;
+        const url = `${environment.appUrl}/register`;
         return this.httpClient.post<any>(url, registerData).toPromise().then(response => {
+            console.log('FE register');
+
             return Promise.resolve(response);
         })
     }

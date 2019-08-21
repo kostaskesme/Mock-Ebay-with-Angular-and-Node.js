@@ -29,23 +29,19 @@ export class LoginComponent implements OnInit {
 
   login(): void {
 
-    console.log(this.logData.value);
-    //this.authenticationService.authenticate(this.logData.value)
-
-    //alert(`Thanks for submitting! Data: ${this.username} + ${this.password}`);
-
-    // if (this.username && this.password) {
-    //   this.authenticationService.authenticate(this.username, this.password).then(result => {
-    //     console.log(result);
-    //     if (result) {
-    //       this.router.navigate(['register']);
-    //     } else {
-    //       alert("Something wrong");
-    //     }
-    //   });
-    // } else {
-    //   alert("Invalid credentials");
-    // }
+    console.log(this.logData);
+    if (this.logData.value.username && this.logData.value.username) {
+      this.authenticationService.authenticate({ username: this.logData.value.username, password: this.logData.value.password }).then(result => {
+        console.log(result);
+        if (result.isLoggedIn) {
+          this.router.navigate([`profile/${result.id}`]);
+        } else {
+          alert("Something wrong");
+        }
+      });
+    } else {
+      alert("Invalid credentials");
+    }
   }
 
 

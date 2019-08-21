@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuctionService } from '../services/auction.service';
 import { Auction } from '../models/auction.type';
 import { Router } from '@angular/router';

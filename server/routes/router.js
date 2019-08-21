@@ -4,35 +4,40 @@ var authController = require('../controller/authenticationController')
 var auctionController = require('../controller/auctionController')
 var usersController = require('../controller/usersController')
 var passport = require('passport');
-
-
-// // GET route for reading data
-// router.post('/login', function (req, res, next) {
-//   return authController.login(req, res, next);
-// });
-
-
-// router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     res.redirect('/');
-//   });
+const User = require('../models/users');
 
 // GET route for reading data
 router.get('/', function (req, res, next) {
   return res.sendFile(path.join(__dirname + '/templateLogReg/index.html'));
 });
 
-router.post('/login',
-passport.authenticate('local', { failureRedirect: '/login' }),
-  function (req, res) {
-    console.log('royter')
-    res.redirect('/');
-  });
+router.post('/login', function (req, res, next) {
+  passport.authenticate('local', function (err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function (err) {
+      if (err) { return next(err); }
+      res.cookie('userid', { id: user.id, username: user.username }, { maxAge: 2592000000, encode: String }); // TODO
+      res.cookie('sessionID', res.sessionID, { maxAge: 2592000000 }); // TODO
+      return res.send({ isLoggedIn: true, id: user._id });
+    });
+  })(req, res, next);
+});
 
-// //POST route for updating data //USELESS???
-// router.post('/', function (req, res, next) {
-//   authController.registerLogin(req, res, next);
-// })
+router.post('/register', (request, response) => {
+  console.log('register');
+  User.register(new User(request.body), request.body.password, function (err, user) {
+    console.log('inside Register');
+    if (err) {
+      console.log(err);
+      return response.render('register');
+    } else {
+      passport.authenticate('local')(request, response, function () {
+        response.send(true);
+      });
+    }
+  });
+});
 
 // GET route after registering
 router.get('/profile', function (req, res, next) {
@@ -49,8 +54,8 @@ router.get('/getByName/:name', function (req, res, next) {
   authController.getByName(req, res, next);
 });
 
-//Users routers
 
+//Users routers
 router.get('/users', function (req, res) {
   usersController.getAllUsers(req, res);
 });
@@ -60,7 +65,7 @@ router.get('/users/:id', function (req, res) {
 });
 
 router.post('/users/register', function (req, res) {
-
+  console.log('router');
   usersController.addUser(req, res);
 });
 
@@ -78,7 +83,6 @@ router.get('/users/delete/:id', function (req, res) {
 
 
 //Auction routers
-
 router.post('/newAuction', function (req, res) {
   auctionController.createAuction(req, res);
 });

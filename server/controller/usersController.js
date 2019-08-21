@@ -52,19 +52,23 @@ exports.findByUsername = function (username, cb) {
 
 //add new user
 exports.addUser = function (req, res) {
+  console.log('controller');
   var userFromRequest = new User(req.body);
+  console.log('controller2');
   userFromRequest.save()
     .then(userFromdb => {
       res.status(200).json({ registered: true, userId: userFromdb._id });
     })
     .catch(err => {
-      console.log(err);
+      console.log('err0r', err);
       res.status(400).send({ register: false, message: 'Error registering user' });
     });
 }
 
 exports.approveUserById = function (req, res) {
   console.log(req.body.id);
+  console.log(req.sessionID);
+  console.log('req.sessionID');
   User.findById(req.body.id, (err, user) => {
     if (!user) {
       res.status(400).send({ found: false, message: `User with id:${req.body.id} not found!` });

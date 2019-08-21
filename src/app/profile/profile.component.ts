@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
     'address', 'location', 'country', 'afm', 'rating', 'approved', ' '];
 
   ngOnInit() {
+    // check if User is LoggedIN
     this.profileService.profile(this.id).then(response => {
       if (response.found) {
         this.userData = [response.User];
@@ -35,16 +36,16 @@ export class ProfileComponent implements OnInit {
   }
 
   onClick() {
-    if(this.approved){
+    if (this.approved) {
       alert('User is already approved');
     }
-    else{
-      this.profileService.approve(this.id).then(response =>{
-        if(response.found){
+    else {
+      this.profileService.approve(this.id).then(response => {
+        if (response.found) {
           alert('User approved!');
-          location.reload(); 
+          location.reload();
         }
-        else{
+        else {
           alert('error!');
         }
       })
