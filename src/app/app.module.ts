@@ -11,7 +11,8 @@ import {MatCardModule,
         MatFormFieldModule,
         MatInputModule,
         MatTableModule,
-        MatPaginatorModule} from '@angular/material'
+        MatPaginatorModule,
+        MatSelectModule} from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from './core/material.module';
 import { HttpModule } from '@angular/http';
@@ -49,6 +50,7 @@ import { PendingApprovalComponent } from './pending-approval/pending-approval.co
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule
   ],

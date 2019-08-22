@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuctionService } from '../services/auction.service';
 import { Auction } from '../models/auction.type';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -17,6 +18,9 @@ export class BrowseAuctionComponent implements OnInit {
 
   displayedColumns: string[] = ['name','firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action'];
   auctionData: MatTableDataSource<Auction>;
+  searchOptions: string[] = ['Name','Category','Description','Price','Location'];
+  option = new FormControl();
+  search = new FormControl();
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -32,7 +36,11 @@ export class BrowseAuctionComponent implements OnInit {
     })
   }
 
-  onClick(auction: any){
+  onClick(auction: any) {
     this.router.navigate([`viewAuction/${auction._id}`]);
+  }
+
+  onSubmit() {
+    alert("works");
   }
 }

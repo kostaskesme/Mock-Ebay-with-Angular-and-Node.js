@@ -1,11 +1,11 @@
 <div>
   <mat-card>
-    <section class="mat-typography">
+    <section class="mat-typography" style="text-align: center">
       <h2>Create a new auction</h2>
     </section>
     <mat-divider></mat-divider>
     <br>
-    <form (ngSubmit)="onSubmit()" class="create-form">
+    <form (ngSubmit)="onSubmit()" class="form">
       <mat-form-field class="full-width">
         <input matInput placeholder="Item's Name" [formControl]="name">
       </mat-form-field>
@@ -32,7 +32,6 @@
       <mat-form-field class="full-width">
         <textarea matInput placeholder="Item Description" [formControl]="description"></textarea>
       </mat-form-field>
-      <mat-divider></mat-divider>
       <br><br>
       <button mat-raised-button type="submit" color="primary">Create</button>
     </form>
