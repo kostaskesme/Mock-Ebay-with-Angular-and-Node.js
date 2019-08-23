@@ -12,15 +12,9 @@ export class AuthenticationService {
 
     public authenticate(logdata: any): Promise<any> {
         const url = `${environment.appUrl}/login`;
-        const httpPostOptions =
-        {
-            headers:
-                new HttpHeaders(),
-            withCredentials: true,
-        };
+        const httpPostOptions = { headers: new HttpHeaders(), withCredentials: true };
         return this.httpClient.post<any>(url, logdata, httpPostOptions).toPromise().then(response => {
-            console.log('FE login');
-            console.log(response);
+            //console.log('FE login');
             return Promise.resolve(response);
         });
     }

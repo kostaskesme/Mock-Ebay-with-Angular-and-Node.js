@@ -78,11 +78,11 @@ exports.goToProfile = function (req, res, next) {
 
     User.findById(req.sessionID)
         .exec(function (error, user) {
-            console.log('find in profile');
+            // console.log('find in profile');
             if (error) {
                 return next(error);
             } else {
-                console.log(user);
+                // console.log(user);
                 if (user === null) {
                     var err = new Error('Not authorized! Go back!');
                     err.status = 400;

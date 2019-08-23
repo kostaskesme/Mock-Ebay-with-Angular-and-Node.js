@@ -1,10 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { User } from '../models/user.type';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+
+
 
 @Injectable()
 export class UserService {
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private cookieService: CookieService,private router: Router) { }
 
     public viewAllUsers() {
         const url = `${environment.appUrl}/users`;
@@ -21,13 +26,29 @@ export class UserService {
     }
 
     public approve(id: string) {
-        console.log(id);
+        //console.log(id);
         const url = `${environment.appUrl}/users/approve`;
-        return this.httpClient.put<any>(url, {id:id}).toPromise().then(response => {
+        return this.httpClient.put<any>(url, { id: id }).toPromise().then(response => {
             return Promise.resolve(response);
         })
 
     }
+
+    public logout(){
+        this.cookieService.delete('usersCookie');
+        this.router.navigate(['']);
+    }
+    // public updateUserCookie(user: User, cookieValueJSON : Object, cookieValue : string) {
+    //    cookieValueJSON = {
+    //         id: user._id,
+    //         username: user.username,
+    //         type: user.type,
+    //         approved: user.approved
+    //     }
+    //     cookieValue = JSON.stringify(cookieValueJSON);
+    //     cookieService.set('usersCookie', cookieValue);
+    // }
+
 
 
 }
