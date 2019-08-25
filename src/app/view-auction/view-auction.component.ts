@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuctionService } from 'src/app/services/auction.service';
 import { ActivatedRoute } from "@angular/router";
-import { FormControl } from '@angular/forms';
 import { Auction } from '../models/auction.type';
 //import { DataSource } from '@angular/cdk/table';
 

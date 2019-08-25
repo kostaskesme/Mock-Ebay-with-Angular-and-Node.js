@@ -9,10 +9,10 @@ export interface User{
     phoneNumber: string,
     address: string,
     location: string,
+    country: string,
     afm: string,
     rating: number,
     type: number
     approved: boolean
-
 }
   

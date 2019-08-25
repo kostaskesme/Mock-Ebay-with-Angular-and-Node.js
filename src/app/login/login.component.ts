@@ -3,6 +3,7 @@ import { environment } from 'src/environments/enviroment.local';
 import { Router } from '@angular/router';
 import { HttpClient } from 'selenium-webdriver/http';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,21 +13,29 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private authenticationService: AuthenticationService) { }
-  username: string;
-  password: string;
+
+
+  logData = new FormGroup({
+    username: new FormControl('', [
+      Validators.required,
+    ]),
+    password: new FormControl('', [
+      Validators.required
+    ])
+  });
 
   ngOnInit() {
   }
 
   login(): void {
-    alert(`Thanks for submitting! Data: ${this.username} + ${this.password}`);
 
-    if (this.username && this.password) {
-      this.authenticationService.authenticate(this.username, this.password).then(result => {
+    console.log(this.logData);
+    if (this.logData.value.username && this.logData.value.username) {
+      this.authenticationService.authenticate({ username: this.logData.value.username, password: this.logData.value.password }).then(result => {
         console.log(result);
-        if (result) {
-          this.router.navigate(['register']);
-        }else {
+        if (result.isLoggedIn) {
+          this.router.navigate([`profile/${result.id}`]);
+        } else {
           alert("Something wrong");
         }
       });

@@ -14,7 +14,6 @@ export class AuctionService {
 
   constructor(private httpClient: HttpClient, ) {
   }
-
   public createAuction(itemid: any, name: any, categ: any[], buyPrice: any, fbid: any,
      loc: any, count: any, ends: any, rat: any, userid: any, desc: any ) {
     const url = `${environment.appUrl}/newAuction`;

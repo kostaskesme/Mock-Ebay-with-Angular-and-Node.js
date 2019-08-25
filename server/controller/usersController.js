@@ -16,60 +16,110 @@ exports.getAllUsers = function (req, res) {
 exports.getUsersById = function (req, res) {
   User.findById(req.params.id, (err, user) => {
     if (err) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ found: false, message: `User with id:${req.params.id} not found!` });
       console.log(err);
     }
     else
-      res.json(user);
+      res.status(200).json({ found: true, User: user });
   });
+}
+
+
+
+exports.findByUsername = function (username, cb) {
+  console.log('controller', username);
+  User.findOne({ username: username })
+    .exec(function (err, user) {
+      if (err) {
+        return cb(err, null);
+      } else if (!user) {
+        var err = new Error('User not found.');
+        err.status = 401;
+        return cb(err, null);
+      }
+      else {
+        return cb(null, user);
+      }
+      // bcrypt.compare(password, user.password, function (err, result) {
+      //   if (result === true) {
+      //     return callback(null, user);
+      //   } else {
+      //     return callback(err);
+      //   }
+      // })
+    });
 }
 
 //add new user
 exports.addUser = function (req, res) {
+  console.log('controller');
   var userFromRequest = new User(req.body);
+  console.log('controller2');
   userFromRequest.save()
     .then(userFromdb => {
       res.status(200).json({ registered: true, userId: userFromdb._id });
     })
     .catch(err => {
-      console.log(err);
-      res.status(400).send({ register: false, message:'Error registering user' });
+      console.log('err0r', err);
+      res.status(400).send({ register: false, message: 'Error registering user' });
     });
 }
 
-//update user info by id
-exports.updateUserById = function (req, res) {
-  User.findById(req.params.id, (err, user) => {
+exports.approveUserById = function (req, res) {
+  console.log(req.body.id);
+  console.log(req.sessionID);
+  console.log('req.sessionID');
+  User.findById(req.body.id, (err, user) => {
     if (!user) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ found: false, message: `User with id:${req.body.id} not found!` });
       console.log(err);
     }
     else {
-      user.email = req.body.email;
-      user.username = req.body.username;
-      user.password = req.body.password;
-      user.firstName = req.body.firstName;
-      user.lastName = req.body.lastName;
-      user.phoneNumber = req.body.phoneNumber;
-      user.address = req.body.address;
-      user.location = req.body.location;
-      user.afm = req.body.afm;
-      user.rating = req.body.rating;
-
+      user.approved = true;
       user.save().then(user => {
-        res.json('Update done');
+        res.json({ found: true, message: 'User approved!' });
       }).catch(err => {
         res.status(400).send('Update failed');
+        console.log(err);
       });
     }
   });
 }
 
+//update user info by id
+
+// exports.updateUserById = function (req, res) {
+//   User.findById(req.params.id, (err, user) => {
+//     if (!user) {
+//       res.status(400).send({ error: `User with id:${req.params.id} not found!` });
+//       console.log(err);
+//     }
+//     else {
+//       user.email = req.body.email;
+//       user.username = req.body.username;
+//       user.password = req.body.password;
+//       user.firstName = req.body.firstName;
+//       user.lastName = req.body.lastName;
+//       user.phoneNumber = req.body.phoneNumber;
+//       user.address = req.body.address;
+//       user.location = req.body.location;
+//       user.afm = req.body.afm;
+//       user.rating = req.body.rating;
+
+//       user.save().then(user => {
+//         res.json('Update done');
+//       }).catch(err => {
+//         res.status(400).send('Update failed');
+//       });
+//     }
+//   });
+// }
+
 //delete user by id
 exports.deleteUserById = function (req, res) {
-  User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
+  User.findByIdAndRemove({ _id: req.params.id }, (err, user) => {
     if (err) {
-      res.status(400).send({ error: `User with id:${req.params.id} not found!`});
+      res.status(400).send({ error: `User with id:${req.params.id} not found!` });
       console.log(err);
     }
     else

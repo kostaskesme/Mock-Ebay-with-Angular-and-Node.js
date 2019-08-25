@@ -24,6 +24,9 @@ import { ViewAuctionComponent } from './view-auction/view-auction.component';
 import { BrowseAuctionComponent } from './browse-auction/browse-auction.component';
 import { BrowseUsersComponent } from './browse-users/browse-users.component';
 import { PendingApprovalComponent } from './pending-approval/pending-approval.component';
+import { UserService } from './services/user.service';
+import { ProfileComponent } from './profile/profile.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { PendingApprovalComponent } from './pending-approval/pending-approval.co
     BrowseAuctionComponent,
     BrowseUsersComponent,
     PendingApprovalComponent,
+    ProfileComponent,
+    WelcomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +59,7 @@ import { PendingApprovalComponent } from './pending-approval/pending-approval.co
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthenticationService, AuctionService],
+  providers: [AuthenticationService, AuctionService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
