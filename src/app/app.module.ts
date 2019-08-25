@@ -5,7 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import {MatCardModule, MatButtonModule} from '@angular/material'
+import {MatCardModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSelectModule} from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from './core/material.module';
 import { HttpModule } from '@angular/http';
@@ -42,7 +49,14 @@ import { CookieService } from 'ngx-cookie-service';
     HttpModule,
     AppRoutingModule,
     CustomMaterialModule,
-    MatCardModule, MatButtonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule
   ],

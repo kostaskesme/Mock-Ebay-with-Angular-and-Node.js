@@ -1,11 +1,39 @@
-<p>Sumbit Auction data below</p>
-<form (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <input matInput placeholder="First bid" [formControl]="firstBid">
-  </mat-form-field>
-
-  <mat-form-field>
-    <input matInput placeholder="Buy price" [formControl]="buyPrice">
-  </mat-form-field>
-  <button mat-button>Create Auction!</button>
-</form>
+<div>
+  <mat-card>
+    <section class="mat-typography" style="text-align: center">
+      <h2>Create a new auction</h2>
+    </section>
+    <mat-divider></mat-divider>
+    <br>
+    <form (ngSubmit)="onSubmit()" class="form">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Item's Name" [formControl]="name">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Category" [formControl]="category">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="number" placeholder="First Bid" [formControl]="firstBid">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="number" placeholder="Buy Price" [formControl]="buyPrice">
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Location" [formControl]="location">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Country" [formControl]="country">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput type="datetime-local" placeholder="End of Auction" [formControl]="ends">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="Item Description" [formControl]="description"></textarea>
+      </mat-form-field>
+      <br><br>
+      <button mat-raised-button type="submit" color="primary">Create</button>
+    </form>
+  </mat-card>
+</div>
