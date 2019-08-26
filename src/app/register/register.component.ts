@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
     location: new FormControl('', [
       Validators.required
     ]),
-    country: new FormControl('', [
+    country: new FormControl('Greece', [
       Validators.required
     ]),
     afm: new FormControl('', [
@@ -68,7 +68,6 @@ export class RegisterComponent implements OnInit {
   }, { validators: passwordConfirmation });
 
   countries = dropdownValues;
-
 
 
 

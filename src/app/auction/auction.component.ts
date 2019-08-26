@@ -3,6 +3,8 @@ import { FormControl } from '@angular/forms';
 import { AuctionService } from '../services/auction.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-auction',
@@ -20,7 +22,7 @@ export class AuctionComponent implements OnInit {
   ends = new FormControl();
   description = new FormControl();
 
-  constructor(private router: Router, private auctionService: AuctionService, private userService: UserService) { }
+  constructor(private router: Router, private auctionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
 
   onSubmit() {
     /*console.log('clicked');
@@ -44,6 +46,10 @@ export class AuctionComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!(this.cookieService.check('usersCookie'))) {
+      alert('Not Autorized!');
+      this.router.navigate(['']);
+    }
   }
 
   logout() {

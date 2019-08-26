@@ -71,4 +71,6 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<button mat-raised-button color="primary"(click)="newAuctionButton()">Create New Auction</button>
+<button mat-raised-button color="primary" routerLink="/viewAuction">Browse Auctions</button>
 <button mat-raised-button (click)="logout()">Logout</button>

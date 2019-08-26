@@ -1,6 +1,8 @@
 <div>
   <br>
-  <button mat-raised-button color="primary" routerLink="/newAuction">Create New Auction</button>
+  <!--<button mat-raised-button color="primary" routerLink="/newAuction">Create New Auction</button>-->
+  <button mat-raised-button color="primary" (click)="newAuctionButton()">Create New Auction</button>
+
   <form (ngSubmit)="onSubmit()" class="form">
     <mat-form-field>
       <mat-label>Search by</mat-label>

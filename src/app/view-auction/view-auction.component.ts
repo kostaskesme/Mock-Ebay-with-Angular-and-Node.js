@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Auction } from '../models/auction.type';
 import { FormControl } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { CookieService } from 'ngx-cookie-service';
 //import { DataSource } from '@angular/cdk/table';
 
 
@@ -15,7 +16,7 @@ import { UserService } from '../services/user.service';
 
 export class ViewAuctionComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private viewauctionService: AuctionService, private userService: UserService) {
+  constructor(private route: ActivatedRoute, private viewauctionService: AuctionService, private userService: UserService, private cookieService: CookieService) {
     //this.route.params.subscribe(params => console.log(params));
   }
 
@@ -40,14 +41,24 @@ export class ViewAuctionComponent implements OnInit {
   }
 
   onClick() {
-    alert("not ready yet");
-    /*this.auctionService.bidAuction(rating,userid,location,country,this.amount.value).then(response => {
-      console.log(response);
-      if (response.created) {
-        var id = response.auctionId;
-        this.router.navigate([`viewAuction/${id}`]);
-      }
-    })*/
+    if (!(this.cookieService.check('usersCookie'))) {
+      alert('Not Autorized!');
+    }
+    else {
+      alert("not ready yet");
+      /*this.auctionService.bidAuction(rating,userid,location,country,this.amount.value).then(response => {
+        console.log(response);
+        if (response.created) {
+          var id = response.auctionId;
+          this.router.navigate([`viewAuction/${id}`]);
+        }
+      })*/
+    }
+
+
+  }
+  newAuctionButton(){
+    this.viewauctionService.newAuctionRedirect();
   }
 
   logout() {

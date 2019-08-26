@@ -1,10 +1,12 @@
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
+    'Content-Type': 'application/json',
     //'Authorization': 'my-auth-token'
   })
 };
@@ -12,10 +14,10 @@ const httpOptions = {
 @Injectable()
 export class AuctionService {
 
-  constructor(private httpClient: HttpClient, ) {
+  constructor(private httpClient: HttpClient, private cookieService: CookieService, private router: Router) {
   }
   public createAuction(itemid: any, name: any, categ: any[], buyPrice: any, fbid: any,
-     loc: any, count: any, ends: any, rat: any, userid: any, desc: any ) {
+    loc: any, count: any, ends: any, rat: any, userid: any, desc: any) {
     const url = `${environment.appUrl}/newAuction`;
     const auction = {
       "ItemID": itemid,
@@ -46,9 +48,9 @@ export class AuctionService {
     })
   }
 
-  public viewAllAuctions(){
+  public viewAllAuctions() {
     const url = `${environment.appUrl}/getAuction`;
-    return this.httpClient.get<any>(url).toPromise().then(response =>{
+    return this.httpClient.get<any>(url).toPromise().then(response => {
       return Promise.resolve(response);
     })
   }
@@ -68,5 +70,15 @@ export class AuctionService {
     return this.httpClient.post<any>(url, bid, httpOptions).toPromise().then(response => {
       return Promise.resolve(response);
     })
+  }
+
+  public newAuctionRedirect() {
+    if (!(this.cookieService.check('usersCookie'))) {
+      alert('Not Autorized!');
+    }
+    else {
+      this.router.navigate(['/newAuction']);
+    }
+
   }
 }

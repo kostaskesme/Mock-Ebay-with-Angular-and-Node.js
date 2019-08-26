@@ -44,6 +44,9 @@ export class BrowseAuctionComponent implements OnInit {
   onSubmit() {
     alert("works");
   }
+  newAuctionButton() {
+    this.browseAuctiontionService.newAuctionRedirect();
+  }
 
   logout() {
     this.userService.logout();
