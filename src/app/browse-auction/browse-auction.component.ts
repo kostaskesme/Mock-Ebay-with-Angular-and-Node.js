@@ -3,8 +3,9 @@ import { AuctionService } from '../services/auction.service';
 import { Auction } from '../models/auction.type';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-browse-auction',
@@ -14,15 +15,15 @@ import {MatTableDataSource} from '@angular/material/table';
 
 export class BrowseAuctionComponent implements OnInit {
 
-  constructor(private router: Router, private browseAuctiontionService: AuctionService) { }
+  constructor(private router: Router, private browseAuctiontionService: AuctionService, private userService: UserService) { }
 
-  displayedColumns: string[] = ['name','firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action'];
+  displayedColumns: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action'];
   auctionData: MatTableDataSource<Auction>;
-  searchOptions: string[] = ['Name','Category','Description','Price','Location'];
+  searchOptions: string[] = ['Name', 'Category', 'Description', 'Price', 'Location'];
   option = new FormControl();
   search = new FormControl();
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
     this.browseAuctiontionService.viewAllAuctions().then(response => {
@@ -42,5 +43,9 @@ export class BrowseAuctionComponent implements OnInit {
 
   onSubmit() {
     alert("works");
+  }
+
+  logout() {
+    this.userService.logout();
   }
 }

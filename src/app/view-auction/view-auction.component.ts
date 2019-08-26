@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuctionService } from 'src/app/services/auction.service';
 import { ActivatedRoute } from "@angular/router";
 import { Auction } from '../models/auction.type';
+import { FormControl } from '@angular/forms';
+import { UserService } from '../services/user.service';
 //import { DataSource } from '@angular/cdk/table';
 
 
@@ -13,12 +15,12 @@ import { Auction } from '../models/auction.type';
 
 export class ViewAuctionComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private viewauctionService: AuctionService, ) {
+  constructor(private route: ActivatedRoute, private viewauctionService: AuctionService, private userService: UserService) {
     //this.route.params.subscribe(params => console.log(params));
   }
 
-  displayedColumns: string[] = ['firstBid','noOfBids','currentBid','buyPrice','location','country','startTime','endTime','sellerRat','sellerId','desc'];
-  bidderColumns: string[] = ['bidder','bidRat','loc','count','time','amount'];
+  displayedColumns: string[] = ['firstBid', 'noOfBids', 'currentBid', 'buyPrice', 'location', 'country', 'startTime', 'endTime', 'sellerRat', 'sellerId', 'desc'];
+  bidderColumns: string[] = ['bidder', 'bidRat', 'loc', 'count', 'time', 'amount'];
   auctionData: Auction[];
   ifBids: boolean;
   amount = new FormControl();
@@ -47,4 +49,9 @@ export class ViewAuctionComponent implements OnInit {
       }
     })*/
   }
+
+  logout() {
+    this.userService.logout();
+  }
+
 }

@@ -64,9 +64,6 @@ exports.addUser = function (req, res) {
 }
 
 exports.approveUserById = function (req, res) {
-  console.log(req.body.id);
-  console.log(req.sessionID);
-  console.log('req.sessionID');
   User.findById(req.body.id, (err, user) => {
     if (!user) {
       res.status(400).send({ found: false, message: `User with id:${req.body.id} not found!` });

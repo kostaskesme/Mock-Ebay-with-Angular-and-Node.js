@@ -50,12 +50,10 @@ export class LoginComponent implements OnInit {
   login(): void {
     //db.users.updateOne({'username': 'admin'},{$set :{'type': 0}}) //command to set admin type in mongo shell
 
-    console.log(this.logData.value);
     if (this.logData.value.username && this.logData.value.username) {
       this.authenticationService.authenticate(this.logData.value).then(result => {
-        console.log(result);
         if (result.isLoggedIn) {
-          if(this.cookieService.check('usersCookie')){
+          if (this.cookieService.check('usersCookie')) {
             this.cookieService.delete('usersCookie');
           }
           this.updateUserCookie(result.user);

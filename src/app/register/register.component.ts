@@ -1,8 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
-import {dropdownValues} from './countries';
+import { dropdownValues } from './countries';
 
 
 const passwordConfirmation: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
@@ -59,9 +59,9 @@ export class RegisterComponent implements OnInit {
     location: new FormControl('', [
       Validators.required
     ]),
-    // country: new FormControl('', [
-    //   Validators.required
-    // ]),
+    country: new FormControl('', [
+      Validators.required
+    ]),
     afm: new FormControl('', [
       Validators.required
     ])
@@ -69,34 +69,34 @@ export class RegisterComponent implements OnInit {
 
   countries = dropdownValues;
 
-  
 
 
-constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
-ngOnInit() {
-}
+  constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
-onSumbit() {
+  ngOnInit() {
+  }
 
-  var registerData = this.regData.value;
-  registerData.rating = "0";
-  registerData.type = "1";
-  registerData.approved = "false";
-  delete registerData.passwordConfirm;
+  onSumbit() {
+
+    var registerData = this.regData.value;
+    registerData.rating = "0";
+    registerData.type = "1";
+    registerData.approved = "false";
+    delete registerData.passwordConfirm;
 
 
-  console.log(registerData);
-  this.authenticationService.register(registerData).then(response => {
-    if (response) {
-      console.log(response);
-      this.router.navigate(['pendingApproval']);
-    }
-    else {
-      console.log(response.message)
-    }
-  })
+    console.log(registerData);
+    this.authenticationService.register(registerData).then(response => {
+      if (response) {
+        console.log(response);
+        this.router.navigate(['pendingApproval']);
+      }
+      else {
+        console.log(response.message)
+      }
+    })
 
-}
+  }
 
 }
