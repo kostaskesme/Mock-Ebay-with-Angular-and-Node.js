@@ -1,33 +1,79 @@
-<p>browse-users works!</p>
-<table mat-table [dataSource]="userData" class="mat-elevation-z8">
-
-    <ng-container matColumnDef="username">
-        <th mat-header-cell *matHeaderCellDef>Username</th>
-        <td mat-cell *matCellDef="let user"> {{user.username}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>E-mail</th>
-        <td mat-cell *matCellDef="let user"> {{user.email}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="rating">
-        <th mat-header-cell *matHeaderCellDef>Rating</th>
-        <td mat-cell *matCellDef="let user"> {{user.rating}}/5</td>
-    </ng-container>
-
-    <ng-container matColumnDef="approved">
-        <th mat-header-cell *matHeaderCellDef>Approved</th>
-        <td mat-cell *matCellDef="let user"> {{user.approved}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let user">
-            <button mat-raised-button (click)="onClick(user)">See more</button>
+<mat-tab-group color="primary">
+  <mat-tab label="Users">
+    <table mat-table [dataSource]="userData" class="mat-elevation-z8">
+        <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef>Username</th>
+            <td mat-cell *matCellDef="let user"> {{user.username}} </td>
+        </ng-container>
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>E-mail</th>
+            <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+        </ng-container>
+        <ng-container matColumnDef="rating">
+            <th mat-header-cell *matHeaderCellDef>Rating</th>
+            <td mat-cell *matCellDef="let user"> {{user.rating}}/5</td>
+        </ng-container>
+        <ng-container matColumnDef="approved">
+            <th mat-header-cell *matHeaderCellDef>Approved</th>
+            <td mat-cell *matCellDef="let user"> {{user.approved}} </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let user">
+                <button mat-raised-button color='primary' (click)="onClick(user)">See more</button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[1, 5, 25, 100]">
+    </mat-paginator>
+    <mat-divider></mat-divider>
+  </mat-tab>
+  <mat-tab label="Auctions">
+    <table mat-table [dataSource]="auctionData" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Item</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.Name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="firstBid">
+        <th mat-header-cell *matHeaderCellDef>First Bid</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.First_Bid}} </td>
+      </ng-container>
+      <ng-container matColumnDef="noOfBids">
+        <th mat-header-cell *matHeaderCellDef># of bids</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.Number_of_Bids}} </td>
+      </ng-container>
+      <ng-container matColumnDef="endTime">
+        <th mat-header-cell *matHeaderCellDef>End time</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.Ends | date:'medium'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="currentBid">
+        <th mat-header-cell *matHeaderCellDef>Current bid</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.Currently}} </td>
+      </ng-container>
+      <ng-container matColumnDef="buyPrice">
+        <th mat-header-cell *matHeaderCellDef>Buy price</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.Buy_Price || 'None'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Export</th>
+        <td mat-cell *matCellDef = "let auction">
+          <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
+            <mat-icon>save_alt</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="export(auction,'xml')">XML</button>
+            <button mat-menu-item (click)="export(auction,'json')">JSON</button>
+          </mat-menu>
         </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+    </table>
+    <mat-paginator #paginator2 [pageSize]="5" [pageSizeOptions]="[1, 5, 25, 100]">
+    </mat-paginator>
+    <mat-divider></mat-divider>
+  </mat-tab>
+  <mat-tab label="Third"> Content 3 </mat-tab>
+</mat-tab-group>
