@@ -1,10 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AuctionService } from '../services/auction.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 
+
+const ValidateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => { //+VALIDATOR FOR ENDTIME > STARTTIME
+  const firstBid = control.get('firstBid');
+  const buyPrice = control.get('buyPrice');
+  if (firstBid.value < buyPrice.value)
+    return null;
+  else
+    return { 'validBuyPrice': false };
+};
 
 @Component({
   selector: 'app-auction',
@@ -13,43 +22,61 @@ import { CookieService } from 'ngx-cookie-service';
 })
 
 export class AuctionComponent implements OnInit {
-  name = new FormControl();
-  category = new FormControl();
-  firstBid = new FormControl();
-  buyPrice = new FormControl();
-  location = new FormControl();
-  country = new FormControl();
-  ends = new FormControl();
-  description = new FormControl();
+  auctData = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    category: new FormControl('', [
+      Validators.required
+    ]),
+    firstBid: new FormControl('', [
+      Validators.required
+    ]),
+    buyPrice: new FormControl(''),
+    ends: new FormControl('', [
+      Validators.required
+    ]),
+    description: new FormControl('')
+  }, { validators: ValidateBuyPrice });
 
   constructor(private router: Router, private auctionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
-
-  onSubmit() {
-    /*console.log('clicked');
-    console.log(this.name);
-    console.log(this.category);
-    console.log(this.firstBid);
-    console.log(this.buyPrice);
-    console.log(this.location);
-    console.log(this.country);
-    console.log(this.ends);
-    console.log(this.description);*/
-
-    this.auctionService.createAuction("hbfdkfheuhfurgbggvbfb", this.name.value, this.category.value, this.firstBid.value, this.buyPrice.value,
-      this.location.value, this.country.value, this.ends.value, 10, "5d4f04ca63ff8018c461e527", this.description.value).then(response => {
-        console.log(response);
-        if (response.created) {
-          var id = response.auctionId;
-          this.router.navigate([`viewAuction/${id}`]);
-        }
-      })
-  }
 
   ngOnInit() {
     if (!(this.cookieService.check('usersCookie'))) {
       alert('Not Autorized!');
       this.router.navigate(['']);
     }
+  }
+
+  onSumbit() {
+    var auctionData = this.auctData.value;
+    var userData = JSON.parse(this.cookieService.get('usersCookie'));
+    auctionData.seller = {
+      id: userData.id,
+      username: userData.username,
+      rating: userData.rating,
+    }
+    auctionData.numberOfBids = 0;
+    auctionData.started = Date.now();
+    auctionData.currently = auctionData.firstBid
+    auctionData.location = userData.location;
+    auctionData.country = userData.country;
+    this.auctionService.createAuction(auctionData).then(response => {
+      if (response.created) {
+        this.router.navigate([`viewAuction/${response.auctionId}`])
+      }
+      else{
+        console.log(response.message);
+      }
+    })
+    // this.auctionService.createAuction("hbfdkfheuhfurgbggvbfb", this.name.value, this.category.value, this.firstBid.value, this.buyPrice.value,
+    //   this.location.value, this.country.value, this.ends.value, 10, "5d4f04ca63ff8018c461e527", this.description.value).then(response => {
+    //     console.log(response);
+    //     if (response.created) {
+    //       var id = response.auctionId;
+    //       this.router.navigate([`viewAuction/${id}`]);
+    //     }
+    //   })
   }
 
   logout() {

@@ -88,11 +88,10 @@ export class RegisterComponent implements OnInit {
     console.log(registerData);
     this.authenticationService.register(registerData).then(response => {
       if (response) {
-        console.log(response);
         this.router.navigate(['pendingApproval']);
       }
       else {
-        console.log(response.message)
+        console.log(response.message);
       }
     })
 

@@ -22,6 +22,9 @@ export class LoginComponent implements OnInit {
     username: 'unavailable',
     type: -1,
     approved: false,
+    rating: 0,
+    location: 'unavailable',
+    country: 'unavailable'
   };
 
   logData = new FormGroup({
@@ -38,7 +41,10 @@ export class LoginComponent implements OnInit {
       id: user._id,
       username: user.username,
       type: user.type,
-      approved: user.approved
+      approved: user.approved,
+      rating : user.rating,
+      location : user.location,
+      country : user.country
     }
     this.cookieValue = JSON.stringify(this.cookieValueJSON);
     this.cookieService.set('usersCookie', this.cookieValue);

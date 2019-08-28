@@ -28,6 +28,7 @@ export class BrowseAuctionComponent implements OnInit {
   ngOnInit() {
     this.browseAuctiontionService.viewAllAuctions().then(response => {
       if (response.found) {
+        console.log(response.result.numberofbids);
         this.auctionData = new MatTableDataSource<Auction>(response.result);
         this.auctionData.paginator = this.paginator;
       }

@@ -1,28 +1,30 @@
 export interface Auction {
-    ItemID: string,
-    Name: string,
-    Category: string[]
-    Currently: number,
-    Buy_Price: number,
-    First_Bid: number,
-    Number_of_Bids: number,
-    Bids: [{
-      Bidder: {
-        Rating: number,
-        UserID: string,
-        Location: string,
-        Country: string
+    id: string,
+    name: string,
+    category: string[]
+    currently: number,
+    buyPrice: number,
+    firstbid: number,
+    numberOfBids: number,
+    bids: [{
+      bidder: {
+        username: string,
+        rating: number,
+        id: string,
+        location: string,
+        country: string
       },
-      Time: string,
-      Amount: number
+      time: Date,
+      amount: number
     }],
-    Location: string,
-    Country: string,
-    Started: string,
-    Ends: string,
-    Seller: {
-      Rating: number
-      UserID: string
+    location: string,
+    country: string,
+    started: Date,
+    ends: Date,
+    seller: {
+      username: string,
+      rating: number
+      id: string
     },
-    Description: string
+    description: string
 }

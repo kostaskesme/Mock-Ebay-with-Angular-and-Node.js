@@ -2,34 +2,35 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var AuctionSchema = new mongoose.Schema({
-  ItemID: { type: String, unique: true, required: true },
-  Name: { type: String, required: true, trim: true },
-  Category: [{ type: String, trim: true }],
-  Currently: { type: Number, required: true },
-  Buy_Price: { type: Number, default: null },
-  First_Bid: { type: Number, required: true },
-  Number_of_Bids: { type: Number, default: 0 },
-  Bids: [
+  name: { type: String, required: true, trim: true },
+  category: [{ type: String, trim: true }],
+  currently: { type: Number, required: true },
+  buyPrice: { type: Number, default: null },
+  firstBid: { type: Number, required: true },
+  numberofbids: { type: Number},
+  bids: [
     {
-      Bidder: {
-        Rating: { type: Number, required: true },
-        UserID: { type: ObjectId, ref: 'User', required: true },
-        Location: { type: String, required: true, trim: true },
-        Country: { type: String, required: true, trim: true }
+      bidder: {
+        username: { type: String, required: true },
+        rating: { type: Number, required: true },
+        id: { type: ObjectId, ref: 'User', required: true },
+        location: { type: String, required: true, trim: true },
+        country: { type: String, required: true, trim: true }
       },
-      Time: { type: Date, default: Date.now },
-      Amount: { type: Number, required: true }
+      time: { type: Date, default: Date.now },
+      amount: { type: Number, required: true }
     }
   ],
-  Location: { type: String, required: true, trim: true },
-  Country: { type: String, required: true, trim: true },
-  Started: { type: Date, default: Date.now },
-  Ends: { type: Date, required: true },
-  Seller: {
-    Rating: { type: Number, required: true },
-    UserID: { type: ObjectId, ref: 'User', required: true }
+  location: { type: String, required: true, trim: true },
+  country: { type: String, required: true, trim: true },
+  started: { type: Date, default: Date.now },
+  ends: { type: Date, required: true },
+  seller: {
+    username: { type: String, required: true },
+    rating: { type: Number, required: true },
+    id: { type: ObjectId, ref: 'User', required: true }
   },
-  Description: { type: String, trim: true }
+  description: { type: String, trim: true }
 });
 
 

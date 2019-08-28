@@ -5,32 +5,26 @@
     </section>
     <mat-divider></mat-divider>
     <br>
-    <form (ngSubmit)="onSubmit()" class="form">
+    <form [formGroup]="auctData" class="form" (ngSubmit)="onSumbit()" >
       <mat-form-field class="full-width">
-        <input matInput placeholder="Item's Name" [formControl]="name">
+        <input matInput placeholder="Item's Name" formControlName="name">
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Category" [formControl]="category">
+        <input matInput placeholder="Category" formControlName="category">
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput type="number" placeholder="First Bid" [formControl]="firstBid">
+        <input matInput type="number" placeholder="First Bid" formControlName="firstBid">
         <span matPrefix>$&nbsp;</span>
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput type="number" placeholder="Buy Price" [formControl]="buyPrice">
+        <input matInput type="number" placeholder="Buy Price" formControlName="buyPrice">
         <span matPrefix>$&nbsp;</span>
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Location" [formControl]="location">
+        <input matInput type="datetime-local" placeholder="End of Auction" formControlName="ends">
       </mat-form-field>
       <mat-form-field class="full-width">
-        <input matInput placeholder="Country" [formControl]="country">
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <input matInput type="datetime-local" placeholder="End of Auction" [formControl]="ends">
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <textarea matInput placeholder="Item Description" [formControl]="description"></textarea>
+        <textarea matInput placeholder="Item Description" formControlName="description"></textarea>
       </mat-form-field>
       <br><br>
       <button mat-raised-button type="submit" color="primary">Create</button>
