@@ -22,6 +22,7 @@ const ValidateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | n
 })
 
 export class AuctionComponent implements OnInit {
+
   auctData = new FormGroup({
     name: new FormControl('', [
       Validators.required

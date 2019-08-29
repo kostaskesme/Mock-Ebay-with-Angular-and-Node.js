@@ -5,26 +5,32 @@
     </section>
     <mat-divider></mat-divider>
     <br>
-    <form [formGroup]="auctData" class="form" (ngSubmit)="onSumbit()" >
+    <form [formGroup]="auctData" (ngSubmit)="onSubmit()" class="form">
       <mat-form-field class="full-width">
         <input matInput placeholder="Item's Name" formControlName="name">
+        <mat-error *ngIf="this.auctData.controls.name.errors.required">Name is required</mat-error>
       </mat-form-field>
       <mat-form-field class="full-width">
         <input matInput placeholder="Category" formControlName="category">
+        <mat-error *ngIf="this.auctData.controls.category.errors.required">Category is required</mat-error>
       </mat-form-field>
       <mat-form-field class="full-width">
         <input matInput type="number" placeholder="First Bid" formControlName="firstBid">
         <span matPrefix>$&nbsp;</span>
+        <mat-error *ngIf="this.auctData.controls.firstBid.errors.required">First Bid is required</mat-error>
       </mat-form-field>
       <mat-form-field class="full-width">
         <input matInput type="number" placeholder="Buy Price" formControlName="buyPrice">
         <span matPrefix>$&nbsp;</span>
+        <mat-hint>Not required</mat-hint>
       </mat-form-field>
       <mat-form-field class="full-width">
         <input matInput type="datetime-local" placeholder="End of Auction" formControlName="ends">
+        <mat-error *ngIf="this.auctData.controls.ends.errors.required">End of Auction is required</mat-error>
       </mat-form-field>
       <mat-form-field class="full-width">
         <textarea matInput placeholder="Item Description" formControlName="description"></textarea>
+        <mat-error *ngIf="this.auctData.controls.description.errors.required">Description is required</mat-error>
       </mat-form-field>
       <br><br>
       <button mat-raised-button type="submit" color="primary">Create</button>

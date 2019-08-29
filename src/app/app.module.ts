@@ -12,7 +12,9 @@ import {MatCardModule,
         MatInputModule,
         MatTableModule,
         MatPaginatorModule,
-        MatSelectModule} from '@angular/material'
+        MatSelectModule,
+        MatMenuModule,
+        MatTabsModule} from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from './core/material.module';
 import { HttpModule } from '@angular/http';
@@ -57,6 +59,8 @@ import { CookieService } from 'ngx-cookie-service';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatMenuModule,
+    MatTabsModule,
     FormsModule,
     ReactiveFormsModule
   ],

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuctionService } from 'src/app/services/auction.service';
-//import { ActivatedRoute } from "@angular/router";
 import { Auction } from '../models/auction.type';
 import { FormControl, Validators, ValidatorFn, ValidationErrors, AbstractControl, FormGroup } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
-//import { DataSource } from '@angular/cdk/table';
+
 
 @Component({
   selector: 'app-view-auction',
@@ -15,9 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class ViewAuctionComponent implements OnInit {
 
-  constructor(/*private route: ActivatedRoute,*/ private viewauctionService: AuctionService, private userService: UserService, private cookieService: CookieService) {
-    //this.route.params.subscribe(params => console.log(params));
-  }
+  constructor(private viewauctionService: AuctionService, private userService: UserService, private cookieService: CookieService) {}
 
   displayedColumns: string[] = ['name', 'desc', 'currentBid', 'noOfBids', 'buyPrice', 'firstBid', 'seller', 'sellerRat', 'location', 'country', 'startTime', 'endTime',];
   bidderColumns: string[] = ['amount', 'bidder', 'bidRat', 'time', 'location', 'country'];
