@@ -29,6 +29,7 @@ import { PendingApprovalComponent } from './pending-approval/pending-approval.co
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthenticationService, AuctionService, UserService],
+  providers: [AuthenticationService, AuctionService, UserService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

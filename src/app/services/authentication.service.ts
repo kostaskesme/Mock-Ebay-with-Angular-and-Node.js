@@ -12,24 +12,14 @@ export class AuthenticationService {
 
     public authenticate(logdata: any): Promise<any> {
         const url = `${environment.appUrl}/login`;
-        const httpPostOptions =
-        {
-            headers:
-                new HttpHeaders(),
-            withCredentials: true,
-        };
+        const httpPostOptions = { headers: new HttpHeaders(), withCredentials: true };
         return this.httpClient.post<any>(url, logdata, httpPostOptions).toPromise().then(response => {
-            console.log('FE login');
-            console.log(response);
             return Promise.resolve(response);
         });
     }
     public register(registerData: any) {
-        // const url = `${environment.appUrl}/users/register`;
         const url = `${environment.appUrl}/register`;
         return this.httpClient.post<any>(url, registerData).toPromise().then(response => {
-            console.log('FE register');
-
             return Promise.resolve(response);
         })
     }

@@ -49,14 +49,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 /*  PASSPORT SETUP  */
 
-// app.use(session({
-//   secret: 'work hard',
-//   resave: true,
-//   saveUninitialized: true,
-//   cookie: { secure: false }
-// }));
-
-
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })); // express body-parser
 app.use(passport.initialize());
@@ -71,8 +63,8 @@ app.use(passport.session({
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
-    console.log('LocalStrategy');
-    console.log(username);
+    // console.log('LocalStrategy');
+    // console.log(username);
     User.findOne({ username: username }, function (err, user) {
       if (err) { return done(err); }
       if (!user) {
@@ -82,7 +74,7 @@ passport.use(new LocalStrategy(
       // if (!user.validPassword(password)) {
       //   return done(null, false, { message: 'Incorrect password.' });
       // }
-      console.log(user);
+      //console.log(user);
 
       return done(null, user);
     });
@@ -90,7 +82,7 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser((user, done) => {
-  console.log('serializeUser');
+  // console.log('serializeUser');
   var sessionUser = { _id: user._id, username: user.username, email: user.email }
 
   done(null, sessionUser._id);

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuctionService } from '../services/auction.service';
 import { User } from '../models/user.type';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +19,7 @@ export class ProfileComponent implements OnInit {
   userData: User[];
   id: string = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
 
-  constructor(private route: ActivatedRoute, private profileService: UserService) {
+  constructor(private route: ActivatedRoute, private profileService: UserService,private auctionService: AuctionService, private cookieService: CookieService, private router: Router) {
     this.route.params.subscribe(params => console.log(params));
   }
   displayedColumns: string[] = ['email', 'username', 'firstName', 'lastName', 'phoneNumber',
@@ -24,6 +27,14 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     // check if User is LoggedIN
+    if (!(this.cookieService.check('usersCookie'))) {
+      alert('Not Autorized!');
+      this.router.navigate(['']);
+    }
+    if ((JSON.parse(this.cookieService.get('usersCookie')).type != 0) && (JSON.parse(this.cookieService.get('usersCookie')).id != this.id)) {
+      alert('Not Autorized!');
+      this.router.navigate(['']);
+    }
     this.profileService.profile(this.id).then(response => {
       if (response.found) {
         this.userData = [response.User];
@@ -36,7 +47,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onClick() {
-    if (this.approved) {
+    if (this.approved) {  // COOKIES!!
       alert('User is already approved');
     }
     else {
@@ -51,5 +62,14 @@ export class ProfileComponent implements OnInit {
       })
     }
   }
+
+  logout() {
+    this.profileService.logout();
+  }
+
+  newAuctionButton() {
+this.auctionService.newAuctionRedirect();
+  }
+
 
 }

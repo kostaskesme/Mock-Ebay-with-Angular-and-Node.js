@@ -4,6 +4,7 @@ import { AuctionService } from '../services/auction.service';
 import { User } from '../models/user.type';
 import { Auction } from '../models/auction.type';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -14,7 +15,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class BrowseUsersComponent implements OnInit {
 
-  constructor(private router: Router, private browseUsersService: UserService, private auctionService: AuctionService) { }
+  constructor(private router: Router, private browseUsersService: UserService,  private cookieService: CookieService, private auctionService: AuctionService) { }
 
   displayedColumns: string[] = ['username', 'email', 'rating', 'approved', 'action'];
   displayedColumns2: string[] = ['name','firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action'];
@@ -25,6 +26,10 @@ export class BrowseUsersComponent implements OnInit {
   @ViewChild('paginator2', {static: true}) paginator2: MatPaginator;
 
   ngOnInit() {
+    if((!(this.cookieService.check('usersCookie'))) || (JSON.parse(this.cookieService.get('usersCookie')).type != 0)){
+      alert('Not Autorized!');
+      this.router.navigate(['']);
+    }
     this.browseUsersService.viewAllUsers().then(response => {
       if (response.found) {
         this.userData = new MatTableDataSource<User>(response.result);
@@ -44,11 +49,14 @@ export class BrowseUsersComponent implements OnInit {
       }
     })
   }
-
   onClick(user: any) {
     this.router.navigate([`profile/${user._id}`]);
   }
 
+  logout(){
+    this.browseUsersService.logout();
+  }
+  
   toXML(obj) {
     var xml = '';
     for (var prop in obj) {
@@ -85,5 +93,6 @@ export class BrowseUsersComponent implements OnInit {
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
   }
-
 }
+
+

@@ -12,22 +12,30 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/login', function (req, res, next) {
-  passport.authenticate('local', function (err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/login'); }
+  passport.authenticate('local', function (err, user) {
+    if (err) {
+      console.log('/login authenticate error', err);
+      return next(err);
+    }
+    if (!user) {
+      console.log('!user');
+      return res.redirect('/login');
+    }
     req.logIn(user, function (err) {
-      if (err) { return next(err); }
-      res.cookie('userid', { id: user.id, username: user.username }, { maxAge: 2592000000, encode: String }); // TODO
-      res.cookie('sessionID', res.sessionID, { maxAge: 2592000000 }); // TODO
-      return res.send({ isLoggedIn: true, id: user._id });
+      if (err) {
+        console.log('/login logIn error', err);
+        return next(err);
+      }
+      //res.cookie('userid', { id: user.id, username: user.username, type: user.type, approved: user.approved }, { maxAge: 2592000000, encode: String }); // TODO
+      //res.cookie('sessionID', res.sessionID, { maxAge: 2592000000 }); // TODO
+      return res.send({ isLoggedIn: true, user });
     });
   })(req, res, next);
 });
 
 router.post('/register', (request, response) => {
-  console.log('register');
   User.register(new User(request.body), request.body.password, function (err, user) {
-    console.log('inside Register');
+    //console.log('inside Register');
     if (err) {
       console.log(err);
       return response.render('register');
