@@ -7,7 +7,7 @@ var AuctionSchema = new mongoose.Schema({
   currently: { type: Number, required: true },
   buyPrice: { type: Number, default: null },
   firstBid: { type: Number, required: true },
-  numberofbids: { type: Number},
+  numberOfBids: { type: Number },
   bids: [
     {
       bidder: {

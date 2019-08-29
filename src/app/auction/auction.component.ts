@@ -69,14 +69,6 @@ export class AuctionComponent implements OnInit {
         console.log(response.message);
       }
     })
-    // this.auctionService.createAuction("hbfdkfheuhfurgbggvbfb", this.name.value, this.category.value, this.firstBid.value, this.buyPrice.value,
-    //   this.location.value, this.country.value, this.ends.value, 10, "5d4f04ca63ff8018c461e527", this.description.value).then(response => {
-    //     console.log(response);
-    //     if (response.created) {
-    //       var id = response.auctionId;
-    //       this.router.navigate([`viewAuction/${id}`]);
-    //     }
-    //   })
   }
 
   logout() {

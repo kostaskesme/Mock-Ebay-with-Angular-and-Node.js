@@ -80,7 +80,7 @@ exports.bidAuctionById = function (req, res) {
       res.status(400).send({ done: false, message: `Auction with id:${req.params.id} not found!`, error: err });
     }
     else {
-      console.log('before', auction);
+      console.log('before', auction.numberOfBids);
       auction.bids.push(req.body);
       auction.numberOfBids = auction.numberOfBids +1;
       auction.currently = req.body.amount;

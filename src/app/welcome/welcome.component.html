@@ -1,4 +1,10 @@
 <p>Welcome !</p>
+<script>
+    import { CookieService } from 'ngx-cookie-service';
+    window.addEventListener('unload', function(event) {
+    cookieService.deleteAll();;
+    });
+  </script>
 <div>
     <a [routerLink]="'/register'">Register as a user</a>
 

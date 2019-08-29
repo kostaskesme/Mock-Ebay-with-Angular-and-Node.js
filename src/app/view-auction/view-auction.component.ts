@@ -25,8 +25,8 @@ export class ViewAuctionComponent implements OnInit {
   currently: Number;
   buyPrice: Number;
   sellerName: String;
-  ifBids: boolean;
-  ifClicked: boolean;
+  ifBids: Boolean;
+  ifClicked: Boolean;
   bidData = new FormGroup({
     amount: new FormControl('', [
       Validators.required,
@@ -41,7 +41,6 @@ export class ViewAuctionComponent implements OnInit {
         this.currently = this.auctionData[0].currently;
         this.buyPrice = this.auctionData[0].buyPrice;
         this.sellerName = this.auctionData[0].seller.username;
-        console.log('number of bids', this.auctionData[0].numberOfBids);
         this.ifBids = this.auctionData[0].numberOfBids > 0;
       }
       else {
@@ -70,7 +69,6 @@ export class ViewAuctionComponent implements OnInit {
         amount: this.bidData.value.amount
       }
       this.viewauctionService.bidAuction(id, bid).then(response => {
-        console.log(response);
         if (response.done)
           location.reload();
         else

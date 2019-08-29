@@ -70,7 +70,7 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <br><br>
-  <table *ngIf='ifBids' mat-table [dataSource]="auctionData[0].Bids" class="mat-elevation-z8">
+  <table *ngIf='ifBids' mat-table [dataSource]="auctionData[0].bids" class="mat-elevation-z8">
 
     <ng-container matColumnDef="amount">
       <th mat-header-cell *matHeaderCellDef>Amount</th>
@@ -79,7 +79,7 @@
 
     <ng-container matColumnDef="bidder">
       <th mat-header-cell *matHeaderCellDef>Bidder</th>
-      <td mat-cell *matCellDef="let bid"> {{bid.bidder.id}} </td>
+      <td mat-cell *matCellDef="let bid"> {{bid.bidder.username}} </td>
     </ng-container>
 
     <ng-container matColumnDef="bidRat">
