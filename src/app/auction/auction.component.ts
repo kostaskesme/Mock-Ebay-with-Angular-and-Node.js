@@ -34,7 +34,10 @@ export class AuctionComponent implements OnInit {
       Validators.required
     ]),
     buyPrice: new FormControl(''),
-    ends: new FormControl('', [
+    date: new FormControl('', [
+      Validators.required
+    ]),
+    time: new FormControl('', [
       Validators.required
     ]),
     description: new FormControl('')
@@ -56,13 +59,8 @@ export class AuctionComponent implements OnInit {
     this.bool1 = this.auctData.controls.name.errors.required;
     this.bool2 = this.auctData.controls.category.errors.required;
     this.bool3 = this.auctData.controls.firstBid.errors.required;
-    this.bool4 = this.auctData.errors.validBuyPrice;
-    this.bool5 = this.auctData.controls.ends.errors.required;
-    /*console.log(this.auctData.controls.name.errors.required);
-    console.log(this.auctData.controls.category.errors.required);
-    console.log(this.auctData.controls.firstBid.errors.required);
-    console.log(this.auctData.controls.ends.errors.required);
-    console.log(this.auctData.errors.validBuyPrice);*/
+    this.bool4 = this.auctData.controls.date.errors.required;
+    this.bool5 = this.auctData.controls.time.errors.required;
   }
 
   onSubmit() {
@@ -71,6 +69,9 @@ export class AuctionComponent implements OnInit {
       return;
     }
     var auctionData = this.auctData.value;
+    auctionData.ends = auctionData.date + 'T' + auctionData.time;
+    delete auctionData.date;
+    delete auctionData.time;
     var userData = JSON.parse(this.cookieService.get('usersCookie'));
     auctionData.seller = {
       id: userData.id,
