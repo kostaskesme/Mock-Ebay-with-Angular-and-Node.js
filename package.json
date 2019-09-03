@@ -36,6 +36,7 @@
     "passport-local-mongoose": "^4.0.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "xml-js": "^1.6.11",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
