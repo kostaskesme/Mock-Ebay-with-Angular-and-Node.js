@@ -79,7 +79,7 @@ export class AuctionComponent implements OnInit {
       rating: userData.rating,
     }
     auctionData.numberOfBids = 0;
-    auctionData.started = Date.now();
+    auctionData.started = null;
     auctionData.currently = auctionData.firstBid
     auctionData.location = userData.location;
     auctionData.country = userData.country;

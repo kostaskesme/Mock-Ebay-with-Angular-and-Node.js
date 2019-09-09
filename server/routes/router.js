@@ -104,6 +104,14 @@ router.get('/getAuction', function (req, res, next) {
   auctionController.getAllAuctions(req, res, next);
 });
 
+router.get('/getAuctionsBySeller/:id', function (req, res) {
+  auctionController.getAuctionsBySeller(req, res);
+});
+
+router.get('/startAuction/:id', function (req, res) {
+  auctionController.startAuctionById(req, res);
+});
+
 router.post('/updateAuction/:id', function (req, res) {
   auctionController.updateAuctionById(req, res);
 });
