@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import * as convert from 'xml-js'
 
 @Component({
   selector: 'app-browse-users',
@@ -18,7 +19,7 @@ export class BrowseUsersComponent implements OnInit {
   constructor(private router: Router, private browseUsersService: UserService,  private cookieService: CookieService, private auctionService: AuctionService) { }
 
   displayedColumns: string[] = ['username', 'email', 'rating', 'approved', 'action'];
-  displayedColumns2: string[] = ['name','firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action'];
+  displayedColumns2: string[] = ['name','firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action1', 'action2'];
   userData: MatTableDataSource<User>;
   auctionData: MatTableDataSource<Auction>;
 
@@ -49,14 +50,18 @@ export class BrowseUsersComponent implements OnInit {
       }
     })
   }
-  onClick(user: any) {
+  onClickProfile(user: any) {
     this.router.navigate([`profile/${user._id}`]);
+  }
+
+  onClickAuction(auction: any) {
+    this.router.navigate([`viewAuction/${auction._id}`]);
   }
 
   logout(){
     this.browseUsersService.logout();
   }
-  
+
   toXML(obj) {
     var xml = '';
     for (var prop in obj) {
@@ -82,7 +87,27 @@ export class BrowseUsersComponent implements OnInit {
     var downloadAnchorNode = document.createElement('a');
     delete auction.__v;
     if (option === 'xml') {
-      var xml = this.toXML(auction);
+      var temp1 = {
+        seller: {
+          _attributes: {
+            username: auction.seller.username,
+            rating: auction.seller.rating
+          }
+        }
+      };
+      delete auction.seller;
+      var item = {
+        _declaration: {
+          _attributes: {
+            version: "1.0",
+            encoding: "utf-8"
+          }
+        },
+        item: null
+      };
+      item.item = Object.assign(temp1, auction);
+      var options = {compact: true, spaces: 4};
+      var xml = convert.js2xml(item, options);
       var dataStr = "data:text/xml;charset=utf-8," + encodeURIComponent(xml);
     } else {
       var dataStr = "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(auction));
@@ -94,5 +119,3 @@ export class BrowseUsersComponent implements OnInit {
     downloadAnchorNode.remove();
   }
 }
-
-

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionService } from '../services/auction.service';
 import { User } from '../models/user.type';
+import { Auction } from '../models/auction.type';
 import { CookieService } from 'ngx-cookie-service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -17,6 +20,7 @@ export class ProfileComponent implements OnInit {
 
   approved: boolean;
   userData: User[];
+  auctionData: MatTableDataSource<Auction>;
   id: string = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
 
   constructor(private route: ActivatedRoute, private profileService: UserService,private auctionService: AuctionService, private cookieService: CookieService, private router: Router) {
@@ -24,15 +28,18 @@ export class ProfileComponent implements OnInit {
   }
   displayedColumns: string[] = ['email', 'username', 'firstName', 'lastName', 'phoneNumber',
     'address', 'location', 'country', 'afm', 'rating', 'approved', ' '];
+  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'started','action'];
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
     // check if User is LoggedIN
     if (!(this.cookieService.check('usersCookie'))) {
-      alert('Not Autorized!');
+      alert('Not Authorized!');
       this.router.navigate(['']);
     }
     if ((JSON.parse(this.cookieService.get('usersCookie')).type != 0) && (JSON.parse(this.cookieService.get('usersCookie')).id != this.id)) {
-      alert('Not Autorized!');
+      alert('Not Authorized!');
       this.router.navigate(['']);
     }
     this.profileService.profile(this.id).then(response => {
@@ -42,6 +49,16 @@ export class ProfileComponent implements OnInit {
       }
       else {
         console.log('cant find user!');
+      }
+    })
+    this.auctionService.viewAuctionsBySeller(this.id).then(response => {
+      if (response.found) {
+        this.auctionData = new MatTableDataSource<Auction>(response.result);
+        this.auctionData.paginator = this.paginator;
+        console.log(this.auctionData);
+      }
+      else {
+        console.log('cant find auctions!');
       }
     })
   }
@@ -61,6 +78,18 @@ export class ProfileComponent implements OnInit {
         }
       })
     }
+  }
+
+  start(auction: any) {
+    this.auctionService.startAuction(auction._id).then(response => {
+      if (response.message) {
+        console.log(response.message);
+        location.reload();
+      }
+      else {
+        console.log(response.error);
+      }
+    })
   }
 
   logout() {

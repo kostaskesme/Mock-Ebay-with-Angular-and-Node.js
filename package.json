@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --ssl",
+    "start": "ng serve --ssl --open",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -36,6 +36,7 @@
     "passport-local-mongoose": "^4.0.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "xml-js": "^1.6.11",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {

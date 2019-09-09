@@ -34,11 +34,20 @@ export class AuctionComponent implements OnInit {
       Validators.required
     ]),
     buyPrice: new FormControl(''),
-    ends: new FormControl('', [
+    date: new FormControl('', [
+      Validators.required
+    ]),
+    time: new FormControl('', [
       Validators.required
     ]),
     description: new FormControl('')
-  }, { validators: ValidateBuyPrice });
+  }, { validators: ValidateBuyPrice});
+
+  bool1: boolean;
+  bool2: boolean;
+  bool3: boolean;
+  bool4: boolean;
+  bool5: boolean;
 
   constructor(private router: Router, private auctionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
 
@@ -47,10 +56,22 @@ export class AuctionComponent implements OnInit {
       alert('Not Autorized!');
       this.router.navigate(['']);
     }
+    this.bool1 = this.auctData.controls.name.errors.required;
+    this.bool2 = this.auctData.controls.category.errors.required;
+    this.bool3 = this.auctData.controls.firstBid.errors.required;
+    this.bool4 = this.auctData.controls.date.errors.required;
+    this.bool5 = this.auctData.controls.time.errors.required;
   }
 
-  onSumbit() {
+  onSubmit() {
+    if (this.auctData.invalid) {
+      alert("form is invalid");
+      return;
+    }
     var auctionData = this.auctData.value;
+    auctionData.ends = auctionData.date + 'T' + auctionData.time;
+    delete auctionData.date;
+    delete auctionData.time;
     var userData = JSON.parse(this.cookieService.get('usersCookie'));
     auctionData.seller = {
       id: userData.id,
@@ -58,7 +79,7 @@ export class AuctionComponent implements OnInit {
       rating: userData.rating,
     }
     auctionData.numberOfBids = 0;
-    auctionData.started = Date.now();
+    auctionData.started = null;
     auctionData.currently = auctionData.firstBid
     auctionData.location = userData.location;
     auctionData.country = userData.country;

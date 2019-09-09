@@ -26,13 +26,43 @@ exports.getAuctionById = function (req, res) {
 }
 
 exports.getAllAuctions = function (req, res) {
-  Auction.find((err, auctionList) => {
+  Auction.find({ started: { $ne: null } },(err, auctionList) => {
     if (err) {
       res.status(400).send({ found: false, message: 'Auction not found' });
       console.log(err);
     }
     else
       res.status(200).json({ found: true, result: auctionList });
+  });
+}
+
+exports.getAuctionsBySeller = function (req, res) {
+  Auction.find({ 'seller.id': req.params.id },(err, auctionList) => {
+    if (err) {
+      res.status(400).send({ found: false, message: 'Auction not found' });
+      console.log(err);
+    }
+    else
+      res.status(200).json({ found: true, result: auctionList });
+      console.log(auctionList);
+  });
+}
+
+exports.startAuctionById = function (req, res) {
+  Auction.findById(req.params.id ,(err, auction) => {
+    if (!auction) {
+      res.status(400).send({ error: `Auction with id:${req.params.id} not found!` });
+      console.log(err);
+    }
+    else {
+      auction.started = Date.now();
+      auction.save().then(auction => {
+        res.status(200).json({ message: `Auction with id:${req.params.id} started!` });
+        console.log(auction);
+      }).catch(err => {
+        res.status(400).send('Update failed');
+      });
+    }
   });
 }
 

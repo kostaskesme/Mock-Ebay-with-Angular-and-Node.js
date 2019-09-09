@@ -20,7 +20,7 @@
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let user">
-                <button mat-raised-button color='primary' (click)="onClick(user)">See more</button>
+                <button mat-raised-button color='primary' (click)="onClickProfile(user)">See more</button>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -34,29 +34,35 @@
     <table mat-table [dataSource]="auctionData" class="mat-elevation-z8">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Item</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.Name}} </td>
+        <td mat-cell *matCellDef="let auction"> {{auction.name}} </td>
       </ng-container>
       <ng-container matColumnDef="firstBid">
         <th mat-header-cell *matHeaderCellDef>First Bid</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.First_Bid}} </td>
+        <td mat-cell *matCellDef="let auction"> {{auction.firstbid}} </td>
       </ng-container>
       <ng-container matColumnDef="noOfBids">
         <th mat-header-cell *matHeaderCellDef># of bids</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.Number_of_Bids}} </td>
+        <td mat-cell *matCellDef="let auction"> {{auction.numberOfBids}} </td>
       </ng-container>
       <ng-container matColumnDef="endTime">
         <th mat-header-cell *matHeaderCellDef>End time</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.Ends | date:'medium'}} </td>
+        <td mat-cell *matCellDef="let auction"> {{auction.ends | date:'medium'}} </td>
       </ng-container>
       <ng-container matColumnDef="currentBid">
         <th mat-header-cell *matHeaderCellDef>Current bid</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.Currently}} </td>
+        <td mat-cell *matCellDef="let auction"> {{auction.currently}} </td>
       </ng-container>
       <ng-container matColumnDef="buyPrice">
         <th mat-header-cell *matHeaderCellDef>Buy price</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.Buy_Price || 'None'}} </td>
+        <td mat-cell *matCellDef="let auction"> {{auction.buyPrice || 'None'}} </td>
       </ng-container>
-      <ng-container matColumnDef="action">
+      <ng-container matColumnDef="action1">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let auction">
+          <button mat-raised-button color="primary" (click)="onClickAuction(auction)">View</button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action2">
         <th mat-header-cell *matHeaderCellDef>Export</th>
         <td mat-cell *matCellDef = "let auction">
           <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
@@ -77,3 +83,5 @@
   </mat-tab>
   <mat-tab label="Third"> Content 3 </mat-tab>
 </mat-tab-group>
+<br>
+<button mat-raised-button (click)="logout()">Logout</button>

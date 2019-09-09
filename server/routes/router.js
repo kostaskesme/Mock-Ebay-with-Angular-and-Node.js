@@ -3,6 +3,7 @@ var router = express.Router();
 var authController = require('../controller/authenticationController')
 var auctionController = require('../controller/auctionController')
 var usersController = require('../controller/usersController')
+var messageController = require('../controller/messageController')
 var passport = require('passport');
 const User = require('../models/users');
 
@@ -103,6 +104,14 @@ router.get('/getAuction', function (req, res, next) {
   auctionController.getAllAuctions(req, res, next);
 });
 
+router.get('/getAuctionsBySeller/:id', function (req, res) {
+  auctionController.getAuctionsBySeller(req, res);
+});
+
+router.get('/startAuction/:id', function (req, res) {
+  auctionController.startAuctionById(req, res);
+});
+
 router.post('/updateAuction/:id', function (req, res) {
   auctionController.updateAuctionById(req, res);
 });
@@ -113,6 +122,24 @@ router.post('/bidAuction/:id', function (req, res) {
 
 router.get('/deleteAuction/:id', function (req, res) {
   auctionController.deleteAuctionById(req, res);
+});
+
+//Message routers
+
+router.get('/getMessageSender/:id', function (req, res) {
+  messageController.getAllMessagesBySender(req, res);
+});
+
+router.get('/getMessageReceiver/:id', function (req, res) {
+  messageController.getAllMessagesByReceiver(req, res);
+});
+
+router.post('/postMessage', function (req, res) {
+  messageController.postMessage(req, res);
+});
+
+router.get('/deleteMessage/:id', function (req, res) {
+  messageController.deleteMessageById(req, res);
 });
 
 module.exports = router;
