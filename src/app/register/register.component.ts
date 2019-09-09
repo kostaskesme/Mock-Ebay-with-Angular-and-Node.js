@@ -67,13 +67,14 @@ export class RegisterComponent implements OnInit {
     ])
   }, { validators: passwordConfirmation });
 
-  countries = dropdownValues;
+  countries: string[] = dropdownValues;
 
 
 
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
+    console.log(this.countries);
   }
 
   onSumbit() {

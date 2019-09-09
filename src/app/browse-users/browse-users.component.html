@@ -20,7 +20,7 @@
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let user">
-                <button mat-raised-button color='primary' (click)="onClick(user)">See more</button>
+                <button mat-raised-button color='primary' (click)="onClickProfile(user)">See more</button>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -56,7 +56,13 @@
         <th mat-header-cell *matHeaderCellDef>Buy price</th>
         <td mat-cell *matCellDef="let auction"> {{auction.buyPrice || 'None'}} </td>
       </ng-container>
-      <ng-container matColumnDef="action">
+      <ng-container matColumnDef="action1">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let auction">
+          <button mat-raised-button color="primary" (click)="onClickAuction(auction)">View</button>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action2">
         <th mat-header-cell *matHeaderCellDef>Export</th>
         <td mat-cell *matCellDef = "let auction">
           <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">

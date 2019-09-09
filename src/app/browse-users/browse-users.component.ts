@@ -19,7 +19,7 @@ export class BrowseUsersComponent implements OnInit {
   constructor(private router: Router, private browseUsersService: UserService,  private cookieService: CookieService, private auctionService: AuctionService) { }
 
   displayedColumns: string[] = ['username', 'email', 'rating', 'approved', 'action'];
-  displayedColumns2: string[] = ['name','firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action'];
+  displayedColumns2: string[] = ['name','firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action1', 'action2'];
   userData: MatTableDataSource<User>;
   auctionData: MatTableDataSource<Auction>;
 
@@ -50,8 +50,12 @@ export class BrowseUsersComponent implements OnInit {
       }
     })
   }
-  onClick(user: any) {
+  onClickProfile(user: any) {
     this.router.navigate([`profile/${user._id}`]);
+  }
+
+  onClickAuction(auction: any) {
+    this.router.navigate([`viewAuction/${auction._id}`]);
   }
 
   logout(){
