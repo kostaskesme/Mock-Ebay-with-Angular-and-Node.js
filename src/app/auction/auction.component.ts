@@ -36,6 +36,9 @@ export class AuctionComponent implements OnInit {
     buyPrice: new FormControl(''),
     description: new FormControl('')
   }, { validators: ValidateBuyPrice});
+  
+  loggedIn: Boolean;
+
 
   bool1: boolean;
   bool2: boolean;
@@ -48,6 +51,8 @@ export class AuctionComponent implements OnInit {
       alert('Not Autorized!');
       this.router.navigate(['']);
     }
+    this.loggedIn = true;
+    //TINAFTORE?
     this.bool1 = this.auctData.controls.name.errors.required;
     this.bool2 = this.auctData.controls.category.errors.required;
     this.bool3 = this.auctData.controls.firstBid.errors.required;
@@ -79,6 +84,10 @@ export class AuctionComponent implements OnInit {
         console.log(response.message);
       }
     })
+  }
+
+  GoToProfile() {
+    this.userService.GoToProfile();
   }
 
   logout() {

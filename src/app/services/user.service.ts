@@ -39,5 +39,14 @@ export class UserService {
         this.router.navigate(['']);
     }
 
+    public GoToProfile() {
+        var cookie = JSON.parse(this.cookieService.get('usersCookie'));
+        if (cookie.type === 0) {
+            this.router.navigate(['viewUser']);
+        }
+        else {
+            this.router.navigate([`profile/${cookie.id}`]);
+        }
+    }
 }
 

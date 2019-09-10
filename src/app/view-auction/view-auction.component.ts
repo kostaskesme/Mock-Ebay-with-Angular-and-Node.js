@@ -14,7 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class ViewAuctionComponent implements OnInit {
 
-  constructor(private viewauctionService: AuctionService, private userService: UserService, private cookieService: CookieService) {}
+  constructor(private viewauctionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
 
   displayedColumns: string[] = ['name', 'desc', 'currentBid', 'noOfBids', 'buyPrice', 'firstBid', 'seller', 'sellerRat', 'location', 'country', 'startTime', 'endTime',];
   bidderColumns: string[] = ['amount', 'bidder', 'bidRat', 'time', 'location', 'country'];
@@ -29,8 +29,10 @@ export class ViewAuctionComponent implements OnInit {
       Validators.required,
     ])
   })
+  loggedIn: Boolean;
 
   ngOnInit() {
+    this.loggedIn = this.cookieService.check('usersCookie');
     var id = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
     this.viewauctionService.viewAuction(id).then(response => {
       if (response.found) {
@@ -88,12 +90,14 @@ export class ViewAuctionComponent implements OnInit {
         this.ifClicked = true;
       }
     }
-
-
   }
 
   newAuctionButton() {
     this.viewauctionService.newAuctionRedirect();
+  }
+
+  GoToProfile() {
+    this.userService.GoToProfile();
   }
 
   logout() {

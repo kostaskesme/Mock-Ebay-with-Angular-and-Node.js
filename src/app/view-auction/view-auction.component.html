@@ -17,7 +17,7 @@
     </ng-container>
 
     <ng-container matColumnDef="currentBid">
-      <th mat-header-cell *matHeaderCellDef>Current bid</th>
+      <th mat-header-cell *matHeaderCellDef>Current bid €</th>
       <td mat-cell *matCellDef="let auction"> {{auction.currently}} </td>
     </ng-container>
 
@@ -27,12 +27,12 @@
     </ng-container>
 
     <ng-container matColumnDef="buyPrice">
-      <th mat-header-cell *matHeaderCellDef>Buy price</th>
+      <th mat-header-cell *matHeaderCellDef>Buy price €</th>
       <td mat-cell *matCellDef="let auction"> {{auction.buyPrice || 'None'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="firstBid">
-      <th mat-header-cell *matHeaderCellDef>First Bid</th>
+      <th mat-header-cell *matHeaderCellDef>First Bid €</th>
       <td mat-cell *matCellDef="let auction"> {{auction.firstBid}} </td>
     </ng-container>
 
@@ -116,6 +116,8 @@
     <button mat-raised-button (click)="bid()">Place Bid</button>
   </div>
   <br>
-  <button mat-raised-button (click)="logout()">Logout</button>
+  <button *ngIf = 'loggedIn' mat-raised-button  (click)="GoToProfile() " >Go to profile</button>
+  <button *ngIf = 'loggedIn' mat-raised-button  (click)="logout() " >Logout</button>
+  <button *ngIf = '!loggedIn' mat-raised-button  (click)="logout() " >Login</button>
   <br><br>
 </div>

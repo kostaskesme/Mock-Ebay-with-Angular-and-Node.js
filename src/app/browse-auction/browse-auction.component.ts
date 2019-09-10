@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../services/user.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-browse-auction',
@@ -15,20 +16,23 @@ import { UserService } from '../services/user.service';
 
 export class BrowseAuctionComponent implements OnInit {
 
-  constructor(private router: Router, private browseAuctiontionService: AuctionService, private userService: UserService) { }
+  constructor(private router: Router, private browseAuctiontionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
 
   displayedColumns: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action'];
   auctionData: MatTableDataSource<Auction>;
   searchOptions: string[] = ['Name', 'Category', 'Description', 'Price', 'Location'];
   option = new FormControl();
   search = new FormControl();
+  loggedIn: Boolean;
+
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    this.loggedIn = this.cookieService.check('usersCookie');
+
     this.browseAuctiontionService.viewAllAuctions().then(response => {
       if (response.found) {
-        console.log(response.result.numberofbids);
         this.auctionData = new MatTableDataSource<Auction>(response.result);
         this.auctionData.paginator = this.paginator;
       }
@@ -47,6 +51,10 @@ export class BrowseAuctionComponent implements OnInit {
   }
   newAuctionButton() {
     this.browseAuctiontionService.newAuctionRedirect();
+  }
+
+  GoToProfile() {
+    this.userService.GoToProfile();
   }
 
   logout() {
