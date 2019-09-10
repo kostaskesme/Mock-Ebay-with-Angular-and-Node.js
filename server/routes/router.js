@@ -108,7 +108,7 @@ router.get('/getAuctionsBySeller/:id', function (req, res) {
   auctionController.getAuctionsBySeller(req, res);
 });
 
-router.get('/startAuction/:id', function (req, res) {
+router.post('/startAuction/:id', function (req, res) {
   auctionController.startAuctionById(req, res);
 });
 

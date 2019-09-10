@@ -1,7 +1,7 @@
 <div>
   <mat-card>
     <section class="mat-typography" style="text-align: center">
-      <h2>Create a new auction</h2>
+      <h4>Create a new auction</h4>
     </section>
     <mat-divider></mat-divider>
     <br>
@@ -23,14 +23,6 @@
         <input matInput type="number" placeholder="Buy Price" formControlName="buyPrice">
         <span matPrefix>$&nbsp;</span>
         <mat-hint>Not required</mat-hint>
-      </mat-form-field>
-      <mat-form-field class="half-width">
-        <input matInput type="date" placeholder="Choose a date" formControlName="date">
-        <mat-error *ngIf="bool4">Date is required</mat-error>
-      </mat-form-field>
-      <mat-form-field class="half-width">
-        <input matInput type="time" placeholder="Time" formControlName="time">
-        <mat-error *ngIf="bool5">Time is required</mat-error>
       </mat-form-field>
       <mat-form-field class="full-width">
         <textarea matInput placeholder="Item Description" formControlName="description"></textarea>

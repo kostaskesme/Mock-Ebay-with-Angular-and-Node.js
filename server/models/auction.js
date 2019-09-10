@@ -24,7 +24,7 @@ var AuctionSchema = new mongoose.Schema({
   location: { type: String, required: true, trim: true },
   country: { type: String, required: true, trim: true },
   started: { type: Date, default: Date.now },
-  ends: { type: Date, required: true },
+  ends: { type: Date},
   seller: {
     username: { type: String, required: true },
     rating: { type: Number, required: true },

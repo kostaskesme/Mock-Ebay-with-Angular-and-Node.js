@@ -74,7 +74,6 @@ export class RegisterComponent implements OnInit {
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
-    console.log(this.countries);
   }
 
   onSumbit() {
@@ -85,8 +84,6 @@ export class RegisterComponent implements OnInit {
     registerData.approved = "false";
     delete registerData.passwordConfirm;
 
-
-    console.log(registerData);
     this.authenticationService.register(registerData).then(response => {
       if (response) {
         this.router.navigate(['pendingApproval']);

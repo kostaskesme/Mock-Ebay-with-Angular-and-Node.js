@@ -4,7 +4,7 @@ exports.createAuction = function (req, res) {
   //console.log(req.body);
   var auctionFromRequest = new Auction(req.body);
   auctionFromRequest.save().then(AuctionFromdb => {
-    console.log(AuctionFromdb);
+    //console.log(AuctionFromdb);
     res.status(200).json({ created: true, auctionId: AuctionFromdb._id });
   })
     .catch(err => {
@@ -44,7 +44,7 @@ exports.getAuctionsBySeller = function (req, res) {
     }
     else
       res.status(200).json({ found: true, result: auctionList });
-      console.log(auctionList);
+      //console.log(auctionList);
   });
 }
 
@@ -56,10 +56,12 @@ exports.startAuctionById = function (req, res) {
     }
     else {
       auction.started = Date.now();
+      auction.ends = req.body.date + 'T' + req.body.time;
       auction.save().then(auction => {
         res.status(200).json({ message: `Auction with id:${req.params.id} started!` });
-        console.log(auction);
+        console.log(`Auction with id:${req.params.id} started!`);
       }).catch(err => {
+        console.log(err);
         res.status(400).send('Update failed');
       });
     }
@@ -110,12 +112,10 @@ exports.bidAuctionById = function (req, res) {
       res.status(400).send({ done: false, message: `Auction with id:${req.params.id} not found!`, error: err });
     }
     else {
-      console.log('before', auction.numberOfBids);
       auction.bids.push(req.body);
       auction.numberOfBids = auction.numberOfBids +1;
       auction.currently = req.body.amount;
       auction.save().then(auction => {
-        console.log('/nafter', auction)
         res.send({ done: true, message: 'Update Done' });
       }).catch(err => {
         res.status(400).send({ done: false, message: 'Update Failed' });
