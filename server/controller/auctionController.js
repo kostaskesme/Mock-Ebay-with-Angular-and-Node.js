@@ -42,9 +42,10 @@ exports.getAuctionsBySeller = function (req, res) {
       res.status(400).send({ found: false, message: 'Auction not found' });
       console.log(err);
     }
-    else
+    else {
       res.status(200).json({ found: true, result: auctionList });
       console.log(auctionList);
+    }
   });
 }
 
@@ -64,6 +65,50 @@ exports.startAuctionById = function (req, res) {
       });
     }
   });
+}
+
+function textSearch(res, field, term) {
+  Auction.find({ [field]: new RegExp(term, 'i') }, (err, auctionList) => {
+    if (err) {
+      res.status(400).send({ found: false, message: 'Auction not found' });
+      console.log(err);
+    }
+    else {
+      res.status(200).json({ found: true, result: auctionList });
+      console.log(auctionList);
+    }
+  });
+}
+
+function numSearch(res, field, term) {
+  Auction.find({ [field]: { $gte: term - 10, $lte: 10 + parseInt(term) } }, (err, auctionList) => {
+    if (err) {
+      res.status(400).send({ found: false, message: 'Auction not found' });
+      console.log(err);
+    }
+    else {
+      res.status(200).json({ found: true, result: auctionList });
+      console.log(auctionList);
+    }
+  });
+}
+
+exports.searchAuction = function (req, res) {
+  if (req.params.option === 'Name') {
+    textSearch(res, 'name', req.params.term);
+  }
+  if (req.params.option === 'Category') {
+    textSearch(res, 'category', req.params.term);
+  }
+  if (req.params.option === 'Description') {
+    textSearch(res, 'description', req.params.term);
+  }
+  if (req.params.option === 'Price') {
+    numSearch(res, 'buyPrice', req.params.term);
+  }
+  if (req.params.option === 'Location') {
+    textSearch(res, 'location', req.params.term);
+  }
 }
 
 exports.updateAuctionById = function (req, res) {
@@ -124,7 +169,7 @@ exports.bidAuctionById = function (req, res) {
   });
 }
 
-exports.deleteAuctionById = function () {
+exports.deleteAuctionById = function (req, res) {
   Auction.findByIdAndRemove({ _id: req.params.id }, (err, auction) => {
     if (err) {
       res.status(400).send({ error: `Auction with id:${req.params.id} not found!` });

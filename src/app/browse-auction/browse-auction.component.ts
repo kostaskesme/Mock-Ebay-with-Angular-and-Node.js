@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuctionService } from '../services/auction.service';
 import { Auction } from '../models/auction.type';
 import { Router } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from '../services/user.service';
@@ -20,8 +20,14 @@ export class BrowseAuctionComponent implements OnInit {
   displayedColumns: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'action'];
   auctionData: MatTableDataSource<Auction>;
   searchOptions: string[] = ['Name', 'Category', 'Description', 'Price', 'Location'];
-  option = new FormControl();
-  search = new FormControl();
+  searchForm = new FormGroup({
+    option: new FormControl('', [
+      Validators.required
+    ]),
+    search: new FormControl('', [
+      Validators.required
+    ])
+  });
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -35,7 +41,7 @@ export class BrowseAuctionComponent implements OnInit {
       else {
         console.log(response.message);
       }
-    })
+    });
   }
 
   onClick(auction: any) {
@@ -43,7 +49,18 @@ export class BrowseAuctionComponent implements OnInit {
   }
 
   onSubmit() {
-    alert("works");
+    var option = this.searchForm.value.option;
+    var term = this.searchForm.value.search;
+    this.browseAuctiontionService.searchAuction(option, term).then(response => {
+      if (response.found) {
+        console.log(response.result);
+        this.auctionData = new MatTableDataSource<Auction>(response.result);
+        this.auctionData.paginator = this.paginator;
+      }
+      else {
+        console.log(response.message);
+      }
+    });
   }
   newAuctionButton() {
     this.browseAuctiontionService.newAuctionRedirect();

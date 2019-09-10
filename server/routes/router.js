@@ -112,6 +112,10 @@ router.get('/startAuction/:id', function (req, res) {
   auctionController.startAuctionById(req, res);
 });
 
+router.get('/searchAuction/:option/:term', function (req, res) {
+  auctionController.searchAuction(req, res);
+});
+
 router.post('/updateAuction/:id', function (req, res) {
   auctionController.updateAuctionById(req, res);
 });
