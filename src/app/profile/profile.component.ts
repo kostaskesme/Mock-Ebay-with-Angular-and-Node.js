@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
   }
   displayedColumns: string[] = ['email', 'username', 'firstName', 'lastName', 'phoneNumber',
     'address', 'location', 'country', 'afm', 'rating', 'approved', ' '];
-  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'started', 'action'];
+  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'started', 'view', 'action'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit {
       if (response.found) {
         this.userData = [response.User];
         this.approved = response.User.approved;
-        if ((JSON.parse(this.cookieService.get('usersCookie')).type === 0) && (response.User.approved)){
+        if ((JSON.parse(this.cookieService.get('usersCookie')).type === 0) && (response.User.approved)) {
           this.showApproveButton = true;
         }
       }
@@ -84,16 +84,20 @@ export class ProfileComponent implements OnInit {
     //   alert('User is already approved');
     // }
     // else {
-      this.profileService.approve(this.id).then(response => {
-        if (response.found) {
-          alert('User approved!');
-          location.reload();
-        }
-        else {
-          alert('error!');
-        }
-      })
+    this.profileService.approve(this.id).then(response => {
+      if (response.found) {
+        alert('User approved!');
+        location.reload();
+      }
+      else {
+        alert('error!');
+      }
+    })
     // }
+  }
+
+  view(auction: any){
+    this.router.navigate([`viewAuction/${auction._id}`]);
   }
 
   start(auction: any) {

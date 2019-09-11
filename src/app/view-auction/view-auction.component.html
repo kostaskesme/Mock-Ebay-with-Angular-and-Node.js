@@ -116,8 +116,8 @@
     <button mat-raised-button (click)="bid()">Place Bid</button>
   </div>
   <br>
-  <button *ngIf = 'loggedIn' mat-raised-button  (click)="GoToProfile() " >Go to profile</button>
-  <button *ngIf = 'loggedIn' mat-raised-button  (click)="logout() " >Logout</button>
-  <button *ngIf = '!loggedIn' mat-raised-button  (click)="logout() " >Login</button>
+  <button *ngIf='loggedIn' mat-raised-button (click)="GoToProfile() ">Go to profile</button>
+  <button *ngIf='loggedIn' mat-raised-button (click)="logout() ">Logout</button>
+  <button *ngIf='!loggedIn' mat-raised-button (click)="logout() ">Login</button>
   <br><br>
 </div>

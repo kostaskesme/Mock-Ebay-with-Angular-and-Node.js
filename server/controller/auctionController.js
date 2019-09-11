@@ -26,7 +26,7 @@ exports.getAuctionById = function (req, res) {
 }
 
 exports.getAllAuctions = function (req, res) {
-  Auction.find({ started: { $ne: null } },(err, auctionList) => {
+  Auction.find({ started: { $ne: null }, ends: { $gt: Date.now() } }, (err, auctionList) => {
     if (err) {
       res.status(400).send({ found: false, message: 'Auction not found' });
       console.log(err);
@@ -37,19 +37,19 @@ exports.getAllAuctions = function (req, res) {
 }
 
 exports.getAuctionsBySeller = function (req, res) {
-  Auction.find({ 'seller.id': req.params.id },(err, auctionList) => {
+  Auction.find({ 'seller.id': req.params.id }, (err, auctionList) => {
     if (err) {
       res.status(400).send({ found: false, message: 'Auction not found' });
       console.log(err);
     }
     else
       res.status(200).json({ found: true, result: auctionList });
-      //console.log(auctionList);
+    //console.log(auctionList);
   });
 }
 
 exports.startAuctionById = function (req, res) {
-  Auction.findById(req.params.id ,(err, auction) => {
+  Auction.findById(req.params.id, (err, auction) => {
     if (!auction) {
       res.status(400).send({ error: `Auction with id:${req.params.id} not found!` });
       console.log(err);
@@ -113,7 +113,7 @@ exports.bidAuctionById = function (req, res) {
     }
     else {
       auction.bids.push(req.body);
-      auction.numberOfBids = auction.numberOfBids +1;
+      auction.numberOfBids = auction.numberOfBids + 1;
       auction.currently = req.body.amount;
       auction.save().then(auction => {
         res.send({ done: true, message: 'Update Done' });
