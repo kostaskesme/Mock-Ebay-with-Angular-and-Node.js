@@ -115,6 +115,9 @@ exports.bidAuctionById = function (req, res) {
       auction.bids.push(req.body);
       auction.numberOfBids = auction.numberOfBids + 1;
       auction.currently = req.body.amount;
+      if(auction.currently >= auction.buyPrice){
+        auction.ends = Date.now();
+      }
       auction.save().then(auction => {
         res.send({ done: true, message: 'Update Done' });
       }).catch(err => {

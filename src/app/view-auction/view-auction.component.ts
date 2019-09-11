@@ -50,8 +50,8 @@ export class ViewAuctionComponent implements OnInit {
 
 
   bid() {
-    if ((this.bidData.value.amount <= this.currently) || (this.bidData.value.amount >= this.buyPrice)) {
-      alert('Your bid must be between the current bid and the buying price!');
+    if (this.bidData.value.amount <= this.currently) {
+      alert('Your bid must be larger than the current bid!');
     }
     else {
       var id = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
@@ -67,9 +67,14 @@ export class ViewAuctionComponent implements OnInit {
         time: Date.now(),
         amount: this.bidData.value.amount
       }
+
       this.viewauctionService.bidAuction(id, bid).then(response => {
-        if (response.done)
+        if (response.done){
+          if(bid.amount >= this.auctionData[0].buyPrice){
+            alert('Congratulations! \n You have met the buying price of the item and have won the auction!')
+          }
           location.reload();
+        }
         else
           console.log(response);
       })
