@@ -176,6 +176,6 @@ exports.deleteAuctionById = function (req, res) {
       console.log(err);
     }
     else
-      res.json('Removed successfully');
+      res.json({ done: true, message: 'Removed successfully' });
   });
 }

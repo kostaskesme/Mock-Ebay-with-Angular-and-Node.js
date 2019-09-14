@@ -102,12 +102,13 @@
       </ng-container>
       <ng-container matColumnDef="started">
         <th mat-header-cell *matHeaderCellDef>Started</th>
-        <td mat-cell *matCellDef="let auction"> {{auction.started | date:'medium'}} </td>
+        <td mat-cell *matCellDef="let auction"> {{(auction.started | date:'medium') || 'Not yet'}} </td>
       </ng-container>
-      <ng-container matColumnDef="action">
+      <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let auction">
-          <button mat-raised-button color="primary" (click)="start(auction)">Start</button>
+          <button *ngIf="!auction.started" mat-button color="primary" (click)="start(auction)">Start</button>
+          <button *ngIf="!auction.numberOfBids" mat-button color="warn" (click)="delete(auction)">Delete</button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumnsAuction; sticky: true"></tr>

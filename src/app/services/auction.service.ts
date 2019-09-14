@@ -65,6 +65,13 @@ export class AuctionService {
     })
   }
 
+  public deleteAuction(id:string) {
+    const url = `${environment.appUrl}/deleteAuction/${id}`;
+    return this.httpClient.get<any>(url).toPromise().then(response => {
+      return Promise.resolve(response);
+    })
+  }
+
   public newAuctionRedirect() {
     if (!(this.cookieService.check('usersCookie'))) {
       alert('Not Autorized!');

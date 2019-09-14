@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionService } from '../services/auction.service';
@@ -8,7 +8,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -16,19 +15,18 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ProfileComponent implements OnInit {
 
-
-
   approved: boolean;
   userData: User[];
   auctionData: MatTableDataSource<Auction>;
   id: string = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
-
-  constructor(private route: ActivatedRoute, private profileService: UserService,private auctionService: AuctionService, private cookieService: CookieService, private router: Router) {
-    this.route.params.subscribe(params => console.log(params));
-  }
   displayedColumns: string[] = ['email', 'username', 'firstName', 'lastName', 'phoneNumber',
     'address', 'location', 'country', 'afm', 'rating', 'approved', ' '];
-  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'started','action'];
+  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'started','actions'];
+
+  constructor(private route: ActivatedRoute, private profileService: UserService, private auctionService: AuctionService,
+    private cookieService: CookieService, private router: Router) {
+    this.route.params.subscribe(params => console.log(params));
+  }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -92,13 +90,23 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  delete(auction: any) {
+    this.auctionService.deleteAuction(auction._id).then(response => {
+      if (response.done) {
+        console.log(response.message);
+        location.reload();
+      }
+      else {
+        console.log(response.error);
+      }
+    })
+  }
+
   logout() {
     this.profileService.logout();
   }
 
   newAuctionButton() {
-this.auctionService.newAuctionRedirect();
+    this.auctionService.newAuctionRedirect();
   }
-
-
 }
