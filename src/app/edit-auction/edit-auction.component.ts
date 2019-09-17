@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AuctionService } from '../services/auction.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -16,12 +16,14 @@ const ValidateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | n
 };
 
 @Component({
-  selector: 'app-auction',
-  templateUrl: './auction.component.html',
-  styleUrls: ['./auction.component.scss']
+  selector: 'app-edit-auction',
+  templateUrl: './edit-auction.component.html',
+  styleUrls: ['./edit-auction.component.scss']
 })
+export class EditAuctionComponent implements OnInit {
 
-export class AuctionComponent implements OnInit {
+  id: string;
+  auction: any;
 
   auctData = new FormGroup({
     name: new FormControl('', [
@@ -44,7 +46,8 @@ export class AuctionComponent implements OnInit {
   bool2: boolean;
   bool3: boolean;
 
-  constructor(private router: Router, private auctionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
+  constructor(private router: Router, private auctionService: AuctionService, private userService: UserService,
+    private cookieService: CookieService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     if (!(this.cookieService.check('usersCookie'))) {
@@ -56,6 +59,23 @@ export class AuctionComponent implements OnInit {
     this.bool1 = this.auctData.controls.name.errors.required;
     this.bool2 = this.auctData.controls.category.errors.required;
     this.bool3 = this.auctData.controls.firstBid.errors.required;
+
+    this.route.params.subscribe(params => {
+      this.id = params.id;
+      this.auctionService.viewAuction(this.id).then(response => {
+        if (response.found) {
+          this.auction = response.Auction;
+          this.auctData.get('name').setValue(this.auction.name);
+          this.auctData.get('category').setValue(this.auction.category);
+          this.auctData.get('firstBid').setValue(this.auction.firstBid);
+          this.auctData.get('buyPrice').setValue(this.auction.buyPrice);
+          this.auctData.get('description').setValue(this.auction.description);
+        }
+        else {
+          console.log('Cannot find auction!');
+        }
+      })
+    });
   }
 
   onSubmit() {
@@ -64,34 +84,18 @@ export class AuctionComponent implements OnInit {
       return;
     }
     var auctionData = this.auctData.value;
-    var userData = JSON.parse(this.cookieService.get('usersCookie'));
-    auctionData.seller = {
-      id: userData.id,
-      username: userData.username,
-      rating: userData.rating,
-    }
-    auctionData.numberOfBids = 0;
-    auctionData.started = null;
-    auctionData.ends = null;
-    auctionData.currently = auctionData.firstBid;
-    auctionData.location = userData.location;
-    auctionData.country = userData.country;
-    this.auctionService.createAuction(auctionData).then(response => {
-      if (response.created) {
-        this.router.navigate([`viewAuction/${response.auctionId}`])
+    //auctionData.ends = null;
+    this.auctionService.editAuction(this.id, auctionData).then(response => {
+      if (response.done) {
+        this.userService.GoToProfile();
       }
-      else{
+      else {
         console.log(response.message);
       }
-    })
+    });
   }
 
   GoToProfile() {
     this.userService.GoToProfile();
   }
-
-  logout() {
-    this.userService.logout();
-  }
-
 }

@@ -29,6 +29,7 @@ import { UserService } from './services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CookieService } from 'ngx-cookie-service';
+import { EditAuctionComponent } from './edit-auction/edit-auction.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { CookieService } from 'ngx-cookie-service';
     BrowseUsersComponent,
     ProfileComponent,
     WelcomeComponent,
+    EditAuctionComponent,
   ],
   imports: [
     BrowserModule,

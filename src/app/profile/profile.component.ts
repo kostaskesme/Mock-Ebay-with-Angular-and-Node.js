@@ -123,6 +123,10 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  edit(auction: any) {
+    this.router.navigate([`edit/${auction._id}`]);
+  }
+
   delete(auction: any) {
     this.auctionService.deleteAuction(auction._id).then(response => {
       if (response.done) {
