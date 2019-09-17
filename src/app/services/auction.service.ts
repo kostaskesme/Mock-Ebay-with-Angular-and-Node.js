@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
-    //'Authorization': 'my-auth-token'
   })
 };
 
@@ -44,9 +43,9 @@ export class AuctionService {
     })
   }
 
-  public startAuction(id:string) {
+  public startAuction(id:string, endTime: any) {
     const url = `${environment.appUrl}/startAuction/${id}`;
-    return this.httpClient.get<any>(url).toPromise().then(response => {
+    return this.httpClient.post<any>(url, endTime, httpOptions).toPromise().then(response => {
       return Promise.resolve(response);
     })
   }
