@@ -44,7 +44,7 @@ exports.getAuctionsBySeller = function (req, res) {
     }
     else {
       res.status(200).json({ found: true, result: auctionList });
-    //console.log(auctionList);
+    }
   });
 }
 
@@ -69,7 +69,7 @@ exports.startAuctionById = function (req, res) {
 }
 
 function textSearch(res, field, term) {
-  Auction.find({ [field]: new RegExp(term, 'i') }, (err, auctionList) => {
+  Auction.find({ [field]: new RegExp(term, 'i'), started: { $ne: null }, ends: { $gt: Date.now() } }, (err, auctionList) => {
     if (err) {
       res.status(400).send({ found: false, message: 'Auction not found' });
       console.log(err);
@@ -159,7 +159,7 @@ exports.bidAuctionById = function (req, res) {
       auction.bids.push(req.body);
       auction.numberOfBids = auction.numberOfBids + 1;
       auction.currently = req.body.amount;
-      if(auction.currently >= auction.buyPrice){
+      if (auction.currently >= auction.buyPrice) {
         auction.ends = Date.now();
       }
       auction.save().then(auction => {

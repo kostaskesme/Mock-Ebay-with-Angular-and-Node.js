@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
       if (response.found) {
         this.userData = [response.User];
         this.approved = response.User.approved;
-        if ((JSON.parse(this.cookieService.get('usersCookie')).type === 0) && (response.User.approved)) {
+        if ((JSON.parse(this.cookieService.get('usersCookie')).type === 0) && (!response.User.approved)) {
           this.showApproveButton = true;
         }
       }
