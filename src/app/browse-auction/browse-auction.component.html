@@ -3,19 +3,19 @@
   <!--<button mat-raised-button color="primary" routerLink="/newAuction">Create New Auction</button>-->
   <button mat-raised-button color="primary" (click)="newAuctionButton()">Create New Auction</button>
 
-  <form (ngSubmit)="onSubmit()" class="form">
+  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="form">
     <mat-form-field>
       <mat-label>Search by</mat-label>
-      <mat-select [formControl]="option" required>
+      <mat-select formControlName="option">
         <mat-option *ngFor="let option of searchOptions" [value]="option">
           {{option}}
         </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="search">
-      <input type="search" matInput placeholder="Search" [formControl]="search">
+      <input type="search" matInput placeholder="Search" formControlName="search">
     </mat-form-field>
-    <button mat-icon-button color="primary">
+    <button mat-icon-button color="primary" [disabled]="!searchForm.valid">
       <mat-icon>search</mat-icon>
     </button>
   </form>
@@ -65,4 +65,3 @@
   <button *ngIf = 'loggedIn' mat-raised-button  (click)="GoToProfile() " >Go to profile</button>
   <button *ngIf = 'loggedIn' mat-raised-button  (click)="logout() " >Logout</button>
   <button *ngIf = '!loggedIn' mat-raised-button  (click)="logout() " >Login</button>
-</div>

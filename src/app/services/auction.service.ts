@@ -50,9 +50,23 @@ export class AuctionService {
     })
   }
 
+  public searchAuction(option:string, term:string) {
+    const url = `${environment.appUrl}/searchAuction/${option}/${term}`;
+    return this.httpClient.get<any>(url).toPromise().then(response => {
+      return Promise.resolve(response);
+    })
+  }
+
   public bidAuction(id:string, bidData : any) {
     const url = `${environment.appUrl}/bidAuction/${id}`;
     return this.httpClient.post<any>(url, bidData, httpOptions).toPromise().then(response => {
+      return Promise.resolve(response);
+    })
+  }
+
+  public deleteAuction(id:string) {
+    const url = `${environment.appUrl}/deleteAuction/${id}`;
+    return this.httpClient.get<any>(url).toPromise().then(response => {
       return Promise.resolve(response);
     })
   }

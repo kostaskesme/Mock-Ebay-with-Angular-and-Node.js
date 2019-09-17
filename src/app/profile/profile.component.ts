@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionService } from '../services/auction.service';
@@ -10,15 +10,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { DataSource } from '@angular/cdk/table';
 
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
-
 
   approved: boolean;
   showApproveButton: boolean;
@@ -126,6 +123,18 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  delete(auction: any) {
+    this.auctionService.deleteAuction(auction._id).then(response => {
+      if (response.done) {
+        console.log(response.message);
+        location.reload();
+      }
+      else {
+        console.log(response.error);
+      }
+    })
+  }
+
   logout() {
     this.profileService.logout();
   }
@@ -133,6 +142,4 @@ export class ProfileComponent implements OnInit {
   newAuctionButton() {
     this.auctionService.newAuctionRedirect();
   }
-
-
 }
