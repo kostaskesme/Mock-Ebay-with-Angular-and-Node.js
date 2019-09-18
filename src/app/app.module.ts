@@ -29,6 +29,7 @@ import { UserService } from './services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CookieService } from 'ngx-cookie-service';
+import { NominatimService } from './services/nominatim.service';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { CookieService } from 'ngx-cookie-service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthenticationService, AuctionService, UserService, CookieService],
+  providers: [AuthenticationService, AuctionService, UserService, CookieService, NominatimService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

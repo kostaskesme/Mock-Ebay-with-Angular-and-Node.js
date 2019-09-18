@@ -4,7 +4,8 @@ import { Auction } from '../models/auction.type';
 import { FormControl, Validators, ValidatorFn, ValidationErrors, AbstractControl, FormGroup } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
-
+import { NominatimService } from '../services/nominatim.service';
+declare var ol: any;
 
 @Component({
   selector: 'app-view-auction',
@@ -14,7 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 export class ViewAuctionComponent implements OnInit {
 
-  constructor(private viewauctionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
+  constructor(private viewauctionService: AuctionService, private userService: UserService, private cookieService: CookieService, private nominatimService: NominatimService) { }
 
   displayedColumns: string[] = ['name', 'desc', 'currentBid', 'noOfBids', 'buyPrice', 'firstBid', 'seller', 'sellerRat', 'location', 'country', 'startTime', 'endTime',];
   bidderColumns: string[] = ['amount', 'bidder', 'bidRat', 'time', 'location', 'country'];
@@ -30,6 +31,7 @@ export class ViewAuctionComponent implements OnInit {
     ])
   })
   loggedIn: Boolean;
+  map: any;
 
   ngOnInit() {
     this.loggedIn = this.cookieService.check('usersCookie');
@@ -41,6 +43,42 @@ export class ViewAuctionComponent implements OnInit {
         this.buyPrice = this.auctionData[0].buyPrice;
         this.sellerName = this.auctionData[0].seller.username;
         this.ifBids = this.auctionData[0].numberOfBids > 0;
+        var locationData = {
+          country: this.auctionData[0].country,
+          location: this.auctionData[0].location
+        }
+        this.nominatimService.getCoordinates(locationData).then(response => {
+          if (response[0].lon) {
+            console.log(typeof response[0].lon);
+            this.map = new ol.Map({
+              target: 'map',
+              layers: [
+                new ol.layer.Tile({
+                  source: new ol.source.OSM()
+                })
+              ],
+              view: new ol.View({
+                center: ol.proj.fromLonLat([Number(response[0].lon), Number(response[0].lat)]),
+                zoom: 15
+              })
+            });
+          }
+          else {
+            alert('Cant find map of the auction here is DI instead!')
+            this.map = new ol.Map({
+              target: 'map',
+              layers: [
+                new ol.layer.Tile({
+                  source: new ol.source.OSM()
+                })
+              ],
+              view: new ol.View({
+                center: ol.proj.fromLonLat([23.7668007554141, 37.96860355]),
+                zoom: 15
+              })
+            });
+          }
+        })
       }
       else {
         console.log('Cannot find auction!');
@@ -69,8 +107,8 @@ export class ViewAuctionComponent implements OnInit {
       }
 
       this.viewauctionService.bidAuction(id, bid).then(response => {
-        if (response.done){
-          if(bid.amount >= this.auctionData[0].buyPrice){
+        if (response.done) {
+          if (bid.amount >= this.auctionData[0].buyPrice) {
             alert('Congratulations! \n You have met the buying price of the item and have won the auction!')
           }
           location.reload();

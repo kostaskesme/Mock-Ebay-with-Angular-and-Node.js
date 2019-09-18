@@ -70,6 +70,8 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <br><br>
+  <div id="map" class="map"></div>
+  <br><br>
   <table *ngIf='ifBids' mat-table [dataSource]="auctionData[0].bids" class="mat-elevation-z8">
 
     <ng-container matColumnDef="amount">
