@@ -47,9 +47,8 @@ export class ViewAuctionComponent implements OnInit {
           country: this.auctionData[0].country,
           location: this.auctionData[0].location
         }
-        this.nominatimService.getCoordinates(locationData).then(response => {
-          if (response[0].lon) {
-            console.log(typeof response[0].lon);
+        this.nominatimService.getCoordinates(locationData).then(response2 => {
+          if (response2 == []) {
             this.map = new ol.Map({
               target: 'map',
               layers: [
