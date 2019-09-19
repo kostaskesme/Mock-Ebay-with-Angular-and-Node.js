@@ -3,11 +3,13 @@ var Message = require('../models/message');
 //get all messages by sender
 exports.getAllMessagesBySender = function (req, res) {
   Message.find({ sender: req.params.id }, (err, messages) => {
-    if (err || Array.isArray(messages) && (!messages.length)) {
+    if (err) {
       res.status(400).send({ found: false, message: 'Could not get messages' });
-      if (err)
-        console.log(err);
+      console.log(err);
     }
+    /*else if (Array.isArray(messages) && (!messages.length)) {
+      res.status(200).json({ found: true, result: messages });
+    }*/
     else
       res.status(200).json({ found: true, result: messages });
   });
@@ -16,10 +18,9 @@ exports.getAllMessagesBySender = function (req, res) {
 //get all messages by receiver
 exports.getAllMessagesByReceiver = function (req, res) {
   Message.find({ receiver: req.params.id }, (err, messages) => {
-    if (err || Array.isArray(messages) && (!messages.length)) {
+    if (err) {
       res.status(400).send({ found: false, message: 'Could not get messages' });
-      if (err)
-        console.log(err);
+      console.log(err);
     }
     else
       res.status(200).json({ found: true, result: messages });
@@ -47,6 +48,6 @@ exports.deleteMessageById = function (req, res) {
       console.log(err);
     }
     else
-      res.json('Removed successfully');
+      res.json({ done: true, message: 'Removed successfully' });
   });
 }

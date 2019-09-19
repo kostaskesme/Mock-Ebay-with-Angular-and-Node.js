@@ -30,6 +30,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CookieService } from 'ngx-cookie-service';
 import { EditAuctionComponent } from './edit-auction/edit-auction.component';
+import { MessageService } from './services/message.service';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { EditAuctionComponent } from './edit-auction/edit-auction.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthenticationService, AuctionService, UserService, CookieService],
+  providers: [AuthenticationService, AuctionService, UserService, CookieService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
