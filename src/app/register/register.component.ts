@@ -28,7 +28,6 @@ export class RegisterComponent implements OnInit {
     ]),
     username: new FormControl('', [
       Validators.required
-      //checkUnique()
     ]),
     password: new FormControl('', [
       Validators.required,

@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/enviroment.local';
 import { Router } from '@angular/router';
-import { HttpClient } from 'selenium-webdriver/http';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
@@ -54,8 +52,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
-    //db.users.updateOne({'username': 'admin'},{$set :{'type': 0}}) //command to set admin type in mongo shell
-
     if (this.logData.value.username && this.logData.value.username) {
       this.authenticationService.authenticate(this.logData.value).then(result => {
         if (result.isLoggedIn) {

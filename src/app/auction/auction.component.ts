@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 
 
-const ValidateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => { //+VALIDATOR FOR ENDTIME > STARTTIME
+const ValidateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const firstBid = control.get('firstBid');
   const buyPrice = control.get('buyPrice');
   if (firstBid.value < buyPrice.value)

@@ -57,7 +57,6 @@ export class BrowseAuctionComponent implements OnInit {
     var term = this.searchForm.value.search;
     this.browseAuctiontionService.searchAuction(option, term).then(response => {
       if (response.found) {
-        console.log(response.result);
         this.auctionData = new MatTableDataSource<Auction>(response.result);
         this.auctionData.paginator = this.paginator;
       }

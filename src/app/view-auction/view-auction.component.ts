@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuctionService } from 'src/app/services/auction.service';
 import { Auction } from '../models/auction.type';
-import { FormControl, Validators, ValidatorFn, ValidationErrors, AbstractControl, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { NominatimService } from '../services/nominatim.service';
