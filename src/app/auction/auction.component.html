@@ -10,10 +10,17 @@
         <input matInput placeholder="Item's Name" formControlName="name">
         <mat-error *ngIf="bool1">Name is required</mat-error>
       </mat-form-field>
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Category" formControlName="category">
-        <mat-error *ngIf="bool2">Category is required</mat-error>
+
+      <mat-form-field>
+        <mat-select formControlName="category" placeholder = "Categories" multiple>
+          <mat-optgroup *ngFor="let group of categoryGroups" [label]="group.name">
+            <mat-option *ngFor="let category of group.categories" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
       </mat-form-field>
+
       <mat-form-field class="full-width">
         <input matInput type="number" placeholder="First Bid" formControlName="firstBid">
         <span matPrefix>€&nbsp;</span>

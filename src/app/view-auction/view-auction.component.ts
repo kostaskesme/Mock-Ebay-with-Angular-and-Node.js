@@ -17,7 +17,7 @@ export class ViewAuctionComponent implements OnInit {
 
   constructor(private viewauctionService: AuctionService, private userService: UserService, private cookieService: CookieService, private nominatimService: NominatimService) { }
 
-  displayedColumns: string[] = ['name', 'desc', 'currentBid', 'noOfBids', 'buyPrice', 'firstBid', 'seller', 'sellerRat', 'location', 'country', 'startTime', 'endTime',];
+  displayedColumns: string[] = ['name', 'desc','categories', 'currentBid', 'noOfBids', 'buyPrice', 'firstBid', 'seller', 'sellerRat', 'location', 'country', 'startTime', 'endTime',];
   bidderColumns: string[] = ['amount', 'bidder', 'bidRat', 'time', 'location', 'country'];
   auctionData: Auction[];
   currently: Number;
@@ -48,7 +48,8 @@ export class ViewAuctionComponent implements OnInit {
           location: this.auctionData[0].location
         }
         this.nominatimService.getCoordinates(locationData).then(response2 => {
-          if (response2 == []) {
+          console.log(response2);
+          if (response2 != []) {
             this.map = new ol.Map({
               target: 'map',
               layers: [
@@ -57,7 +58,7 @@ export class ViewAuctionComponent implements OnInit {
                 })
               ],
               view: new ol.View({
-                center: ol.proj.fromLonLat([Number(response[0].lon), Number(response[0].lat)]),
+                center: ol.proj.fromLonLat([Number(response2[0].lon), Number(response2[0].lat)]),
                 zoom: 15
               })
             });

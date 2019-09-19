@@ -4,6 +4,7 @@ import { AuctionService } from '../services/auction.service';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
+import{CategoryGroup, CategoryGroups} from './categories'
 
 
 const ValidateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
@@ -38,6 +39,7 @@ export class AuctionComponent implements OnInit {
   }, { validators: ValidateBuyPrice});
   
   loggedIn: Boolean;
+  categoryGroups : CategoryGroup[] = CategoryGroups;
 
 
   bool1: boolean;
