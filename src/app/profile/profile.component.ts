@@ -8,6 +8,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { MessageService } from '../services/message.service';
+import { Message } from '../models/message.type';
 
 @Component({
   selector: 'app-profile',
@@ -16,10 +18,17 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class ProfileComponent implements OnInit {
 
+  displayedColumns: string[] = ['email', 'username', 'firstName', 'lastName', 'phoneNumber',
+    'address', 'location', 'country', 'afm', 'rating', 'approved', ' '];
+  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'started', 'view', 'action'];
+  displayedColumnsMessage: string[] = ['sender', 'receiver', 'message', 'action'];
+
   approved: boolean;
   showApproveButton: boolean;
   userData: User[];
   auctionData: MatTableDataSource<Auction>;
+  sentMessages: MatTableDataSource<Message>;
+  receivedMessages: MatTableDataSource<Message>;
   id: string = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
   showEndTimeForm = false;
   auctionToStartId: string;
@@ -34,12 +43,10 @@ export class ProfileComponent implements OnInit {
     ]),
   });
 
-  constructor(private route: ActivatedRoute, private profileService: UserService, private auctionService: AuctionService, private cookieService: CookieService, private router: Router) {
+  constructor(private route: ActivatedRoute, private profileService: UserService, private auctionService: AuctionService,
+    private cookieService: CookieService, private router: Router, private messageService: MessageService) {
     this.route.params.subscribe(params => console.log(params));
   }
-  displayedColumns: string[] = ['email', 'username', 'firstName', 'lastName', 'phoneNumber',
-    'address', 'location', 'country', 'afm', 'rating', 'approved', ' '];
-  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'started', 'view', 'action'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -63,7 +70,7 @@ export class ProfileComponent implements OnInit {
       else {
         console.log('cant find user!');
       }
-    })
+    });
     this.auctionService.viewAuctionsBySeller(this.id).then(response => {
       if (response.found) {
         this.auctionData = new MatTableDataSource<Auction>(response.result);
@@ -72,7 +79,24 @@ export class ProfileComponent implements OnInit {
       else {
         console.log('cant find auctions!');
       }
-    })
+    });
+    var userData = JSON.parse(this.cookieService.get('usersCookie'));
+    this.messageService.getMessageReceiver(userData.username).then(response => {
+      if (response.found) {
+        this.receivedMessages = new MatTableDataSource<Message>(response.result);
+      }
+      else {
+        console.log('cant find messages!');
+      }
+    });
+    this.messageService.getMessageSender(userData.username).then(response => {
+      if (response.found) {
+        this.sentMessages = new MatTableDataSource<Message>(response.result);
+      }
+      else {
+        console.log('cant find messages!');
+      }
+    });
   }
 
   onClick() {
@@ -117,8 +141,24 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  edit(auction: any) {
+    this.router.navigate([`edit/${auction._id}`]);
+  }
+
   delete(auction: any) {
     this.auctionService.deleteAuction(auction._id).then(response => {
+      if (response.done) {
+        console.log(response.message);
+        location.reload();
+      }
+      else {
+        console.log(response.error);
+      }
+    })
+  }
+
+  deleteMessage(message: any) {
+    this.messageService.deleteMessage(message._id).then(response => {
       if (response.done) {
         console.log(response.message);
         location.reload();

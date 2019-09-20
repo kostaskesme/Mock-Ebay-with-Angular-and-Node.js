@@ -64,6 +64,13 @@ export class AuctionService {
     })
   }
 
+  public editAuction(id:string, auctionData: any) {
+    const url = `${environment.appUrl}/updateAuction/${id}`;
+    return this.httpClient.post<any>(url, auctionData, httpOptions).toPromise().then(response => {
+      return Promise.resolve(response);
+    })
+  }
+
   public deleteAuction(id:string) {
     const url = `${environment.appUrl}/deleteAuction/${id}`;
     return this.httpClient.get<any>(url).toPromise().then(response => {
@@ -73,7 +80,7 @@ export class AuctionService {
 
   public newAuctionRedirect() {
     if (!(this.cookieService.check('usersCookie'))) {
-      alert('Not Autorized!');
+      alert('Not Authorized!');
     }
     else {
       this.router.navigate(['/newAuction']);

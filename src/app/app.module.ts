@@ -28,8 +28,10 @@ import { BrowseUsersComponent } from './browse-users/browse-users.component';
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { CookieService } from 'ngx-cookie-service';
 import { NominatimService } from './services/nominatim.service';
+import { CookieService } from 'ngx-cookie-service';
+import { EditAuctionComponent } from './edit-auction/edit-auction.component';
+import { MessageService } from './services/message.service';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { NominatimService } from './services/nominatim.service';
     BrowseUsersComponent,
     ProfileComponent,
     WelcomeComponent,
+    EditAuctionComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,7 @@ import { NominatimService } from './services/nominatim.service';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthenticationService, AuctionService, UserService, CookieService, NominatimService],
+  providers: [AuthenticationService, AuctionService, UserService, CookieService, MessageService, NominatimService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
