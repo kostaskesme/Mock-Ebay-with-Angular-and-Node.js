@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { UserService } from '../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuctionService } from '../services/auction.service';
@@ -8,7 +8,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { DataSource } from '@angular/cdk/table';
 import { MessageService } from '../services/message.service';
 import { Message } from '../models/message.type';
 
@@ -64,7 +63,7 @@ export class ProfileComponent implements OnInit {
       if (response.found) {
         this.userData = [response.User];
         this.approved = response.User.approved;
-        if ((JSON.parse(this.cookieService.get('usersCookie')).type === 0) && (response.User.approved)) {
+        if ((JSON.parse(this.cookieService.get('usersCookie')).type === 0) && (!response.User.approved)) {
           this.showApproveButton = true;
         }
       }
@@ -101,10 +100,6 @@ export class ProfileComponent implements OnInit {
   }
 
   onClick() {
-    // if (this.approved) {
-    //   alert('User is already approved');
-    // }
-    // else {
     this.profileService.approve(this.id).then(response => {
       if (response.found) {
         alert('User approved!');
@@ -114,7 +109,6 @@ export class ProfileComponent implements OnInit {
         alert('error!');
       }
     })
-    // }
   }
 
   view(auction: any){
@@ -132,7 +126,7 @@ export class ProfileComponent implements OnInit {
       time: this.timeData.value.time
     };
     if ((Date.parse(endTime.date + 'T' + endTime.time)) < Date.now()) {
-      alert('Please select a date in the fut');
+      alert('Please select a date in the future');
     }
     else {
       this.auctionService.startAuction(this.auctionToStartId, endTime).then(response => {
