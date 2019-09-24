@@ -1,3 +1,29 @@
+<body class="text-center">
+    <form [formGroup]="logData" class="form-signin" (ngSubmit)="login()">
+      <!--<img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <br>
+      <label for="inputUsername" class="sr-only">Username</label>
+      <input type="text" id="inputUsername" class="form-control" placeholder="Username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && this.logData.controls.username.errors }" required autofocus>
+      <div *ngIf="submitted && this.logData.controls.username.errors" class="invalid-feedback">
+        <div *ngIf="bool1" style="text-align: left">Username is required</div>
+      </div>
+      <label for="inputPassword" class="sr-only">Password</label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && this.logData.controls.password.errors }" required>
+      <div *ngIf="submitted && this.logData.controls.password.errors" class="invalid-feedback">
+        <div *ngIf="bool2" style="text-align: left">Password is required</div>
+      </div>
+      <br>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <br>
+      <mat-divider></mat-divider>
+      <br>
+      Don't have an account ? <a routerLink="/register" > Click to register</a>
+      Go to <a routerLink="/"> Home</a> page
+    </form>
+</body>
+
+<!--
 <form [formGroup]="logData">
     <div class="data1">
         <mat-form-field appearance="outline">
@@ -13,6 +39,7 @@
     Don't have an account ? <a href="https://localhost:4200/register"> Click to register</a>
 
 </form>
+
 
 
 <!--<mat-card class="example-card">
