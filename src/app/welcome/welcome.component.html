@@ -1,4 +1,37 @@
-<p>Welcome !</p>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/viewAuction">Browse</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Sign in</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="welcome-text">
+      <h1>Welcome to our site!</h1>
+      <p class="lead text-white"><a class="text-dark font-weight-normal" routerLink="/viewAuction" >Browse</a> auctions as a guest.</p>
+      <p class="lead text-white">You can register <a class="text-dark font-weight-normal" routerLink="/register" >here</a>, <br>or <a class="text-dark font-weight-normal" routerLink="/login" >sign in</a> if you already have an account.</p>
+    </div>
+  </div>
+</body>
+
+<!--<p>Welcome !</p>
 <script>
     import { CookieService } from 'ngx-cookie-service';
     window.addEventListener('unload', function(event) {
@@ -16,4 +49,4 @@
 
 <div>
     <a [routerLink]="'/viewAuction'">Browse the auctions as a guest</a>
-</div>
+</div>-->
