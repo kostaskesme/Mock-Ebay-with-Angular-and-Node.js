@@ -4,14 +4,13 @@ import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { dropdownValues } from './countries';
 
-
 const passwordConfirmation: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const password = control.get('password');
   const passwordConfirm = control.get('passwordConfirm');
   if (password.value === passwordConfirm.value)
     return null;
   else
-    return { 'passwordsMatch': false };
+    return { 'passwordsMatch': true };
 };
 
 
@@ -67,15 +66,22 @@ export class RegisterComponent implements OnInit {
   }, { validators: passwordConfirmation });
 
   countries: string[] = dropdownValues;
-
+  submitted:boolean = false;
+  fControls:any;
 
 
   constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
+    this.fControls = this.regData.controls;
   }
 
-  onSumbit() {
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.regData.invalid) {
+        return;
+    }
 
     var registerData = this.regData.value;
     registerData.rating = "0";
@@ -85,14 +91,20 @@ export class RegisterComponent implements OnInit {
 
     this.authenticationService.register(registerData).then(response => {
       if (response) {
-        alert('You have registered succesfully and are pending approval from an admin. Until then you can browse the site as a guest')
-        this.router.navigate(['viewAuction']);
+        //alert('You have registered succesfully and are pending approval from an admin. Until then you can browse the site as a guest')
+        this.router.navigate(['pending']);
       }
       else {
         console.log(response.message);
       }
     })
 
+  }
+
+  onReset() {
+    this.submitted = false;
+    this.regData.reset({ country: 'Greece' });
+    //console.log(this.regData);
   }
 
 }

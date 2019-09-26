@@ -9,6 +9,7 @@ import { BrowseUsersComponent } from './browse-users/browse-users.component';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { EditAuctionComponent } from './edit-auction/edit-auction.component';
+import { PendingComponent } from './pending/pending.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,9 @@ const routes: Routes = [
   },
   {
     path : 'edit/:id', component: EditAuctionComponent
+  },
+  {
+    path : 'pending', component: PendingComponent
   }
 ];
 

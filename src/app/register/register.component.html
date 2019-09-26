@@ -1,3 +1,117 @@
+<body class="text-center">
+  <form [formGroup]="regData" class="form-register" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col">
+        <label>Username</label>
+        <input type="text" placeholder="Username" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.username.errors }" />
+        <div *ngIf="submitted && fControls.username.errors" class="invalid-feedback">
+          <div *ngIf="fControls.username.errors.required">Username is required</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label>E-mail</label>
+        <input type="text" placeholder="email@example.com" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.email.errors }" />
+        <div *ngIf="submitted && fControls.email.errors" class="invalid-feedback">
+          <div *ngIf="fControls.email.errors.required">Email is required</div>
+          <div *ngIf="fControls.email.errors.email">Email must be a valid email address</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label>First Name</label>
+        <input type="text" placeholder="First Name" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.firstName.errors }" />
+        <div *ngIf="submitted && fControls.firstName.errors" class="invalid-feedback">
+          <div *ngIf="fControls.firstName.errors.required">First Name is required</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label>Last Name</label>
+        <input type="text" placeholder="Last Name" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.lastName.errors }" />
+        <div *ngIf="submitted && fControls.lastName.errors" class="invalid-feedback">
+          <div *ngIf="fControls.lastName.errors.required">Last Name is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label>Phone Number</label>
+        <input type="text" placeholder="Phone Number" formControlName="phoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.phoneNumber.errors }" />
+        <div *ngIf="submitted && fControls.phoneNumber.errors" class="invalid-feedback">
+          <div *ngIf="fControls.phoneNumber.errors.required">Phone number is required</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label>Address</label>
+        <input type="text" placeholder="Address" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.address.errors }" />
+        <div *ngIf="submitted && fControls.address.errors" class="invalid-feedback">
+          <div *ngIf="fControls.address.errors.required">Address is required</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label>AFM</label>
+        <input type="text" placeholder="AFM" formControlName="afm" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.afm.errors }" />
+        <div *ngIf="submitted && fControls.afm.errors" class="invalid-feedback">
+          <div *ngIf="fControls.afm.errors.required">AFM is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label>Location</label>
+        <input type="text" placeholder="Location" formControlName="location" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.location.errors }" />
+        <div *ngIf="submitted && fControls.location.errors" class="invalid-feedback">
+          <div *ngIf="fControls.location.errors.required">Location is required</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label>Country</label>
+        <select formControlName="country" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.country.errors }">
+          <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+        </select>
+        <div *ngIf="submitted && fControls.country.errors" class="invalid-feedback">
+          <div *ngIf="fControls.country.errors.required">Country is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label>Password</label>
+        <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.password.errors }" />
+        <div *ngIf="submitted && fControls.password.errors" class="invalid-feedback">
+          <div *ngIf="fControls.password.errors.required">Password is required</div>
+          <div *ngIf="fControls.password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label>Confirm Password</label>
+        <input type="password" placeholder="Confirm Password" formControlName="passwordConfirm" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.passwordConfirm.errors }" />
+        <div *ngIf="submitted && fControls.passwordConfirm.errors" class="invalid-feedback">
+          <div *ngIf="fControls.passwordConfirm.errors.required">Confirm Password is required</div>
+          <div *ngIf="this.regData.errors?.passwordsMatch">Passwords must match</div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="text-center">
+      <button class="btn btn-lg btn-primary" type="submit">Register</button>
+      <button class="btn btn-lg btn-secondary" type="reset" (click)="onReset()">Reset</button>
+    </div>
+
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    Go to <a routerLink="/"> Home</a> page
+  </form>
+</body>
+
+<!--
 Enter your data to register
 
 <form [formGroup]="regData" (ngSubmit)="onSumbit()">
@@ -55,7 +169,6 @@ Enter your data to register
             <input matInput placeholder="Location" formControlName="location">
         </mat-form-field>
 
-<!-- TO BE CONTINUED-->
         <mat-form-field appearance="outline">
             <mat-label>Country</mat-label>
                 <mat-select formControlName="country">
@@ -65,9 +178,6 @@ Enter your data to register
             </mat-select>
         </mat-form-field>
 
-        <!-- <mat-form-field appearance="outline">
-            <input matInput placeholder="Country" formControlName="country">
-        </mat-form-field>-->
 
         <mat-form-field appearance="outline">
             <input matInput placeholder="afm" formControlName="afm">
@@ -78,3 +188,4 @@ Enter your data to register
     <button type="submit" [disabled]="!regData.valid">Submit</button>
 
 </form>
+-->

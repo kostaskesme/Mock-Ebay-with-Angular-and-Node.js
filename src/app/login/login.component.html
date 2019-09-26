@@ -4,13 +4,13 @@
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <br>
       <label for="inputUsername" class="sr-only">Username</label>
-      <input type="text" id="inputUsername" class="form-control" placeholder="Username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && this.logData.controls.username.errors }" required autofocus>
-      <div *ngIf="submitted && this.logData.controls.username.errors" class="invalid-feedback">
+      <input type="text" id="inputUsername" class="form-control" placeholder="Username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && fControls.username.errors }" required autofocus>
+      <div *ngIf="submitted && fControls.username.errors" class="invalid-feedback">
         <div *ngIf="bool1" style="text-align: left">Username is required</div>
       </div>
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && this.logData.controls.password.errors }" required>
-      <div *ngIf="submitted && this.logData.controls.password.errors" class="invalid-feedback">
+      <input type="password" id="inputPassword" class="form-control" placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && fControls.password.errors }" required>
+      <div *ngIf="submitted && fControls.password.errors" class="invalid-feedback">
         <div *ngIf="bool2" style="text-align: left">Password is required</div>
       </div>
       <br>

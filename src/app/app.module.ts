@@ -32,6 +32,7 @@ import { NominatimService } from './services/nominatim.service';
 import { CookieService } from 'ngx-cookie-service';
 import { EditAuctionComponent } from './edit-auction/edit-auction.component';
 import { MessageService } from './services/message.service';
+import { PendingComponent } from './pending/pending.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MessageService } from './services/message.service';
     ProfileComponent,
     WelcomeComponent,
     EditAuctionComponent,
+    PendingComponent,
   ],
   imports: [
     BrowserModule,
