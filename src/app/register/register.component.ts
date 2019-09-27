@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
 import { AuthenticationService } from '../services/authentication.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { dropdownValues } from './countries';
 
@@ -70,7 +71,7 @@ export class RegisterComponent implements OnInit {
   fControls:any;
 
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
     this.fControls = this.regData.controls;
@@ -92,6 +93,7 @@ export class RegisterComponent implements OnInit {
     this.authenticationService.register(registerData).then(response => {
       if (response) {
         //alert('You have registered succesfully and are pending approval from an admin. Until then you can browse the site as a guest')
+        this.cookieService.delete('usersCookie');
         this.router.navigate(['pending']);
       }
       else {

@@ -1,3 +1,150 @@
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li *ngIf="bool2" class="nav-item">
+          <button class="btn text-light" (click) = "GoToProfile()">Profile</button>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/viewAuction">Browse</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+        <li *ngIf="bool1" class="nav-item">
+          <a class="nav-link" routerLink="/login">Sign in</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="table-box">
+    <table mat-table [dataSource]="auctionData" class="full-width">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Item</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="desc">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.description}} </td>
+      </ng-container>
+      <ng-container matColumnDef="categories">
+        <th mat-header-cell *matHeaderCellDef>Categories</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.category}} </td>
+      </ng-container>
+      <ng-container matColumnDef="currentBid">
+        <th mat-header-cell *matHeaderCellDef>Current bid €</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.currently}} </td>
+      </ng-container>
+      <ng-container matColumnDef="noOfBids">
+        <th mat-header-cell *matHeaderCellDef># of bids</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.numberOfBids}} </td>
+      </ng-container>
+      <ng-container matColumnDef="buyPrice">
+        <th mat-header-cell *matHeaderCellDef>Buy price €</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.buyPrice || 'None'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="firstBid">
+        <th mat-header-cell *matHeaderCellDef>First Bid €</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.firstBid}} </td>
+      </ng-container>
+      <ng-container matColumnDef="seller">
+        <th mat-header-cell *matHeaderCellDef>Seller</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.seller.username}} </td>
+      </ng-container>
+      <ng-container matColumnDef="sellerRat">
+        <th mat-header-cell *matHeaderCellDef>Seller's rating</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.seller.rating}} </td>
+      </ng-container>
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef>Location</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.location}} </td>
+      </ng-container>
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef>Country</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.country}} </td>
+      </ng-container>
+      <ng-container matColumnDef="startTime">
+        <th mat-header-cell *matHeaderCellDef>Start time</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.started | date:'medium'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="endTime">
+        <th mat-header-cell *matHeaderCellDef>End time</th>
+        <td mat-cell *matCellDef="let auction"> {{auction.ends | date:'medium'}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <br><br>
+    <div id="map" class="map"></div>
+    <br><br>
+
+    <table *ngIf='ifBids' mat-table [dataSource]="auctionData[0].bids" class="full-width">
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let bid"> {{bid.amount}} </td>
+      </ng-container>
+      <ng-container matColumnDef="bidder">
+        <th mat-header-cell *matHeaderCellDef>Bidder</th>
+        <td mat-cell *matCellDef="let bid"> {{bid.bidder.username}} </td>
+      </ng-container>
+      <ng-container matColumnDef="bidRat">
+        <th mat-header-cell *matHeaderCellDef>Bidder's rating</th>
+        <td mat-cell *matCellDef="let bid"> {{bid.bidder.rating}} </td>
+      </ng-container>
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef>Time</th>
+        <td mat-cell *matCellDef="let bid"> {{bid.time | date:'medium'}} </td>
+      </ng-container>
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef>Location</th>
+        <td mat-cell *matCellDef="let bid"> {{bid.bidder.location}} </td>
+      </ng-container>
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef>Country</th>
+        <td mat-cell *matCellDef="let bid"> {{bid.bidder.country}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="bidderColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: bidderColumns;"></tr>
+    </table>
+
+    <br>
+
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#Modal" (click)="onClick()">Bid</button>
+
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Place your bid</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="bidData" (ngSubmit)="bid()">
+              <input type="number" class="form-control" placeholder="Bid Amount" formControlName="amount" [ngClass]="{ 'is-invalid': submitted && fControls.amount.errors }" required autofocus>
+              <div *ngIf="submitted && fControls.amount.errors" class="invalid-feedback">
+                <div *ngIf="fControls.amount.errors.required" style="text-align: left">Bid amount is required</div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Place Bid</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<!--
 <div>
   <br>
   <button mat-raised-button color="primary" (click)="newAuctionButton()">Create New Auction</button>
@@ -128,3 +275,4 @@
   <button *ngIf='!loggedIn' mat-raised-button (click)="logout() ">Login</button>
   <br><br>
 </div>
+-->

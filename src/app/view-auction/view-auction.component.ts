@@ -32,8 +32,17 @@ export class ViewAuctionComponent implements OnInit {
   })
   loggedIn: Boolean;
   map: any;
+  bool1:boolean = false;
+  bool2:boolean = false;
+  submitted: boolean = false;
+  fControls:any;
 
   ngOnInit() {
+    this.fControls = this.bidData.controls;
+    if (this.cookieService.get('usersCookie')) {
+      this.bool2 = true;
+    } else this.bool1 = true;
+
     this.loggedIn = this.cookieService.check('usersCookie');
     var id = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
     this.viewauctionService.viewAuction(id).then(response => {
@@ -88,6 +97,11 @@ export class ViewAuctionComponent implements OnInit {
 
 
   bid() {
+    this.submitted = true;
+    if (this.bidData.invalid) {
+      return;
+    }
+
     if (this.bidData.value.amount <= this.currently) {
       alert('Your bid must be larger than the current bid!');
     }
@@ -121,7 +135,7 @@ export class ViewAuctionComponent implements OnInit {
 
   onClick() {
     if (!(this.cookieService.check('usersCookie'))) {
-      alert('Not Autorized!');
+      alert('Not Authorized!');
     }
     else {
       var cookieData = JSON.parse(this.cookieService.get('usersCookie'));

@@ -34,10 +34,16 @@ export class BrowseAuctionComponent implements OnInit {
 
   fControls:any;
   submitted:boolean = false;
+  bool1:boolean = false;
+  bool2:boolean = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    if (this.cookieService.get('usersCookie')) {
+      this.bool2 = true;
+    } else this.bool1 = true;
+
     this.fControls = this.searchForm.controls;
     this.loggedIn = this.cookieService.check('usersCookie');
 

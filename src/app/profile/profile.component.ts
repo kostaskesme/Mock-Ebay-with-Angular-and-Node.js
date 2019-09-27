@@ -49,9 +49,7 @@ export class ProfileComponent implements OnInit {
   });
 
   constructor(private route: ActivatedRoute, private userService: UserService, private auctionService: AuctionService,
-    private cookieService: CookieService, private router: Router, private messageService: MessageService) {
-    this.route.params.subscribe(params => console.log(params));
-  }
+    private cookieService: CookieService, private router: Router, private messageService: MessageService) {}
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
