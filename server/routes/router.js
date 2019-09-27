@@ -100,8 +100,12 @@ router.get('/getAuction/:id', function (req, res) {
   auctionController.getAuctionById(req, res);
 });
 
-router.get('/getAuction', function (req, res, next) {
-  auctionController.getAllAuctions(req, res, next);
+router.get('/getAuction', function (req, res) {
+  auctionController.getAllAuctions(req, res);
+});
+
+router.get('/getActiveAuctions', function (req, res) {
+  auctionController.getActiveAuctions(req, res);
 });
 
 router.get('/getAuctionsBySeller/:id', function (req, res) {

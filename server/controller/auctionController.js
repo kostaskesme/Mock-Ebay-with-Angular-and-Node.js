@@ -26,6 +26,17 @@ exports.getAuctionById = function (req, res) {
 }
 
 exports.getAllAuctions = function (req, res) {
+  Auction.find({ started: { $ne: null } }, (err, auctionList) => {
+    if (err) {
+      res.status(400).send({ found: false, message: 'Auction not found' });
+      console.log(err);
+    }
+    else
+      res.status(200).json({ found: true, result: auctionList });
+  });
+}
+
+exports.getActiveAuctions = function (req, res) {
   Auction.find({ started: { $ne: null }, ends: { $gt: Date.now() } }, (err, auctionList) => {
     if (err) {
       res.status(400).send({ found: false, message: 'Auction not found' });

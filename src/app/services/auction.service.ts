@@ -36,6 +36,13 @@ export class AuctionService {
     })
   }
 
+  public viewActiveAuctions() {
+    const url = `${environment.appUrl}/getActiveAuctions`;
+    return this.httpClient.get<any>(url).toPromise().then(response => {
+      return Promise.resolve(response);
+    })
+  }
+
   public viewAuctionsBySeller(id:string) {
     const url = `${environment.appUrl}/getAuctionsBySeller/${id}`;
     return this.httpClient.get<any>(url).toPromise().then(response => {

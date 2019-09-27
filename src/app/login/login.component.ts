@@ -73,16 +73,16 @@ export class LoginComponent implements OnInit {
         }
         this.updateUserCookie(result.user);
         if (this.cookieValueJSON.type === 0) {
-          this.router.navigate(['viewUser']);
+          this.router.navigate(['admin']);
         }
         else {
           if (this.cookieValueJSON.approved) {
             this.router.navigate([`profile/${this.cookieValueJSON.id}`]);
           }
           else {
-            alert('You are not approved yet! Try again later');
+            //alert('You are not approved yet! Try again later');
             this.cookieService.delete('usersCookie');
-            location.reload();
+            this.router.navigate(['pending']);
           }
         }
 

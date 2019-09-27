@@ -10,6 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { EditAuctionComponent } from './edit-auction/edit-auction.component';
 import { PendingComponent } from './pending/pending.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,9 @@ const routes: Routes = [
   },
   {
     path : 'pending', component: PendingComponent
+  },
+  {
+    path : 'admin', component: AdminComponent
   }
 ];
 

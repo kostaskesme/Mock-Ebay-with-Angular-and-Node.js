@@ -33,6 +33,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { EditAuctionComponent } from './edit-auction/edit-auction.component';
 import { MessageService } from './services/message.service';
 import { PendingComponent } from './pending/pending.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { PendingComponent } from './pending/pending.component';
     WelcomeComponent,
     EditAuctionComponent,
     PendingComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
