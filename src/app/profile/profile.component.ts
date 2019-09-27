@@ -19,12 +19,11 @@ import { Message } from '../models/message.type';
 export class ProfileComponent implements OnInit {
 
   displayedColumns: string[] = ['email', 'username', 'firstName', 'lastName', 'phoneNumber',
-    'address', 'location', 'country', 'afm', 'rating', 'approved', ' '];
-  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime', 'currentBid', 'buyPrice', 'started', 'view', 'action'];
+  'address', 'location', 'country', 'afm', 'rating', 'approved'];
+  displayedColumnsAuction: string[] = ['name', 'firstBid', 'noOfBids', 'endTime',
+  'currentBid', 'buyPrice', 'started', 'view', 'start', 'edit', 'delete'];
   displayedColumnsMessage: string[] = ['sender', 'receiver', 'message', 'action'];
 
-  approved: boolean;
-  showApproveButton: boolean;
   userData: User[];
   auctionData: MatTableDataSource<Auction>;
   sentMessages: MatTableDataSource<Message>;
@@ -32,6 +31,12 @@ export class ProfileComponent implements OnInit {
   id: string = window.location.href.slice((window.location.href.lastIndexOf("/")) + 1);
   showEndTimeForm = false;
   auctionToStartId: string;
+  bool1:boolean = false;
+  bool2:boolean = true;
+  bool3:boolean = true;
+  bool4:boolean = true;
+  submitted:boolean = false;
+  fControls:any;
 
 
   timeData = new FormGroup({
@@ -43,7 +48,7 @@ export class ProfileComponent implements OnInit {
     ]),
   });
 
-  constructor(private route: ActivatedRoute, private profileService: UserService, private auctionService: AuctionService,
+  constructor(private route: ActivatedRoute, private userService: UserService, private auctionService: AuctionService,
     private cookieService: CookieService, private router: Router, private messageService: MessageService) {
     this.route.params.subscribe(params => console.log(params));
   }
@@ -51,6 +56,7 @@ export class ProfileComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    this.fControls = this.timeData.controls;
     if (!(this.cookieService.check('usersCookie'))) {
       alert('Not Authorized!');
       this.router.navigate(['']);
@@ -59,13 +65,9 @@ export class ProfileComponent implements OnInit {
       alert('Not Authorized2!');
       this.router.navigate(['']);
     }
-    this.profileService.profile(this.id).then(response => {
+    this.userService.profile(this.id).then(response => {
       if (response.found) {
         this.userData = [response.User];
-        this.approved = response.User.approved;
-        if ((JSON.parse(this.cookieService.get('usersCookie')).type === 0) && (!response.User.approved)) {
-          this.showApproveButton = true;
-        }
       }
       else {
         console.log('cant find user!');
@@ -100,7 +102,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onClick() {
-    this.profileService.approve(this.id).then(response => {
+    this.userService.approve(this.id).then(response => {
       if (response.found) {
         alert('User approved!');
         location.reload();
@@ -111,16 +113,85 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  viewUserInfo() {
+    this.userService.profile(this.id).then(response => {
+      if (response.found) {
+        this.userData = [response.User];
+      }
+      else {
+        console.log('cant find user!');
+      }
+    });
+    this.bool1 = false;
+    this.bool2 = true;
+    this.bool3 = true;
+    this.bool4 = true;
+  }
+
+  viewAuctions() {
+    this.auctionService.viewAuctionsBySeller(this.id).then(response => {
+      if (response.found) {
+        this.auctionData = new MatTableDataSource<Auction>(response.result);
+        this.auctionData.paginator = this.paginator;
+      }
+      else {
+        console.log('cant find auctions!');
+      }
+    });
+    this.bool1 = true;
+    this.bool2 = false;
+    this.bool3 = true;
+    this.bool4 = true;
+  }
+
+  viewInbox() {
+    this.messageService.getMessageReceiver(this.userData[0].username).then(response => {
+      if (response.found) {
+        this.receivedMessages = new MatTableDataSource<Message>(response.result);
+      }
+      else {
+        console.log('cant find messages!');
+      }
+    });
+    this.bool1 = true;
+    this.bool2 = true;
+    this.bool3 = false;
+    this.bool4 = true;
+  }
+
+  viewSent() {
+    this.messageService.getMessageSender(this.userData[0].username).then(response => {
+      if (response.found) {
+        this.sentMessages = new MatTableDataSource<Message>(response.result);
+      }
+      else {
+        console.log('cant find messages!');
+      }
+    });
+    this.bool1 = true;
+    this.bool2 = true;
+    this.bool3 = true;
+    this.bool4 = false;
+  }
+
   view(auction: any){
     this.router.navigate([`viewAuction/${auction._id}`]);
   }
 
   start(auction: any) {
-    this.showEndTimeForm = true;
-    this.auctionToStartId = auction._id;
+    if (this.showEndTimeForm === false) {
+      this.showEndTimeForm = true;
+      this.auctionToStartId = auction._id;
+    } else this.showEndTimeForm = false;
   }
 
   onEndTimeSubmit() {
+    this.submitted = true;
+
+    if (this.timeData.invalid) {
+        return;
+    }
+
     var endTime = {
       date: this.timeData.value.date,
       time: this.timeData.value.time
@@ -170,7 +241,7 @@ export class ProfileComponent implements OnInit {
   }
 
   logout() {
-    this.profileService.logout();
+    this.userService.logout();
   }
 
   newAuctionButton() {
