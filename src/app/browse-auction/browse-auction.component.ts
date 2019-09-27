@@ -22,7 +22,7 @@ export class BrowseAuctionComponent implements OnInit {
   auctionData: MatTableDataSource<Auction>;
   searchOptions: string[] = ['Name', 'Category', 'Description', 'Price', 'Location'];
   loggedIn: Boolean;
-  
+
   searchForm = new FormGroup({
     option: new FormControl('', [
       Validators.required
@@ -32,12 +32,16 @@ export class BrowseAuctionComponent implements OnInit {
     ])
   });
 
+  fControls:any;
+  submitted:boolean = false;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    this.fControls = this.searchForm.controls;
     this.loggedIn = this.cookieService.check('usersCookie');
 
-    this.browseAuctiontionService.viewAllAuctions().then(response => {
+    this.browseAuctiontionService.viewActiveAuctions().then(response => {
       if (response.found) {
         this.auctionData = new MatTableDataSource<Auction>(response.result);
         this.auctionData.paginator = this.paginator;
@@ -53,6 +57,12 @@ export class BrowseAuctionComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
+
+    if (this.searchForm.invalid) {
+        return;
+    }
+
     var option = this.searchForm.value.option;
     var term = this.searchForm.value.search;
     this.browseAuctiontionService.searchAuction(option, term).then(response => {
@@ -65,6 +75,7 @@ export class BrowseAuctionComponent implements OnInit {
       }
     });
   }
+
   newAuctionButton() {
     this.browseAuctiontionService.newAuctionRedirect();
   }
