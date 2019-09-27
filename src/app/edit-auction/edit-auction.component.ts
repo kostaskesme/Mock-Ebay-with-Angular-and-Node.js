@@ -4,15 +4,15 @@ import { AuctionService } from '../services/auction.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
+import{CategoryGroup, CategoryGroups} from '../auction/categories'
 
-
-const ValidateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => { //+VALIDATOR FOR ENDTIME > STARTTIME
+const validateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => { //+VALIDATOR FOR ENDTIME > STARTTIME
   const firstBid = control.get('firstBid');
   const buyPrice = control.get('buyPrice');
   if (firstBid.value < buyPrice.value)
     return null;
   else
-    return { 'validBuyPrice': false };
+    return { 'validBuyPrice': true };
 };
 
 @Component({
@@ -37,28 +37,23 @@ export class EditAuctionComponent implements OnInit {
     ]),
     buyPrice: new FormControl(''),
     description: new FormControl('')
-  }, { validators: ValidateBuyPrice});
+  }, { validators: validateBuyPrice});
 
   loggedIn: Boolean;
-
-
-  bool1: boolean;
-  bool2: boolean;
-  bool3: boolean;
+  categoryGroups : CategoryGroup[] = CategoryGroups;
+  fControls:any;
+  submitted:boolean = false;
 
   constructor(private router: Router, private auctionService: AuctionService, private userService: UserService,
     private cookieService: CookieService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.fControls = this.auctData.controls;
     if (!(this.cookieService.check('usersCookie'))) {
       alert('Not Authorized!');
       this.router.navigate(['']);
     }
     this.loggedIn = true;
-    //TINAFTORE?
-    this.bool1 = this.auctData.controls.name.errors.required;
-    this.bool2 = this.auctData.controls.category.errors.required;
-    this.bool3 = this.auctData.controls.firstBid.errors.required;
 
     this.route.params.subscribe(params => {
       this.id = params.id;
@@ -79,10 +74,12 @@ export class EditAuctionComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
+
     if (this.auctData.invalid) {
-      alert("form is invalid");
-      return;
+        return;
     }
+
     var auctionData = this.auctData.value;
     //auctionData.ends = null;
     this.auctionService.editAuction(this.id, auctionData).then(response => {
@@ -97,5 +94,9 @@ export class EditAuctionComponent implements OnInit {
 
   GoToProfile() {
     this.userService.GoToProfile();
+  }
+
+  onReset() {
+    this.submitted = false;
   }
 }

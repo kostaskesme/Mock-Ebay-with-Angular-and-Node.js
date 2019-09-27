@@ -42,9 +42,6 @@ export class AuctionComponent implements OnInit {
   categoryGroups : CategoryGroup[] = CategoryGroups;
   fControls:any;
   submitted:boolean = false;
-  //bool1: boolean;
-  //bool2: boolean;
-  //bool3: boolean;
 
   constructor(private router: Router, private auctionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
 
@@ -55,10 +52,6 @@ export class AuctionComponent implements OnInit {
       this.router.navigate(['']);
     }
     this.loggedIn = true;
-
-    //this.bool1 = this.auctData.controls.name.errors.required;
-    //this.bool2 = this.auctData.controls.category.errors.required;
-    //this.bool3 = this.auctData.controls.firstBid.errors.required;
   }
 
   onSubmit() {
