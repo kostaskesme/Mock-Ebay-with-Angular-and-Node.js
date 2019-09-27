@@ -7,13 +7,13 @@ import { CookieService } from 'ngx-cookie-service';
 import{CategoryGroup, CategoryGroups} from './categories'
 
 
-const ValidateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
+const validateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const firstBid = control.get('firstBid');
   const buyPrice = control.get('buyPrice');
   if (firstBid.value < buyPrice.value)
     return null;
   else
-    return { 'validBuyPrice': false };
+    return { 'validBuyPrice': true };
 };
 
 @Component({
@@ -36,35 +36,38 @@ export class AuctionComponent implements OnInit {
     ]),
     buyPrice: new FormControl(''),
     description: new FormControl('')
-  }, { validators: ValidateBuyPrice});
+  }, { validators: validateBuyPrice} );
 
   loggedIn: Boolean;
   categoryGroups : CategoryGroup[] = CategoryGroups;
-
-
-  bool1: boolean;
-  bool2: boolean;
-  bool3: boolean;
+  fControls:any;
+  submitted:boolean = false;
+  //bool1: boolean;
+  //bool2: boolean;
+  //bool3: boolean;
 
   constructor(private router: Router, private auctionService: AuctionService, private userService: UserService, private cookieService: CookieService) { }
 
   ngOnInit() {
+    this.fControls = this.auctData.controls;
     if (!(this.cookieService.check('usersCookie'))) {
       alert('Not Authorized!');
       this.router.navigate(['']);
     }
     this.loggedIn = true;
-    //TINAFTORE?
-    this.bool1 = this.auctData.controls.name.errors.required;
-    this.bool2 = this.auctData.controls.category.errors.required;
-    this.bool3 = this.auctData.controls.firstBid.errors.required;
+
+    //this.bool1 = this.auctData.controls.name.errors.required;
+    //this.bool2 = this.auctData.controls.category.errors.required;
+    //this.bool3 = this.auctData.controls.firstBid.errors.required;
   }
 
   onSubmit() {
+    this.submitted = true;
+
     if (this.auctData.invalid) {
-      alert("form is invalid");
-      return;
+        return;
     }
+
     var auctionData = this.auctData.value;
     var userData = JSON.parse(this.cookieService.get('usersCookie'));
     auctionData.seller = {
@@ -94,6 +97,10 @@ export class AuctionComponent implements OnInit {
 
   logout() {
     this.userService.logout();
+  }
+
+  onReset() {
+    this.submitted = false;
   }
 
 }

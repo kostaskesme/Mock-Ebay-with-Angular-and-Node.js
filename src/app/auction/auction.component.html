@@ -1,3 +1,77 @@
+<body class="text-center">
+  <form [formGroup]="auctData" class="form-register" (ngSubmit)="onSubmit()">
+    <h1 class="h3 mb-3 font-weight-normal">Create a new auction</h1>
+    <br>
+    <div class="form-row">
+      <div class="form-group col">
+        <label>Item's name</label>
+        <input type="text" placeholder="Item's name" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.name.errors }" />
+        <div *ngIf="submitted && fControls.name.errors" class="invalid-feedback">
+          <div *ngIf="fControls.name.errors.required">Name is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label>Category</label>
+        <mat-select class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.category.errors }" formControlName="category" placeholder = "Categories" multiple>
+          <mat-optgroup *ngFor="let group of categoryGroups" [label]="group.name">
+            <mat-option *ngFor="let category of group.categories" [value]="category">
+              {{category}}
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+        <div *ngIf="submitted && fControls.category.errors" class="invalid-feedback">
+          <div *ngIf="fControls.category.errors.required">Category is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label>First Bid</label>
+        <input type="number" placeholder="First Bid" formControlName="firstBid" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.firstBid.errors }" />
+        <div *ngIf="submitted && fControls.firstBid.errors" class="invalid-feedback">
+          <div *ngIf="fControls.firstBid.errors.required">First Bid is required</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label>Buy Price</label>
+        <input type="number" aria-describedby="buypriceHint" placeholder="Buy Price" formControlName="buyPrice" class="form-control" [ngClass]="{ 'is-invalid': submitted && this.auctData.errors?.validBuyPrice }" />
+        <div *ngIf="submitted && this.auctData.errors?.validBuyPrice" class="invalid-feedback">
+          <div *ngIf="this.auctData.errors?.validBuyPrice">Buy Price must be greater than First Bid</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label>Description</label>
+        <textarea placeholder="Description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.description.errors }" rows="3"></textarea>
+        <!--<input type="password" placeholder="Description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.description.errors }" />\
+        -->
+        <div *ngIf="submitted && fControls.description.errors" class="invalid-feedback">
+          <div *ngIf="fControls.description.errors.required">Description is required</div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="text-center">
+      <button class="btn btn-lg btn-primary" type="submit">Create</button>
+      <button class="btn btn-lg btn-secondary" type="reset" (click)="onReset()">Reset</button>
+    </div>
+
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    <button class="btn btn-lg btn-link" type="reset" (click)="GoToProfile()">Back to profile</button>
+  </form>
+</body>
+
+<!--
 <div>
   <mat-card>
     <section class="mat-typography" style="text-align: center">
@@ -36,10 +110,11 @@
       </mat-form-field>
       <br><br>
       <button mat-raised-button type="submit" color="primary">Create</button>
-      
+
       <button *ngIf = 'loggedIn' mat-raised-button  (click)="GoToProfile() " >Go to profile</button>
       <button *ngIf = 'loggedIn' mat-raised-button  (click)="logout() " >Logout</button>
       <button *ngIf = '!loggedIn' mat-raised-button  (click)="logout() " >Login</button>
     </form>
   </mat-card>
 </div>
+-->
