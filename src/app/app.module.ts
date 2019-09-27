@@ -12,9 +12,7 @@ import {MatCardModule,
         MatInputModule,
         MatTableModule,
         MatPaginatorModule,
-        MatSelectModule,
-        MatMenuModule,
-        MatTabsModule} from '@angular/material'
+        MatSelectModule} from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomMaterialModule } from './core/material.module';
 import { HttpModule } from '@angular/http';
@@ -24,7 +22,6 @@ import { AuctionComponent } from './auction/auction.component';
 import { AuctionService } from './services/auction.service';
 import { ViewAuctionComponent } from './view-auction/view-auction.component';
 import { BrowseAuctionComponent } from './browse-auction/browse-auction.component';
-import { BrowseUsersComponent } from './browse-users/browse-users.component';
 import { UserService } from './services/user.service';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -43,7 +40,6 @@ import { AdminComponent } from './admin/admin.component';
     AuctionComponent,
     ViewAuctionComponent,
     BrowseAuctionComponent,
-    BrowseUsersComponent,
     ProfileComponent,
     WelcomeComponent,
     EditAuctionComponent,
@@ -65,8 +61,6 @@ import { AdminComponent } from './admin/admin.component';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatMenuModule,
-    MatTabsModule,
     FormsModule,
     ReactiveFormsModule
   ],

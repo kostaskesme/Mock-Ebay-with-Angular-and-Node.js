@@ -49,8 +49,6 @@
       <div class="form-group col">
         <label>Description</label>
         <textarea placeholder="Description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.description.errors }" rows="3"></textarea>
-        <!--<input type="password" placeholder="Description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && fControls.description.errors }" />\
-        -->
         <div *ngIf="submitted && fControls.description.errors" class="invalid-feedback">
           <div *ngIf="fControls.description.errors.required">Description is required</div>
         </div>
@@ -70,51 +68,3 @@
     <button class="btn btn-lg btn-link" type="reset" (click)="GoToProfile()">Back to profile</button>
   </form>
 </body>
-
-<!--
-<div>
-  <mat-card>
-    <section class="mat-typography" style="text-align: center">
-      <h4>Create a new auction</h4>
-    </section>
-    <mat-divider></mat-divider>
-    <br>
-    <form [formGroup]="auctData" (ngSubmit)="onSubmit()" class="form">
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Item's Name" formControlName="name">
-        <mat-error *ngIf="bool1">Name is required</mat-error>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select formControlName="category" placeholder = "Categories" multiple>
-          <mat-optgroup *ngFor="let group of categoryGroups" [label]="group.name">
-            <mat-option *ngFor="let category of group.categories" [value]="category">
-              {{category}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field class="full-width">
-        <input matInput type="number" placeholder="First Bid" formControlName="firstBid">
-        <span matPrefix>€&nbsp;</span>
-        <mat-error *ngIf="bool3">First Bid is required</mat-error>
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <input matInput type="number" placeholder="Buy Price" formControlName="buyPrice">
-        <span matPrefix>€&nbsp;</span>
-        <mat-hint>Not required</mat-hint>
-      </mat-form-field>
-      <mat-form-field class="full-width">
-        <textarea matInput placeholder="Item Description" formControlName="description"></textarea>
-      </mat-form-field>
-      <br><br>
-      <button mat-raised-button type="submit" color="primary">Create</button>
-
-      <button *ngIf = 'loggedIn' mat-raised-button  (click)="GoToProfile() " >Go to profile</button>
-      <button *ngIf = 'loggedIn' mat-raised-button  (click)="logout() " >Logout</button>
-      <button *ngIf = '!loggedIn' mat-raised-button  (click)="logout() " >Login</button>
-    </form>
-  </mat-card>
-</div>
--->

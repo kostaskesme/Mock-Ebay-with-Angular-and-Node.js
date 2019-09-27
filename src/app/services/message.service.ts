@@ -1,8 +1,6 @@
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-//import { CookieService } from 'ngx-cookie-service';
-//import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({

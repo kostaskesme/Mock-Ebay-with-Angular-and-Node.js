@@ -5,7 +5,6 @@ import { RegisterComponent } from './register/register.component';
 import { AuctionComponent } from './auction/auction.component';
 import { ViewAuctionComponent } from '../app/view-auction/view-auction.component';
 import { BrowseAuctionComponent } from './browse-auction/browse-auction.component';
-import { BrowseUsersComponent } from './browse-users/browse-users.component';
 import { ProfileComponent } from './profile/profile.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { EditAuctionComponent } from './edit-auction/edit-auction.component';
@@ -30,9 +29,6 @@ const routes: Routes = [
   },
   {
     path : 'viewAuction', component: BrowseAuctionComponent
-  },
-  {
-    path : 'viewUser', component: BrowseUsersComponent
   },
   {
     path : 'profile/:id', component: ProfileComponent

@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import{CategoryGroup, CategoryGroups} from '../auction/categories'
 
-const validateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => { //+VALIDATOR FOR ENDTIME > STARTTIME
+const validateBuyPrice: ValidatorFn = (control: FormGroup): ValidationErrors | null => {
   const firstBid = control.get('firstBid');
   const buyPrice = control.get('buyPrice');
   if (firstBid.value < buyPrice.value)
@@ -81,7 +81,6 @@ export class EditAuctionComponent implements OnInit {
     }
 
     var auctionData = this.auctData.value;
-    //auctionData.ends = null;
     this.auctionService.editAuction(this.id, auctionData).then(response => {
       if (response.done) {
         this.userService.GoToProfile();

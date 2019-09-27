@@ -7,9 +7,6 @@ exports.getAllMessagesBySender = function (req, res) {
       res.status(400).send({ found: false, message: 'Could not get messages' });
       console.log(err);
     }
-    /*else if (Array.isArray(messages) && (!messages.length)) {
-      res.status(200).json({ found: true, result: messages });
-    }*/
     else
       res.status(200).json({ found: true, result: messages });
   });

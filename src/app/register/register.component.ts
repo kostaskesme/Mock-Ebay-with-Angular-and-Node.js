@@ -92,7 +92,6 @@ export class RegisterComponent implements OnInit {
 
     this.authenticationService.register(registerData).then(response => {
       if (response) {
-        //alert('You have registered succesfully and are pending approval from an admin. Until then you can browse the site as a guest')
         this.cookieService.delete('usersCookie');
         this.router.navigate(['pending']);
       }
@@ -106,7 +105,6 @@ export class RegisterComponent implements OnInit {
   onReset() {
     this.submitted = false;
     this.regData.reset({ country: 'Greece' });
-    //console.log(this.regData);
   }
 
 }

@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit {
   login(): void {
     this.submitted = true;
     if (this.logData.invalid) {
-      //console.log("went in");
       return;
     }
 
@@ -80,7 +79,6 @@ export class LoginComponent implements OnInit {
             this.router.navigate([`profile/${this.cookieValueJSON.id}`]);
           }
           else {
-            //alert('You are not approved yet! Try again later');
             this.cookieService.delete('usersCookie');
             this.router.navigate(['pending']);
           }
@@ -91,6 +89,5 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
 
 }

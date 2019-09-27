@@ -5,8 +5,6 @@ import { User } from '../models/user.type';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
-
-
 @Injectable()
 export class UserService {
     constructor(private httpClient: HttpClient, private cookieService: CookieService, private router: Router) { }
@@ -26,7 +24,6 @@ export class UserService {
     }
 
     public approve(id: string) {
-        //console.log(id);
         const url = `${environment.appUrl}/users/approve`;
         return this.httpClient.put<any>(url, { id: id }).toPromise().then(response => {
             return Promise.resolve(response);
@@ -49,4 +46,3 @@ export class UserService {
         }
     }
 }
-

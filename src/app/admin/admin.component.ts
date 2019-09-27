@@ -119,7 +119,6 @@ export class AdminComponent implements OnInit {
   approve(user:any) {
     this.userService.approve(user._id).then(response => {
       if (response.found) {
-        //alert('User approved!');
         location.reload();
       }
       else {

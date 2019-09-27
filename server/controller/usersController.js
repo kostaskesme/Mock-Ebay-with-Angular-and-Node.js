@@ -27,7 +27,6 @@ exports.getUsersById = function (req, res) {
 
 
 exports.findByUsername = function (username, cb) {
-  // console.log('controller', username);
   User.findOne({ username: username })
     .exec(function (err, user) {
       if (err) {
@@ -40,13 +39,6 @@ exports.findByUsername = function (username, cb) {
       else {
         return cb(null, user);
       }
-      // bcrypt.compare(password, user.password, function (err, result) {
-      //   if (result === true) {
-      //     return callback(null, user);
-      //   } else {
-      //     return callback(err);
-      //   }
-      // })
     });
 }
 

@@ -27,8 +27,6 @@ router.post('/login', function (req, res, next) {
         console.log('/login logIn error', err);
         return next(err);
       }
-      //res.cookie('userid', { id: user.id, username: user.username, type: user.type, approved: user.approved }, { maxAge: 2592000000, encode: String }); // TODO
-      //res.cookie('sessionID', res.sessionID, { maxAge: 2592000000 }); // TODO
       return res.send({ isLoggedIn: true, user });
     });
   })(req, res, next);
@@ -36,7 +34,6 @@ router.post('/login', function (req, res, next) {
 
 router.post('/register', (request, response) => {
   User.register(new User(request.body), request.body.password, function (err, user) {
-    //console.log('inside Register');
     if (err) {
       console.log(err);
       return response.render('register');
@@ -74,7 +71,6 @@ router.get('/users/:id', function (req, res) {
 });
 
 router.post('/users/register', function (req, res) {
-  console.log('router');
   usersController.addUser(req, res);
 });
 

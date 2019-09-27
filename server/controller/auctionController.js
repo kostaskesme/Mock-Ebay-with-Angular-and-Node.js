@@ -1,10 +1,8 @@
 var Auction = require('../models/auction');
 
 exports.createAuction = function (req, res) {
-  //console.log(req.body);
   var auctionFromRequest = new Auction(req.body);
   auctionFromRequest.save().then(AuctionFromdb => {
-    //console.log(AuctionFromdb);
     res.status(200).json({ created: true, auctionId: AuctionFromdb._id });
   })
     .catch(err => {
